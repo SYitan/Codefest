@@ -207,7 +207,7 @@ export const crewMembers: CrewMember[] = [
     valorEquipo:
       "Convierte necesidades del mundo real en productos de software funcionales, combinando visión de producto, solidez técnica y automatización para crear soluciones completas de principio a fin.",
     logros: [
-      "GradeDesk: plataforma de gestión académica con React, Node.js y PostgreSQL.",
+      "Plataforma de gestión académica con React, Node.js y PostgreSQL.",
       "Automatización de procesos empresariales con Power Platform.",
       "Prototipos funcionales integrando IA generativa en flujos de trabajo.",
     ],
