@@ -6,10 +6,10 @@ import {
   Globe,
   Database,
 } from "lucide-react";
-import yitanImg from "../../imports/yitan.png";
-import diegoImg from "../../imports/diego.png";
-import matheusImg from "../../imports/matheus.png";
-import ianImg from "../../imports/ian.png";
+import yitanImg from "../../imports/yitan.webp";
+import diegoImg from "../../imports/diego.webp";
+import matheusImg from "../../imports/matheus.webp";
+import ianImg from "../../imports/ian.webp";
 
 export const mission = {
   badge: "Misión Activa · 2026",
@@ -70,11 +70,11 @@ export const crewMembers: CrewMember[] = [
     perfil:
       "Estudiante enfocado en inteligencia artificial, arquitectura de software y diseño de soluciones tecnológicas.",
     skills: [
-      { label: "Technical Mastery", value: 78 },
-      { label: "System Design", value: 82 },
-      { label: "Problem Solving", value: 80 },
-      { label: "AI Knowledge", value: 85 },
-      { label: "Development Experience", value: 72 },
+      { label: "Dominio Técnico", value: 78 },
+      { label: "Diseño de Sistemas", value: 82 },
+      { label: "Resolución de Problemas", value: 80 },
+      { label: "Conocimiento en IA", value: 85 },
+      { label: "Experiencia en Desarrollo", value: 72 },
     ],
     techGroups: [
       { category: "Lenguajes", items: ["Python", "Java", "SQL"] },
@@ -106,7 +106,7 @@ export const crewMembers: CrewMember[] = [
       "Prototipo funcional de agente con IA.",
       "Integración temprana de LLMs en proyectos académicos.",
     ],
-    color: "#38bdf8",
+    color: "#f97316",
   },
   {
     id: 1,
@@ -117,11 +117,11 @@ export const crewMembers: CrewMember[] = [
     perfil:
       "Estudiante con experiencia en automatización, inteligencia artificial y seguridad informática aplicada a proyectos tecnológicos.",
     skills: [
-      { label: "Technical Mastery", value: 80 },
-      { label: "System Design", value: 72 },
-      { label: "Problem Solving", value: 85 },
-      { label: "AI Knowledge", value: 82 },
-      { label: "Development Experience", value: 75 },
+      { label: "Dominio Técnico", value: 80 },
+      { label: "Diseño de Sistemas", value: 72 },
+      { label: "Resolución de Problemas", value: 85 },
+      { label: "Conocimiento en IA", value: 82 },
+      { label: "Experiencia en Desarrollo", value: 75 },
     ],
     techGroups: [
       { category: "Lenguajes", items: ["Python", "Java"] },
@@ -164,11 +164,11 @@ export const crewMembers: CrewMember[] = [
     perfil:
       "Estudiante de Ingeniería de Software con experiencia práctica en desarrollo de aplicaciones web, automatización de procesos e integración de inteligencia artificial en soluciones digitales. Apasionado por construir productos tecnológicos escalables que resuelvan problemas reales, combinando desarrollo full stack, automatización e innovación.",
     skills: [
-      { label: "Technical Mastery", value: 85 },
-      { label: "System Design", value: 80 },
-      { label: "Problem Solving", value: 82 },
-      { label: "AI Knowledge", value: 72 },
-      { label: "Development Experience", value: 82 },
+      { label: "Dominio Técnico", value: 85 },
+      { label: "Diseño de Sistemas", value: 80 },
+      { label: "Resolución de Problemas", value: 82 },
+      { label: "Conocimiento en IA", value: 72 },
+      { label: "Experiencia en Desarrollo", value: 82 },
     ],
     techGroups: [
       { category: "Frontend", items: ["Angular", "TypeScript", "JavaScript"] },
@@ -214,11 +214,11 @@ export const crewMembers: CrewMember[] = [
     perfil:
       "Estudiante de Ingeniería de Software enfocado en desarrollo full stack, con experiencia real construyendo sistemas completos desde el backend hasta interfaces modernas. Apasionado por la arquitectura de software, la ciberseguridad y la creación de productos funcionales que resuelvan problemas reales.",
     skills: [
-      { label: "Technical Mastery", value: 82 },
-      { label: "System Design", value: 80 },
-      { label: "Problem Solving", value: 85 },
-      { label: "AI Knowledge", value: 70 },
-      { label: "Development Experience", value: 78 },
+      { label: "Dominio Técnico", value: 82 },
+      { label: "Diseño de Sistemas", value: 80 },
+      { label: "Resolución de Problemas", value: 85 },
+      { label: "Conocimiento en IA", value: 70 },
+      { label: "Experiencia en Desarrollo", value: 78 },
     ],
     techGroups: [
       { category: "Frontend", items: ["Angular 19+", "TypeScript", "HTML5", "CSS3", "TailwindCSS", "DaisyUI"] },
@@ -231,7 +231,7 @@ export const crewMembers: CrewMember[] = [
       { label: "Proyectos", value: "10+" },
       { label: "Tecnologías", value: "22+" },
       { label: "Apps Desktop", value: "3+" },
-      { label: "Cert.", value: "3" },
+      { label: "Certificaciones", value: "3" },
     ],
     experiencia: [
       "Desarrollo de aplicaciones desktop con Electron y Angular 19+.",

@@ -79,6 +79,8 @@
 }
 
 @theme inline {
+  --font-orbitron: 'Orbitron', monospace;
+  --font-space: 'Space Grotesk', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
