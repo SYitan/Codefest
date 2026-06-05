@@ -102,14 +102,14 @@ function AnimatedContent({ member, onBack }) {
             <h3 className="text-sm uppercase tracking-[0.3em] font-mono mb-4" style={{ color: member.color }}>
               ESTADÍSTICAS DE MISIÓN
             </h3>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-4 gap-2">
               {metrics.map((m) => (
                 <div
                   key={m.label}
-                  className="p-4 rounded-lg bg-slate-800/40 border border-slate-700/30 text-center"
+                  className="p-3 rounded-lg bg-slate-800/40 border border-slate-700/30 text-center"
                 >
-                  <p className="text-3xl font-bold" style={{ color: member.color }}>{m.value}</p>
-                  <p className="text-[10px] text-slate-500 uppercase tracking-wider mt-1 font-mono">{m.label}</p>
+                  <p className="text-xl font-bold" style={{ color: member.color }}>{m.value}</p>
+                  <p className="text-[9px] text-slate-500 uppercase tracking-wider mt-0.5 font-mono">{m.label}</p>
                 </div>
               ))}
             </div>
@@ -193,7 +193,7 @@ export default function DossierSection({ member, onBack }) {
       }`}
     >
       <div className="relative max-w-6xl mx-auto">
-        <div className="absolute inset-0 -m-6 rounded-3xl bg-slate-900/40 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 -m-6 rounded-3xl bg-slate-900/60 backdrop-blur-sm" />
         <div className="relative">
           {member ? (
             <AnimatedContent key={member.id} member={member} onBack={onBack} />
