@@ -17,33 +17,17 @@ export interface CrewMember {
   photo: string;
   name: string;
   shortName: string;
-  spaceTitle: string;
-  subtitle: string;
-  bio: string;
+  rol: string;
+  perfil: string;
   skills: Skill[];
   experiencia: string[];
   fortalezas: string[];
+  tecnologias: string[];
   contribuciones: string[];
   valorEquipo: string;
-  tecnologias: string[];
+  logros: string[];
   color: string;
 }
-
-export const mission = {
-  badge: "Misión Activa · 2026",
-  title: "MISIÓN:",
-  subtitle: "CODEFEST AD ASTRA",
-  year: "2026",
-  description: "Construyendo Agentes Inteligentes para un Impacto Real",
-};
-
-export const heroTags = [
-  { label: "Agentes IA", icon: BrainCircuit, color: "#a78bfa", delay: 0.6 },
-  { label: "Automatización", icon: Zap, color: "#38bdf8", delay: 0.7 },
-  { label: "Ingeniería de Software", icon: Cpu, color: "#34d399", delay: 0.8 },
-  { label: "APIs", icon: Globe, color: "#38bdf8", delay: 1.0 },
-  { label: "Sistemas de Datos", icon: Database, color: "#a78bfa", delay: 1.1 },
-];
 
 export const crewMembers: CrewMember[] = [
   {
@@ -51,15 +35,14 @@ export const crewMembers: CrewMember[] = [
     photo: img3,
     name: "Matheus Aponte",
     shortName: "Matheus",
-    spaceTitle: "AI Systems Architect",
-    subtitle: "Estudiante enfocado en inteligencia artificial, arquitectura de soluciones y diseño de sistemas.",
-    bio: "Matheus es estudiante universitario con interés en inteligencia artificial y arquitectura de software. Ha complementado su formación académica con investigación autónoma en agentes inteligentes, integración de modelos de lenguaje y prototipado de soluciones basadas en IA. Su enfoque está en entender cómo las tecnologías emergentes pueden aplicarse a problemas reales, evaluando opciones y diseñando arquitecturas funcionales.",
+    rol: "AI Systems Architect",
+    perfil: "Estudiante enfocado en inteligencia artificial, arquitectura de software y diseño de soluciones tecnológicas.",
     skills: [
-      { label: "Arquitectura de IA", value: 78 },
-      { label: "Integración de Modelos", value: 75 },
-      { label: "Investigación Técnica", value: 85 },
-      { label: "Prompt Engineering", value: 80 },
-      { label: "Python", value: 72 },
+      { label: "Technical Mastery", value: 78 },
+      { label: "System Design", value: 82 },
+      { label: "Problem Solving", value: 80 },
+      { label: "AI Knowledge", value: 85 },
+      { label: "Development Experience", value: 72 },
     ],
     experiencia: [
       "Investigación de agentes inteligentes y sus aplicaciones.",
@@ -69,19 +52,24 @@ export const crewMembers: CrewMember[] = [
       "Evaluación de tecnologías emergentes para proyectos.",
     ],
     fortalezas: [
+      "Arquitectura de Software",
+      "Inteligencia Artificial",
+      "Investigación Técnica",
       "Pensamiento Analítico",
       "Diseño de Soluciones",
-      "Investigación Técnica",
-      "Aprendizaje Autónomo",
     ],
+    tecnologias: ["Python", "Java", "React", "Git", "SQL", "APIs REST", "OpenAI APIs"],
     contribuciones: [
       "Diseño de la arquitectura del agente.",
       "Definición de componentes de IA.",
       "Investigación y validación tecnológica.",
     ],
     valorEquipo:
-      "Aporta una visión estructurada para el diseño de sistemas con IA, asegurando que las decisiones tecnológicas estén respaldadas por investigación y análisis.",
-    tecnologias: ["Python", "OpenAI API", "LangChain", "TensorFlow", "FastAPI"],
+      "Convierte requerimientos complejos en soluciones funcionales y escalables, conectando tecnología, producto y experiencia de usuario.",
+    logros: [
+      "Prototipo funcional de agente con IA.",
+      "Integración temprana de LLMs en proyectos académicos.",
+    ],
     color: "#38bdf8",
   },
   {
@@ -89,37 +77,41 @@ export const crewMembers: CrewMember[] = [
     photo: img4,
     name: "Ian Di Filippo",
     shortName: "Ian",
-    spaceTitle: "Full Stack Engineer",
-    subtitle: "Estudiante con experiencia en desarrollo web, integración de servicios y construcción de aplicaciones funcionales.",
-    bio: "Ian es estudiante universitario con experiencia práctica en desarrollo web, tanto en frontend como en backend. Ha trabajado en proyectos que involucran consumo de APIs, gestión de bases de datos e integración entre sistemas. Su enfoque está en construir aplicaciones funcionales que resuelvan necesidades reales de los usuarios, aprendiendo nuevas herramientas según lo requiera cada proyecto.",
+    rol: "Automation, AI & Cybersecurity Specialist",
+    perfil: "Estudiante con experiencia en automatización, inteligencia artificial y seguridad informática aplicada a proyectos tecnológicos.",
     skills: [
-      { label: "Desarrollo Frontend", value: 80 },
-      { label: "Desarrollo Backend", value: 78 },
-      { label: "Bases de Datos", value: 72 },
-      { label: "APIs y Servicios", value: 82 },
-      { label: "Git y Control de Versiones", value: 78 },
+      { label: "Technical Mastery", value: 80 },
+      { label: "System Design", value: 72 },
+      { label: "Problem Solving", value: 85 },
+      { label: "AI Knowledge", value: 82 },
+      { label: "Development Experience", value: 75 },
     ],
     experiencia: [
-      "Desarrollo frontend y backend en proyectos web.",
-      "Consumo e integración de APIs REST.",
-      "Diseño y gestión de bases de datos relacionales.",
-      "Integración entre sistemas y servicios.",
-      "Desarrollo de funcionalidades para usuarios finales.",
+      "Automatización de procesos con n8n y APIs.",
+      "Integración de modelos de IA en flujos automatizados.",
+      "Implementación de medidas básicas de ciberseguridad.",
+      "Desarrollo de scripts para análisis de datos.",
+      "Administración de sistemas Linux.",
     ],
     fortalezas: [
-      "Desarrollo Full Stack",
+      "Automatización",
+      "Inteligencia Artificial",
+      "Ciberseguridad",
       "Resolución de Problemas",
       "Adaptabilidad",
-      "Trabajo Colaborativo",
     ],
+    tecnologias: ["Python", "Java", "Git", "Linux", "n8n", "OpenAI APIs", "APIs REST"],
     contribuciones: [
-      "Implementación de funcionalidades clave.",
-      "Desarrollo de interfaces de usuario.",
-      "Integración de servicios y APIs.",
+      "Automatización de flujos de trabajo.",
+      "Integración de IA en procesos.",
+      "Seguridad en integraciones.",
     ],
     valorEquipo:
-      "Conecta el frontend con el backend, garantizando que las funcionalidades se implementen de principio a fin con calidad y buen desempeño.",
-    tecnologias: ["React", "Node.js", "PostgreSQL", "TypeScript", "Tailwind CSS"],
+      "Automatiza procesos complejos y protege las integraciones, asegurando que los flujos de trabajo sean eficientes y seguros.",
+    logros: [
+      "Flujo automatizado para procesamiento de datos.",
+      "Implementación de agente con capacidades de IA.",
+    ],
     color: "#a78bfa",
   },
   {
@@ -127,38 +119,42 @@ export const crewMembers: CrewMember[] = [
     photo: img1,
     name: "Brian Alba",
     shortName: "Brian",
-    spaceTitle: "Automation Specialist",
-    subtitle: "Estudiante con experiencia práctica en automatización de procesos, desarrollo de soluciones digitales y optimización operativa.",
-    bio: "Brian es estudiante universitario con experiencia en automatización de procesos empresariales y desarrollo de soluciones digitales. Ha participado en proyectos que integran plataformas, diseñan flujos automatizados y optimizan operaciones mediante tecnología. Su enfoque combina el pensamiento de producto con la implementación técnica para crear soluciones que realmente mejoren la eficiencia.",
+    rol: "Lead Full Stack Developer",
+    perfil: "Estudiante con experiencia en desarrollo full stack, automatización de procesos e integración de plataformas empresariales.",
     skills: [
-      { label: "Automatización de Procesos", value: 82 },
-      { label: "Diseño de Flujos", value: 78 },
-      { label: "Desarrollo Web", value: 70 },
-      { label: "Integración de Plataformas", value: 75 },
-      { label: "Lógica de Negocio", value: 72 },
+      { label: "Technical Mastery", value: 85 },
+      { label: "System Design", value: 80 },
+      { label: "Problem Solving", value: 82 },
+      { label: "AI Knowledge", value: 70 },
+      { label: "Development Experience", value: 82 },
     ],
     experiencia: [
-      "Automatización de procesos empresariales.",
-      "Diseño de flujos automatizados.",
-      "Desarrollo web de aplicaciones funcionales.",
-      "Participación en proyectos de desarrollo móvil.",
-      "Integración de plataformas y servicios.",
+      "Desarrollo full stack con React, TypeScript y Java.",
+      "Automatización de procesos con Power Platform y n8n.",
+      "Creación de portales con Power Pages.",
+      "Integración de sistemas y APIs REST.",
+      "Gestión de bases de datos SQL.",
     ],
     fortalezas: [
+      "Desarrollo Full Stack",
       "Automatización",
+      "Integración de Sistemas",
       "Pensamiento de Producto",
-      "Optimización de Procesos",
-      "Aprendizaje Rápido",
+      "Aprendizaje Autónomo",
     ],
+    tecnologias: ["React", "Java", "JavaScript", "TypeScript", "Power Platform", "Power Pages", "n8n", "Git", "SQL", "APIs REST"],
     contribuciones: [
-      "Diseño de automatizaciones.",
-      "Integración entre sistemas.",
-      "Construcción de flujos inteligentes.",
-      "Implementación de lógica de negocio.",
+      "Liderazgo técnico del equipo.",
+      "Desarrollo de la plataforma principal.",
+      "Integración de servicios y APIs.",
+      "Diseño de la lógica de negocio.",
     ],
     valorEquipo:
-      "Identifica oportunidades de automatización y las convierte en flujos funcionales que ahorran tiempo y reducen errores operativos.",
-    tecnologias: ["Python", "Node.js", "Zapier", "Power Automate", "React"],
+      "Lidera el desarrollo técnico del equipo, conectando el frontend con el backend y asegurando que cada integración funcione de extremo a extremo.",
+    logros: [
+      "Plataforma funcional con múltiples integraciones.",
+      "Automatización de procesos manuales complejos.",
+    ],
     color: "#06b6d4",
   },
   {
@@ -166,46 +162,49 @@ export const crewMembers: CrewMember[] = [
     photo: img2,
     name: "Diego Panteve",
     shortName: "Diego",
-    spaceTitle: "Mobile & UX Specialist",
-    subtitle: "Estudiante enfocado en desarrollo móvil, experiencia de usuario y construcción de interfaces intuitivas.",
-    bio: "Diego es estudiante universitario con interés en el desarrollo de aplicaciones móviles y el diseño de experiencias de usuario. Ha trabajado en prototipado, validación de interfaces y construcción de apps funcionales, combinando principios de usabilidad con buenas prácticas de desarrollo. Su enfoque está en crear productos digitales que sean intuitivos, accesibles y centrados en las necesidades del usuario.",
+    rol: "Frontend & Mobile Engineer",
+    perfil: "Estudiante enfocado en desarrollo frontend y mobile, construcción de interfaces modernas y experiencias de usuario intuitivas.",
     skills: [
-      { label: "Desarrollo Móvil", value: 82 },
-      { label: "Diseño UX/UI", value: 85 },
-      { label: "Prototipado", value: 78 },
-      { label: "Usabilidad y Pruebas", value: 75 },
-      { label: "Flujos de Usuario", value: 76 },
+      { label: "Technical Mastery", value: 78 },
+      { label: "System Design", value: 72 },
+      { label: "Problem Solving", value: 80 },
+      { label: "AI Knowledge", value: 65 },
+      { label: "Development Experience", value: 76 },
     ],
     experiencia: [
-      "Desarrollo de aplicaciones móviles.",
-      "Diseño de experiencia de usuario.",
-      "Prototipado de interfaces y flujos.",
-      "Validación de interfaces con usuarios.",
-      "Diseño centrado en el usuario.",
+      "Desarrollo de interfaces con React y React Native.",
+      "Construcción de aplicaciones mobile funcionales.",
+      "Maquetación con HTML5, CSS3 y TypeScript.",
+      "Consumo de APIs REST en aplicaciones.",
+      "Control de versiones con Git.",
     ],
     fortalezas: [
-      "UX/UI",
-      "Diseño de Flujos",
-      "Creatividad",
-      "Comunicación",
+      "Frontend",
+      "Mobile Development",
+      "UI Engineering",
+      "Resolución de Problemas",
+      "Trabajo en Equipo",
     ],
+    tecnologias: ["React", "React Native", "JavaScript", "TypeScript", "HTML5", "CSS3", "Git", "APIs REST"],
     contribuciones: [
-      "Diseño de experiencia de usuario.",
-      "Construcción de interfaces.",
-      "Prototipado rápido.",
-      "Validación de usabilidad.",
+      "Desarrollo de interfaces de usuario.",
+      "Construcción de componentes reutilizables.",
+      "Prototipado rápido de funcionalidades.",
     ],
     valorEquipo:
-      "Garantiza que las aplicaciones sean usables, atractivas y estén diseñadas pensando en quienes las utilizarán.",
-    tecnologias: ["React Native", "Figma", "Flutter", "TypeScript", "Firebase"],
+      "Construye las interfaces que los usuarios ven y usan, asegurando que cada pantalla sea intuitiva, rápida y visualmente consistente.",
+    logros: [
+      "App mobile con navegación y consumo de APIs.",
+      "Sistema de componentes reutilizables.",
+    ],
     color: "#fb923c",
   },
 ];
 
 export const teamSection = {
   label: "CODEFEST AD ASTRA 2026",
-  title: "BASE DE DATOS DE TRIPULACIÓN",
-  subtitle: "Selecciona un miembro para acceder a su perfil de misión.",
+  title: "SELECCIÓN DE TRIPULACIÓN",
+  subtitle: "Accede al dossier de cada miembro para revisar sus credenciales de misión.",
 };
 
 export interface SkillGroupSkill {
