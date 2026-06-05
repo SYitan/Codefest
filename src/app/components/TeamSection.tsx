@@ -261,10 +261,11 @@ function TechBadges({ member, b }: { member: CrewMember; b: number }) {
               {group.items.map((tech, ti) => (
                 <motion.span
                   key={tech}
-                  className="px-3 py-1 rounded text-sm"
+                  className="px-3 py-1 rounded text-sm cursor-default"
                   style={{ background: `${member.color}06`, border: `1px solid ${member.color}15`, color: "rgba(255,255,255,0.55)", fontFamily: "'Space Grotesk', sans-serif" }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
+                  whileHover={{ scale: 1.06, background: `${member.color}10`, borderColor: `${member.color}30`, color: "rgba(255,255,255,0.8)" }}
                   transition={{ delay: b + 0.25 + (gi * (member.techGroups[0]?.items.length ?? 4) + ti) * 0.02 }}
                 >
                   {tech}
@@ -337,58 +338,73 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
             />
 
-            <div className="relative z-10 p-8 md:p-10">
+            <div className="relative z-10 p-10 md:p-12">
               {/* HEADER */}
               <SectionFade delay={b}>
-                <div className="flex items-center gap-6 mb-10">
+                <div className="flex items-center gap-8 mb-8">
                   <div className="relative flex-shrink-0">
                     <motion.div
-                      className="w-24 h-24 md:w-28 md:h-28 rounded-xl overflow-hidden"
-                      style={{ border: `1px solid ${member.color}40`, boxShadow: `0 0 40px ${member.color}15` }}
-                      initial={{ scale: 0.95 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: b, duration: 0.3 }}
+                      className="w-28 h-28 md:w-32 md:h-32 rounded-xl overflow-hidden"
+                      style={{ border: `1px solid ${member.color}40`, boxShadow: `0 0 50px ${member.color}15` }}
+                      initial={{ scale: 0.95, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: b, duration: 0.4 }}
                     >
                       <img src={member.photo} alt={member.name} className="w-full h-full object-cover object-top" />
-                      <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${member.color}10, transparent 30%, ${member.color}08)`, mixBlendMode: "overlay" }} />
+                      <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${member.color}15, transparent 30%, ${member.color}08)`, mixBlendMode: "overlay" }} />
                     </motion.div>
-                    <div className="absolute -top-2 -left-2 w-3.5 h-3.5 border-t-2 border-l-2" style={{ borderColor: member.color }} />
-                    <div className="absolute -top-2 -right-2 w-3.5 h-3.5 border-t-2 border-r-2" style={{ borderColor: member.color }} />
-                    <div className="absolute -bottom-2 -left-2 w-3.5 h-3.5 border-b-2 border-l-2" style={{ borderColor: member.color }} />
-                    <div className="absolute -bottom-2 -right-2 w-3.5 h-3.5 border-b-2 border-r-2" style={{ borderColor: member.color }} />
+                    <motion.div className="absolute -top-2.5 -left-2.5 w-4 h-4 border-t-2 border-l-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.1 }} />
+                    <motion.div className="absolute -top-2.5 -right-2.5 w-4 h-4 border-t-2 border-r-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.15 }} />
+                    <motion.div className="absolute -bottom-2.5 -left-2.5 w-4 h-4 border-b-2 border-l-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.2 }} />
+                    <motion.div className="absolute -bottom-2.5 -right-2.5 w-4 h-4 border-b-2 border-r-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.25 }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-3 mb-1.5">
-                      <h2 className="text-white text-2xl md:text-3xl font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.name}</h2>
-                      <span className="text-xs px-2.5 py-0.5 rounded font-medium" style={{ background: `${member.color}12`, border: `1px solid ${member.color}25`, color: member.color, fontFamily: "'Orbitron', monospace" }}>
+                    <div className="flex flex-wrap items-center gap-3 mb-2">
+                      <motion.div className="flex items-center gap-2" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: b + 0.1 }}>
+                        <motion.div className="w-2 h-2 rounded-full" style={{ background: "#22c55e", boxShadow: "0 0 10px #22c55e" }} animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 2, repeat: Infinity }} />
+                      </motion.div>
+                      <h2 className="text-white text-3xl md:text-4xl font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.name}</h2>
+                      <motion.span className="text-sm px-3 py-0.5 rounded font-medium" style={{ background: `${member.color}12`, border: `1px solid ${member.color}25`, color: member.color, fontFamily: "'Orbitron', monospace" }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: b + 0.2 }}>
                         {member.rol}
-                      </span>
+                      </motion.span>
                     </div>
-                    <p className="text-slate-500 text-base md:text-lg leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.perfil}</p>
+                    <motion.p className="text-slate-500 text-lg md:text-xl leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: b + 0.25 }}>
+                      {member.perfil}
+                    </motion.p>
+                    <motion.div className="flex flex-wrap gap-2 mt-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.35 }}>
+                      {member.specialties.slice(0, 3).map((s) => (
+                        <span key={s} className="text-[10px] px-2 py-0.5 rounded font-medium" style={{ background: `${member.color}10`, border: `1px solid ${member.color}20`, color: member.color, fontFamily: "'Orbitron', monospace" }}>{s}</span>
+                      ))}
+                      {member.idiomas.map((idi) => (
+                        <span key={idi} className="text-[10px] px-2 py-0.5 rounded" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.35)", fontFamily: "'Orbitron', monospace" }}>{idi}</span>
+                      ))}
+                    </motion.div>
                   </div>
                 </div>
               </SectionFade>
 
-              <div className="h-px mb-8" style={{ background: `linear-gradient(90deg, transparent, ${member.color}30, transparent)` }} />
+              <div className="relative h-px mb-10" style={{ background: `linear-gradient(90deg, transparent, ${member.color}40, transparent)` }}>
+                <motion.div className="absolute left-1/2 -top-1 w-2 h-2 rotate-45" style={{ background: member.color, boxShadow: `0 0 8px ${member.color}` }} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: b + 0.3 }} />
+              </div>
 
               {/* 2-COLUMN CONTENT */}
-              <div className="grid md:grid-cols-2 gap-x-12 gap-y-10">
+              <div className="grid md:grid-cols-2 gap-x-16 gap-y-12">
                 <div>
                   <SectionFade delay={b + 0.15}>
                     <SectionLabel2>DIAGNÓSTICO DEL OPERADOR</SectionLabel2>
-                    <div className="rounded-lg overflow-hidden" style={{ background: `${member.color}04`, border: `1px solid ${member.color}10` }}>
+                    <motion.div className="rounded-lg overflow-hidden" style={{ background: `${member.color}04`, border: `1px solid ${member.color}10` }} whileHover={{ boxShadow: `0 0 20px ${member.color}08` }} transition={{ duration: 0.3 }}>
                       {member.skills.map((s, i) => (
                         <SkillBadge key={s.label} label={s.label} level={s.level} color={member.color} />
                       ))}
-                    </div>
+                    </motion.div>
                   </SectionFade>
 
                   {/* COLLAPSIBLE EXPERIENCE */}
-                  <div className="mt-8">
+                  <div className="mt-10">
                     <SectionFade delay={b + 0.35}>
                       <button
                         onClick={() => setExpSect((p) => !p)}
-                        className="flex items-center gap-2 w-full text-left"
+                        className="flex items-center gap-2 w-full text-left group"
                       >
                         <SectionLabel2>REGISTRO DE EXPERIENCIA</SectionLabel2>
                         <motion.span
@@ -406,7 +422,7 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.25 }}
+                            transition={{ duration: 0.3 }}
                             className="space-y-2.5 overflow-hidden"
                           >
                             {member.experiencia.map((item, i) => (
@@ -414,11 +430,11 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                                 key={i}
                                 className="flex items-start gap-2 text-sm md:text-base leading-relaxed"
                                 style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'Space Grotesk', sans-serif" }}
-                                initial={{ opacity: 0, x: -6 }}
+                                initial={{ opacity: 0, x: -8 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: i * 0.03 }}
+                                transition={{ delay: i * 0.04 }}
                               >
-                                <span className="mt-0.5 text-xs" style={{ color: member.color }}>{String.fromCharCode(9656)}</span>
+                                <span className="mt-0.5" style={{ color: member.color, fontSize: "10px" }}>{String.fromCharCode(9656)}</span>
                                 {item}
                               </motion.li>
                             ))}
@@ -437,21 +453,22 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                       {member.stats.map((stat, i) => (
                         <motion.div
                           key={stat.label}
-                          className="rounded-xl p-5 text-center"
+                          className="rounded-xl p-5 text-center cursor-default"
                           style={{ background: `${member.color}06`, border: `1px solid ${member.color}12` }}
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: b + 0.25 + i * 0.04 }}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: b + 0.25 + i * 0.06, duration: 0.35 }}
+                          whileHover={{ scale: 1.04, y: -2, boxShadow: `0 8px 25px ${member.color}15`, borderColor: `${member.color}30` }}
                         >
-                          <div className="text-3xl font-bold" style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}>{stat.value}</div>
-                          <div className="text-xs uppercase tracking-[0.1em] mt-1" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Orbitron', monospace" }}>{stat.label}</div>
+                          <div className="text-4xl font-bold" style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}>{stat.value}</div>
+                          <div className="text-xs uppercase tracking-[0.1em] mt-1.5" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Orbitron', monospace" }}>{stat.label}</div>
                         </motion.div>
                       ))}
                     </div>
                   </SectionFade>
 
                   {/* LOGROS */}
-                  <div className="mt-8">
+                  <div className="mt-10">
                     <SectionFade delay={b + 0.35}>
                       <SectionLabel2>LOGROS DESTACADOS</SectionLabel2>
                       <ul className="space-y-2.5">
@@ -460,11 +477,11 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                             key={i}
                             className="flex items-start gap-2 text-sm md:text-base leading-relaxed"
                             style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'Space Grotesk', sans-serif" }}
-                            initial={{ opacity: 0, x: -6 }}
+                            initial={{ opacity: 0, x: -8 }}
                             animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: b + 0.4 + i * 0.04 }}
+                            transition={{ delay: b + 0.4 + i * 0.05 }}
                           >
-                            <span className="mt-0.5 text-sm" style={{ color: member.color }}>{String.fromCharCode(9733)}</span>
+                            <motion.span className="mt-0.5 text-sm" style={{ color: member.color }} whileHover={{ scale: 1.3 }}>{String.fromCharCode(9733)}</motion.span>
                             {item}
                           </motion.li>
                         ))}
@@ -475,17 +492,20 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
               </div>
 
               {/* TECH BADGES */}
-              <div className="mt-8">
+              <div className="mt-10">
                 <TechBadges member={member} b={b + 0.5} />
               </div>
 
               {/* IMPACT STATEMENT */}
               <SectionFade delay={b + 0.55}>
                 <motion.div
-                  className="mt-8 p-6 rounded-xl relative overflow-hidden"
-                  style={{ background: `linear-gradient(135deg, ${member.color}06, transparent 60%)`, border: `1px solid ${member.color}15` }}
+                  className="mt-10 p-6 md:p-8 rounded-xl relative overflow-hidden group"
+                  style={{ background: `linear-gradient(135deg, ${member.color}08, transparent 60%)`, border: `1px solid ${member.color}15` }}
+                  whileHover={{ borderColor: `${member.color}40`, boxShadow: `0 0 40px ${member.color}10` }}
+                  transition={{ duration: 0.3 }}
                 >
-                  <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at 30% 50%, ${member.color}08, transparent 70%)` }} />
+                  <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at 30% 50%, ${member.color}10, transparent 70%)` }} />
+                  <motion.div className="absolute -top-6 -right-6 w-12 h-12 rounded-full opacity-10" style={{ background: member.color, filter: "blur(20px)" }} animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 4, repeat: Infinity }} />
                   <div className="relative z-10">
                     <div className="text-xs uppercase tracking-[0.2em] mb-2" style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}>DECLARACIÓN DE IMPACTO</div>
                     <p className="text-base md:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.7)", fontFamily: "'Space Grotesk', sans-serif", fontStyle: "italic" }}>
