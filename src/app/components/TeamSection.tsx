@@ -258,11 +258,11 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
   const ref = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
   const [phase, setPhase] = useState<"loading" | "content">("loading");
-  const [expSect, setExpSect] = useState(false);
+  const [expSect, setExpSect] = useState(true);
 
   useEffect(() => {
     setPhase("loading");
-    setExpSect(false);
+    setExpSect(true);
     const t = setTimeout(() => {
       setPhase("content");
       onReady();
