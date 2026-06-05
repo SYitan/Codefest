@@ -117,8 +117,8 @@ function CrewCard({ member, isSelected, onClick, index }: {
         />
 
         {/* Photo */}
-        <div className="relative overflow-hidden" style={{ height: 320 }}>
-          <div className="absolute inset-0 z-[1]" style={{ background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%)` }} />
+        <div className="relative overflow-hidden" style={{ height: 400 }}>
+          <div className="absolute inset-0 z-[1]" style={{ background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 45%)` }} />
           <motion.img
             src={member.photo} alt={member.name}
             className="w-full h-full object-cover object-top"
@@ -126,45 +126,45 @@ function CrewCard({ member, isSelected, onClick, index }: {
             whileHover={{ filter: "brightness(1.08)", scale: 1.05 }}
             transition={{ duration: 0.4 }}
           />
-          <div className="absolute bottom-3 left-3 z-[2] flex items-center gap-2">
+          <div className="absolute bottom-4 left-4 z-[2] flex items-center gap-2">
             <motion.div
-              className="w-1.5 h-1.5 rounded-full"
-              style={{ background: "#22c55e", boxShadow: "0 0 8px #22c55e" }}
+              className="w-2 h-2 rounded-full"
+              style={{ background: "#22c55e", boxShadow: "0 0 10px #22c55e" }}
               animate={{ opacity: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
-            <span className="text-[9px] uppercase tracking-[0.2em] text-white/50" style={{ fontFamily: "'Orbitron', monospace" }}>
+            <span className="text-[10px] uppercase tracking-[0.2em] text-white/50" style={{ fontFamily: "'Orbitron', monospace" }}>
               ACTIVO EN MISIÓN
             </span>
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-5">
+        <div className="p-6">
           {/* Rol */}
-          <div className="text-[11px] uppercase tracking-[0.25em] mb-1.5" style={{ color: "#38bdf8", fontFamily: "'Orbitron', monospace" }}>
+          <div className="text-xs uppercase tracking-[0.25em] mb-2" style={{ color: "#38bdf8", fontFamily: "'Orbitron', monospace" }}>
             {member.rol}
           </div>
 
           {/* Name */}
-          <h3 className="text-white font-bold leading-tight mb-2" style={{ fontSize: "1.8rem", fontFamily: "'Space Grotesk', sans-serif" }}>
+          <h3 className="text-white font-bold leading-tight mb-3" style={{ fontSize: "2rem", fontFamily: "'Space Grotesk', sans-serif" }}>
             {member.shortName}
           </h3>
 
           {/* Description */}
-          <p className="text-slate-500 text-sm leading-relaxed line-clamp-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          <p className="text-slate-500 text-base leading-relaxed line-clamp-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             {member.perfil}
           </p>
 
           {/* Divider */}
-          <div className="h-px my-4" style={{ background: `linear-gradient(90deg, ${member.color}30, transparent)` }} />
+          <div className="h-px my-5" style={{ background: `linear-gradient(90deg, ${member.color}30, transparent)` }} />
 
           {/* Specialties as badges */}
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-2">
             {member.specialties.map((s) => (
               <span
                 key={s}
-                className="text-[10px] px-2 py-0.5 rounded font-medium"
+                className="text-xs px-3 py-1 rounded font-medium"
                 style={{
                   background: `${member.color}10`,
                   border: `1px solid ${member.color}25`,
@@ -178,21 +178,21 @@ function CrewCard({ member, isSelected, onClick, index }: {
           </div>
 
           {/* Divider */}
-          <div className="h-px my-4" style={{ background: `linear-gradient(90deg, transparent, ${member.color}30)` }} />
+          <div className="h-px my-5" style={{ background: `linear-gradient(90deg, transparent, ${member.color}30)` }} />
 
           {/* Stats row — only first two */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             {member.stats.slice(0, 2).map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-lg font-bold text-white" style={{ fontFamily: "'Orbitron', monospace" }}>{stat.value}</div>
-                <div className="text-[9px] uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Orbitron', monospace" }}>{stat.label}</div>
+                <div className="text-[1.35rem] font-bold text-white" style={{ fontFamily: "'Orbitron', monospace" }}>{stat.value}</div>
+                <div className="text-[10px] uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Orbitron', monospace" }}>{stat.label}</div>
               </div>
             ))}
           </div>
 
           {/* VER DOSSIER — appears on hover */}
           <motion.div
-            className="mt-4 text-[10px] uppercase tracking-[0.2em] text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="mt-5 text-xs uppercase tracking-[0.2em] text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}
           >
             VER DOSSIER →
@@ -532,7 +532,7 @@ export function TeamSection() {
           <p className="text-slate-600 max-w-md mx-auto text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{teamSection.subtitle}</p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid sm:grid-cols-2 gap-6">
           {crewMembers.map((m, i) => (
             <CrewCard key={m.id} member={m} isSelected={selectedId === m.id} onClick={() => setSelectedId((prev) => (prev === m.id ? null : m.id))} index={i} />
           ))}
