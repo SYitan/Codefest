@@ -41,7 +41,6 @@ export const heroTags = [
   { label: "Agentes IA", icon: BrainCircuit, color: "#a78bfa", delay: 0.6 },
   { label: "Automatización", icon: Zap, color: "#38bdf8", delay: 0.7 },
   { label: "Ingeniería de Software", icon: Cpu, color: "#34d399", delay: 0.8 },
-  { label: "Apps Móviles", icon: Smartphone, color: "#fb923c", delay: 0.9 },
   { label: "APIs", icon: Globe, color: "#38bdf8", delay: 1.0 },
   { label: "Sistemas de Datos", icon: Database, color: "#a78bfa", delay: 1.1 },
 ];
