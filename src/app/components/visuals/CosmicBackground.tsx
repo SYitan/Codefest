@@ -34,7 +34,7 @@ export function CosmicBackground() {
   }, [smoothY]);
 
   const dpr = typeof window !== "undefined" && window.devicePixelRatio > 2
-    ? [0.6, 1] : [0.8, 1.2];
+    ? [0.5, 0.7] : [0.6, 1];
 
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>

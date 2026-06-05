@@ -3,11 +3,11 @@ import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
 const ARM_COUNT = 4;
-const ARM_PARTICLES = 600;
-const DISK_PARTICLES = 800;
-const JET_PARTICLES = 200;
-const DUST_PARTICLES = 400;
-const FIELD_PARTICLES = 1200;
+const ARM_PARTICLES = 300;
+const DISK_PARTICLES = 400;
+const JET_PARTICLES = 100;
+const DUST_PARTICLES = 200;
+const FIELD_PARTICLES = 500;
 const MAX_RADIUS = 5.0;
 const TWIST = 7.0;
 const ARM_WIDTH = 0.25;

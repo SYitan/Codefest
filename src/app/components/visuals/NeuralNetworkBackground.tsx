@@ -59,11 +59,11 @@ export function NeuralNetworkBackground() {
     let W: number, H: number;
 
     function resize() {
-      const dpr = Math.min(devicePixelRatio, 1.2);
+      const dpr = 1;
       W = window.innerWidth;
       H = window.innerHeight;
-      canvas.width = W * dpr;
-      canvas.height = H * dpr;
+      canvas.width = W;
+      canvas.height = H;
       canvas.style.width = W + "px";
       canvas.style.height = H + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -93,7 +93,7 @@ export function NeuralNetworkBackground() {
 
       const ns = nodes();
 
-      // Constellations around edges
+      // Constellations
       const cpts = CONSTELLATION_POINTS.map((p) => ({ x: p.rx * W, y: p.ry * H }));
       for (const [a, b] of CONSTELLATION_LINKS) {
         const pa = cpts[a], pb = cpts[b];

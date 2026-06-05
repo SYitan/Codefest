@@ -19,7 +19,7 @@ export function ForegroundParticles() {
       canvas.style.height = H + "px";
     }
 
-    const particles = Array.from({ length: 55 }, () => ({
+    const particles = Array.from({ length: 25 }, () => ({
       x: Math.random(),
       y: Math.random(),
       size: 2 + Math.random() * 4,
