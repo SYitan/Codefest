@@ -267,33 +267,4 @@ export function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function GlassCard({
-  children,
-  className = "",
-  style,
-  glowColor = "rgba(56,189,248,0.06)",
-}: {
-  children: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-  glowColor?: string;
-}) {
-  return (
-    <div
-      className={`relative overflow-hidden rounded-2xl ${className}`}
-      style={{
-        background: "rgba(255,255,255,0.03)",
-        backdropFilter: "blur(20px)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        boxShadow: `0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.06)`,
-        ...style,
-      }}
-    >
-      <div
-        className="absolute inset-0 pointer-events-none rounded-2xl"
-        style={{ background: `radial-gradient(ellipse at 50% 0%, ${glowColor}, transparent 70%)` }}
-      />
-      <div className="relative z-10">{children}</div>
-    </div>
-  );
-}
+

@@ -24,13 +24,15 @@ export const heroTags = [
   { label: "Automatización", icon: Zap, color: "#38bdf8", delay: 0.7 },
   { label: "Ingeniería de Software", icon: Cpu, color: "#34d399", delay: 0.8 },
   { label: "Apps Móviles", icon: Smartphone, color: "#fb923c", delay: 0.9 },
-  { label: "APIs", icon: Globe, color: "#38bdf8", delay: 1.0 },
-  { label: "Sistemas de Datos", icon: Database, color: "#a78bfa", delay: 1.1 },
+  { label: "APIs", icon: Globe, color: "#f472b6", delay: 1.0 },
+  { label: "Sistemas de Datos", icon: Database, color: "#fbbf24", delay: 1.1 },
 ];
+
+export type SkillLevel = "Experto" | "Avanzado" | "Sólido";
 
 export interface Skill {
   label: string;
-  value: number;
+  level: SkillLevel;
 }
 
 export interface TechGroup {
@@ -50,15 +52,32 @@ export interface CrewMember {
   shortName: string;
   rol: string;
   perfil: string;
+  focus: string;
+  specialties: string[];
   skills: Skill[];
   techGroups: TechGroup[];
   stats: Stat[];
   experiencia: string[];
-  contribuciones: string[];
   valorEquipo: string;
   logros: string[];
   color: string;
 }
+
+export const teamCapabilities = [
+  "IA Generativa",
+  "Automatización",
+  "Desarrollo Full Stack",
+  "Aplicaciones Móviles",
+  "APIs e Integraciones",
+  "Bases de Datos",
+];
+
+export const teamStats = {
+  solutions: "20+",
+  sectors: "5",
+  members: "4",
+  mission: "1",
+};
 
 export const crewMembers: CrewMember[] = [
   {
@@ -67,14 +86,15 @@ export const crewMembers: CrewMember[] = [
     name: "Matheus Aponte",
     shortName: "Matheus",
     rol: "AI Systems Architect",
-    perfil:
-      "Estudiante enfocado en inteligencia artificial, arquitectura de software y diseño de soluciones tecnológicas.",
+    perfil: "Arquitectura de IA y sistemas inteligentes.",
+    focus: "Arquitectura de IA y Sistemas Inteligentes",
+    specialties: ["Agentes IA", "Modelos de Lenguaje", "Arquitectura de Software"],
     skills: [
-      { label: "Dominio Técnico", value: 78 },
-      { label: "Diseño de Sistemas", value: 82 },
-      { label: "Resolución de Problemas", value: 80 },
-      { label: "Conocimiento en IA", value: 85 },
-      { label: "Experiencia en Desarrollo", value: 72 },
+      { label: "IA y Machine Learning", level: "Experto" },
+      { label: "Arquitectura de Sistemas", level: "Avanzado" },
+      { label: "Investigación Técnica", level: "Avanzado" },
+      { label: "Resolución de Problemas", level: "Avanzado" },
+      { label: "Desarrollo de Software", level: "Sólido" },
     ],
     techGroups: [
       { category: "Lenguajes", items: ["Python", "Java", "SQL"] },
@@ -95,11 +115,6 @@ export const crewMembers: CrewMember[] = [
       "Desarrollo de prototipos basados en IA.",
       "Evaluación de tecnologías emergentes para proyectos.",
     ],
-    contribuciones: [
-      "Diseño de la arquitectura del agente.",
-      "Definición de componentes de IA.",
-      "Investigación y validación tecnológica.",
-    ],
     valorEquipo:
       "Convierte requerimientos complejos en soluciones funcionales y escalables, conectando tecnología, producto y experiencia de usuario.",
     logros: [
@@ -114,19 +129,20 @@ export const crewMembers: CrewMember[] = [
     name: "Ian Di Filippo",
     shortName: "Ian",
     rol: "Automation, AI & Cybersecurity Specialist",
-    perfil:
-      "Estudiante con experiencia en automatización, inteligencia artificial y seguridad informática aplicada a proyectos tecnológicos.",
+    perfil: "Automatización inteligente y seguridad informática.",
+    focus: "Automatización, Integraciones y Ciberseguridad",
+    specialties: ["Automatización de Flujos", "Seguridad en APIs", "Integración de IA"],
     skills: [
-      { label: "Dominio Técnico", value: 80 },
-      { label: "Diseño de Sistemas", value: 72 },
-      { label: "Resolución de Problemas", value: 85 },
-      { label: "Conocimiento en IA", value: 82 },
-      { label: "Experiencia en Desarrollo", value: 75 },
+      { label: "Automatización", level: "Experto" },
+      { label: "Ciberseguridad", level: "Avanzado" },
+      { label: "Integración de APIs", level: "Avanzado" },
+      { label: "Resolución de Problemas", level: "Avanzado" },
+      { label: "Desarrollo de Software", level: "Avanzado" },
     ],
     techGroups: [
       { category: "Lenguajes", items: ["Python", "Java"] },
       { category: "IA", items: ["OpenAI APIs", "n8n"] },
-      { category: "Infra", items: ["Linux", "APIs REST"] },
+      { category: "Infraestructura", items: ["Linux", "APIs REST"] },
       { category: "Herramientas", items: ["Git"] },
     ],
     stats: [
@@ -142,11 +158,6 @@ export const crewMembers: CrewMember[] = [
       "Desarrollo de scripts para análisis de datos.",
       "Administración de sistemas Linux.",
     ],
-    contribuciones: [
-      "Automatización de flujos de trabajo.",
-      "Integración de IA en procesos.",
-      "Seguridad en integraciones.",
-    ],
     valorEquipo:
       "Automatiza procesos complejos y protege las integraciones, asegurando que los flujos de trabajo sean eficientes y seguros.",
     logros: [
@@ -161,21 +172,22 @@ export const crewMembers: CrewMember[] = [
     name: "Brian Stiven Alba Celis",
     shortName: "Brian",
     rol: "Lead Full Stack Developer",
-    perfil:
-      "Estudiante de Ingeniería de Software con experiencia práctica en desarrollo de aplicaciones web, automatización de procesos e integración de inteligencia artificial en soluciones digitales. Apasionado por construir productos tecnológicos escalables que resuelvan problemas reales, combinando desarrollo full stack, automatización e innovación.",
+    perfil: "Producto, desarrollo full stack y liderazgo técnico.",
+    focus: "Producto, Full Stack y Liderazgo Técnico",
+    specialties: ["Aplicaciones Web", "Automatización Empresarial", "IA Aplicada"],
     skills: [
-      { label: "Dominio Técnico", value: 85 },
-      { label: "Diseño de Sistemas", value: 80 },
-      { label: "Resolución de Problemas", value: 82 },
-      { label: "Conocimiento en IA", value: 72 },
-      { label: "Experiencia en Desarrollo", value: 82 },
+      { label: "Full Stack", level: "Experto" },
+      { label: "Liderazgo Técnico", level: "Avanzado" },
+      { label: "IA Aplicada", level: "Avanzado" },
+      { label: "Arquitectura Frontend", level: "Avanzado" },
+      { label: "Automatización", level: "Avanzado" },
     ],
     techGroups: [
       { category: "Frontend", items: ["Angular", "TypeScript", "JavaScript"] },
       { category: "Backend", items: ["Node.js", "APIs REST"] },
-      { category: "Database", items: ["PostgreSQL", "Supabase"] },
-      { category: "Automation", items: ["Power Platform", "Power Automate"] },
-      { category: "Tools", items: ["Git", "GitHub", "Vercel", "Figma"] },
+      { category: "Bases de Datos", items: ["PostgreSQL", "Supabase"] },
+      { category: "Automatización", items: ["Power Platform", "Power Automate"] },
+      { category: "Herramientas", items: ["Git", "GitHub", "Vercel", "Figma"] },
     ],
     stats: [
       { label: "Proyectos", value: "8+" },
@@ -190,14 +202,8 @@ export const crewMembers: CrewMember[] = [
       "Implementación de herramientas basadas en IA generativa, asistentes inteligentes y prompt engineering.",
       "Integración de APIs REST, bases de datos PostgreSQL y servicios externos.",
     ],
-    contribuciones: [
-      "Liderazgo técnico del equipo y desarrollo full stack.",
-      "Diseño e implementación de la plataforma principal.",
-      "Automatización de procesos e integración de servicios.",
-      "Investigación y aplicación de IA en soluciones del equipo.",
-    ],
     valorEquipo:
-      "Convierte necesidades del mundo real en productos de software funcionales, combinando visión de producto, solidez técnica y automatización para crear soluciones completas de principio a fin.",
+      "Convierte necesidades del mundo real en productos de software funcionales, combinando visión de producto, solidez técnica y automatización.",
     logros: [
       "Aplicación móvil PWA con Angular y TypeScript.",
       "Automatización de procesos empresariales con Power Platform.",
@@ -211,21 +217,22 @@ export const crewMembers: CrewMember[] = [
     name: "Diego Alejandro Rojas Panteve",
     shortName: "Diego",
     rol: "Full Stack Developer & Software Engineering Student",
-    perfil:
-      "Estudiante de Ingeniería de Software enfocado en desarrollo full stack, con experiencia real construyendo sistemas completos desde el backend hasta interfaces modernas. Apasionado por la arquitectura de software, la ciberseguridad y la creación de productos funcionales que resuelvan problemas reales.",
+    perfil: "Ingeniería de software, backend y sistemas escalables.",
+    focus: "Ingeniería de Software, Backend y Sistemas Escalables",
+    specialties: ["Arquitectura Backend", "Bases de Datos", "Aplicaciones Desktop"],
     skills: [
-      { label: "Dominio Técnico", value: 82 },
-      { label: "Diseño de Sistemas", value: 80 },
-      { label: "Resolución de Problemas", value: 85 },
-      { label: "Conocimiento en IA", value: 70 },
-      { label: "Experiencia en Desarrollo", value: 78 },
+      { label: "Backend y APIs", level: "Experto" },
+      { label: "Arquitectura de Software", level: "Avanzado" },
+      { label: "Bases de Datos", level: "Avanzado" },
+      { label: "Resolución de Problemas", level: "Avanzado" },
+      { label: "Desarrollo Full Stack", level: "Avanzado" },
     ],
     techGroups: [
       { category: "Frontend", items: ["Angular 19+", "TypeScript", "HTML5", "CSS3", "TailwindCSS", "DaisyUI"] },
       { category: "Backend", items: ["NestJS", "Node.js", "Express", "APIs REST"] },
-      { category: "Database", items: ["PostgreSQL", "Prisma ORM", "MongoDB", "SQL"] },
+      { category: "Bases de Datos", items: ["PostgreSQL", "Prisma ORM", "MongoDB", "SQL"] },
       { category: "Desktop", items: ["Electron"] },
-      { category: "Tools", items: ["Git", "GitHub", "Microsoft Intune", "Python", "Java"] },
+      { category: "Herramientas", items: ["Git", "GitHub", "Microsoft Intune", "Python", "Java"] },
     ],
     stats: [
       { label: "Proyectos", value: "10+" },
@@ -243,15 +250,8 @@ export const crewMembers: CrewMember[] = [
       "Soporte técnico de hardware, software y red mediante sistema de tickets.",
       "Gestión de infraestructura tecnológica empresarial.",
     ],
-    contribuciones: [
-      "Diseño e implementación de arquitecturas full stack escalables.",
-      "Construcción de sistemas POS completos con módulos de caja, gastos e inventario.",
-      "Implementación de autenticación JWT y guards de seguridad.",
-      "Optimización de queries con agrupaciones y eliminación de problemas N+1.",
-      "Desarrollo de componentes reutilizables y directivas personalizadas en Angular.",
-    ],
     valorEquipo:
-      "Conecta el frontend y el backend con criterio arquitectónico, asegurando que el sistema completo funcione de forma coherente, segura y escalable desde la base de datos hasta la interfaz de usuario.",
+      "Conecta el frontend y el backend con criterio arquitectónico, asegurando que el sistema completo funcione de forma coherente, segura y escalable.",
     logros: [
       "Sistema POS desktop funcional con Electron, Angular y NestJS.",
       "Certificación B2 de inglés Cambridge Linguaskill.",

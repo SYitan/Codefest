@@ -13,7 +13,7 @@ export function HeroSection() {
       <SpaceGrid />
 
       {/* Planet */}
-      <div className="opacity-60">
+      <div className="opacity-60 hidden sm:block">
         <Planet
           size={450}
           position={{ bottom: "-15%", right: "-6%" }}
@@ -30,15 +30,6 @@ export function HeroSection() {
         <OrbitalRing size={100} duration={12} delay={2} color="rgba(139,92,246,0.15)" />
         <GlowDot size={5} color="#38bdf8" style={{ top: "50%", left: "50%", marginTop: -2, marginLeft: -2 }} />
       </div>
-
-      {/* Satellite dot top-right */}
-      <motion.div
-        className="absolute top-[18%] right-[18%] pointer-events-none hidden md:block"
-        animate={{ x: [0, 15, 0], y: [0, -8, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      >
-        <GlowDot size={4} color="#a78bfa" style={{}} />
-      </motion.div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">

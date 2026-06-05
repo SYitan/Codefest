@@ -2,7 +2,32 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "motion/react";
 import { StarField, SectionLabel } from "./SpaceElements";
-import { crewMembers, teamSection, type CrewMember } from "../data/landing";
+import { crewMembers, teamSection, type CrewMember, type SkillLevel } from "../data/landing";
+
+const levelColors: Record<SkillLevel, string> = {
+  Experto: "#22c55e",
+  Avanzado: "#38bdf8",
+  Sólido: "#a78bfa",
+};
+
+function SkillBadge({ label, level, color }: { label: string; level: SkillLevel; color: string }) {
+  return (
+    <div className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-b-0">
+      <span className="text-[11px]" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Orbitron', monospace" }}>{label}</span>
+      <span
+        className="text-[10px] px-2 py-0.5 rounded font-semibold"
+        style={{
+          background: `${levelColors[level]}15`,
+          color: levelColors[level],
+          border: `1px solid ${levelColors[level]}25`,
+          fontFamily: "'Orbitron', monospace",
+        }}
+      >
+        {level}
+      </span>
+    </div>
+  );
+}
 
 function ScanLine() {
   return (
@@ -12,42 +37,10 @@ function ScanLine() {
         background: "linear-gradient(90deg, transparent, rgba(56,189,248,0.5), transparent)",
         filter: "blur(2px)",
       }}
-      animate={{ top: ["-2%", "102%"] }}
-      transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+      initial={{ top: "-2%" }}
+      animate={{ top: "102%" }}
+      transition={{ duration: 2.5, ease: "linear" }}
     />
-  );
-}
-
-function GridOverlay() {
-  return (
-    <div
-      className="absolute inset-0 pointer-events-none z-0"
-      style={{
-        backgroundImage: `
-          linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px)
-        `,
-        backgroundSize: "32px 32px",
-        maskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%)",
-      }}
-    />
-  );
-}
-
-function DynaBar({ value, color, delay }: { value: number; color: string; delay: number }) {
-  return (
-    <div className="h-[3px] rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.04)" }}>
-      <motion.div
-        className="h-full rounded-full"
-        style={{
-          background: `linear-gradient(90deg, ${color}40, ${color})`,
-          boxShadow: `0 0 10px ${color}30`,
-        }}
-        initial={{ width: 0 }}
-        animate={{ width: `${value}%` }}
-        transition={{ delay, duration: 0.9, ease: "easeOut" }}
-      />
-    </div>
   );
 }
 
@@ -70,19 +63,6 @@ function SectionLabel2({ children }: { children: React.ReactNode }) {
       {children}
     </div>
   );
-}
-
-function StaggerGroup({ children, baseDelay, step = 0.04 }: { children: React.ReactNode[]; baseDelay: number; step?: number }) {
-  return children.map((child, i) => (
-    <motion.div
-      key={i}
-      initial={{ opacity: 0, x: -6 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay: baseDelay + i * step, duration: 0.3 }}
-    >
-      {child}
-    </motion.div>
-  ));
 }
 
 function CrewCard({ member, isSelected, onClick, index }: {
@@ -217,18 +197,27 @@ function TechBadges({ member, b }: { member: CrewMember; b: number }) {
   return (
     <SectionFade delay={b + 0.2}>
       <SectionLabel2>STACK TECNOLÓGICO</SectionLabel2>
-      <div className="flex flex-wrap gap-1.5">
-        {member.techGroups.flatMap((g) => g.items).map((tech, i) => (
-          <motion.span
-            key={tech}
-            className="px-2 py-0.5 rounded text-[10px]"
-            style={{ background: `${member.color}06`, border: `1px solid ${member.color}15`, color: "rgba(255,255,255,0.55)", fontFamily: "'Space Grotesk', sans-serif" }}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: b + 0.25 + i * 0.02 }}
-          >
-            {tech}
-          </motion.span>
+      <div className="space-y-2.5">
+        {member.techGroups.map((group, gi) => (
+          <div key={group.category}>
+            <div className="text-[9px] uppercase tracking-[0.12em] mb-1" style={{ color: "rgba(255,255,255,0.2)", fontFamily: "'Orbitron', monospace" }}>
+              {group.category}
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {group.items.map((tech, ti) => (
+                <motion.span
+                  key={tech}
+                  className="px-2 py-0.5 rounded text-[10px]"
+                  style={{ background: `${member.color}06`, border: `1px solid ${member.color}15`, color: "rgba(255,255,255,0.55)", fontFamily: "'Space Grotesk', sans-serif" }}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: b + 0.25 + (gi * member.techGroups[0].items.length + ti) * 0.02 }}
+                >
+                  {tech}
+                </motion.span>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
     </SectionFade>
@@ -238,18 +227,17 @@ function TechBadges({ member, b }: { member: CrewMember; b: number }) {
 function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
-  const [phase, setPhase] = useState<"init" | "loading" | "content">("init");
+  const [phase, setPhase] = useState<"loading" | "content">("loading");
   const [expSect, setExpSect] = useState(false);
 
   useEffect(() => {
-    setPhase("init");
+    setPhase("loading");
     setExpSect(false);
-    const t1 = setTimeout(() => setPhase("loading"), 150);
-    const t2 = setTimeout(() => {
+    const t = setTimeout(() => {
       setPhase("content");
       onReady();
-    }, 750);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    }, 300);
+    return () => { clearTimeout(t); };
   }, [member, onReady]);
 
   useEffect(() => {
@@ -261,12 +249,12 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
   return (
     <motion.div
       initial={{ height: 0, opacity: 0 }}
-      animate={{ height: phase === "init" ? 0 : phase === "loading" ? 160 : height, opacity: 1 }}
+      animate={{ height: phase === "loading" ? 160 : height, opacity: 1 }}
       exit={{ height: 0, opacity: 0 }}
       transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
       style={{ overflow: "hidden" }}
     >
-      {phase === "init" ? null : phase === "loading" ? (
+      {phase === "loading" ? (
         <div
           className="relative rounded-2xl overflow-hidden mt-6"
           style={{
@@ -288,7 +276,6 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
               boxShadow: `0 20px 80px rgba(0,0,0,0.7), 0 0 0 1px ${member.color}15, inset 0 1px 0 rgba(255,255,255,0.03)`,
             }}
           >
-            <GridOverlay />
             <motion.div
               className="absolute inset-x-0 h-px pointer-events-none z-10"
               style={{ background: `linear-gradient(90deg, transparent, ${member.color}60, transparent)`, filter: "blur(2px)" }}
@@ -324,24 +311,6 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                       </span>
                     </div>
                     <p className="text-slate-500 text-xs leading-relaxed line-clamp-1" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.perfil}</p>
-                    <div className="flex items-center gap-3 mt-1.5">
-                      <div className="flex items-center gap-1.5">
-                        <motion.div className="w-1.5 h-1.5 rounded-full" style={{ background: "#22c55e" }} animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 2, repeat: Infinity }} />
-                        <span className="text-[9px] text-slate-600" style={{ fontFamily: "'Orbitron', monospace" }}>ACTIVO</span>
-                      </div>
-                      <span className="text-slate-700 text-[9px]" style={{ fontFamily: "'Orbitron', monospace" }}>MISIÓN: CODEFEST 2026</span>
-                    </div>
-                  </div>
-                  <div className="flex-shrink-0 self-start">
-                    <motion.div
-                      className="px-2.5 py-1.5 rounded text-[9px] uppercase tracking-[0.15em]"
-                      style={{ background: `${member.color}08`, border: `1px solid ${member.color}20`, color: member.color, fontFamily: "'Orbitron', monospace" }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: b + 0.1 }}
-                    >
-                      DOSSIER
-                    </motion.div>
                   </div>
                 </div>
               </SectionFade>
@@ -353,23 +322,11 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 <div>
                   <SectionFade delay={b + 0.15}>
                     <SectionLabel2>DIAGNÓSTICO DEL OPERADOR</SectionLabel2>
-                    {member.skills.map((s, i) => (
-                      <div key={s.label} className="mb-2.5">
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-[11px]" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Orbitron', monospace" }}>{s.label}</span>
-                          <motion.span
-                            className="text-[11px] tabular-nums"
-                            style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: b + 0.25 + i * 0.06 }}
-                          >
-                            {s.value}%
-                          </motion.span>
-                        </div>
-                        <DynaBar value={s.value} color={member.color} delay={b + 0.25 + i * 0.06} />
-                      </div>
-                    ))}
+                    <div className="rounded-lg overflow-hidden" style={{ background: `${member.color}04`, border: `1px solid ${member.color}10` }}>
+                      {member.skills.map((s, i) => (
+                        <SkillBadge key={s.label} label={s.label} level={s.level} color={member.color} />
+                      ))}
+                    </div>
                   </SectionFade>
 
                   {/* COLLAPSIBLE EXPERIENCE */}
@@ -419,9 +376,9 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 </div>
 
                 <div>
-                  {/* MISSION STATS (prioritized) */}
+                  {/* ESTADÍSTICAS */}
                   <SectionFade delay={b + 0.2}>
-                    <SectionLabel2>MISSION STATS</SectionLabel2>
+                    <SectionLabel2>ESTADÍSTICAS DE MISIÓN</SectionLabel2>
                     <div className="grid grid-cols-2 gap-2">
                       {member.stats.map((stat, i) => (
                         <motion.div
