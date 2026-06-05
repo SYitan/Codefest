@@ -6,15 +6,6 @@ const levelColors = {
   Intermedio: 'bg-slate-700/60 border-slate-500/40 text-slate-300',
 }
 
-const statLabels = {
-  proyectos: 'PROYECTOS',
-  tecnologias: 'TECNOLOGÍAS',
-  appsWeb: 'APPS WEB',
-  appsMoviles: 'APPS MÓVILES',
-  sistemasIA: 'SIST. IA',
-  modelosDeploy: 'MODELOS DEPLOY',
-}
-
 function AnimatedContent({ member, onBack }) {
   const [loaded, setLoaded] = useState(false)
 
@@ -147,7 +138,7 @@ function AnimatedContent({ member, onBack }) {
                   {value}
                 </p>
                 <p className="text-xs text-slate-500 tracking-[0.15em] uppercase mt-2 font-mono">
-                  {statLabels[key] || key.replace(/([A-Z])/g, ' $1').trim()}
+                  {key.replace(/([A-Z])/g, ' $1').trim()}
                 </p>
               </div>
             ))}
