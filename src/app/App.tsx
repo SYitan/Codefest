@@ -134,7 +134,7 @@ function MetricsSection() {
         initial={{ opacity: 0, y: 24 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="grid grid-cols-4 gap-8 max-w-3xl mx-auto relative"
+        className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 max-w-3xl mx-auto relative"
       >
         <GlowDot size={4} color="#38bdf8" style={{ left: "-20px", top: "50%" }} />
         <GlowDot size={4} color="#818cf8" style={{ right: "-20px", top: "50%" }} />

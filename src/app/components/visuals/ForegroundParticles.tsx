@@ -10,13 +10,16 @@ export function ForegroundParticles() {
     let animId: number;
     let W: number, H: number;
 
+    const dpr = 1;
+
     function resize() {
       W = window.innerWidth;
       H = window.innerHeight;
-      canvas.width = W;
-      canvas.height = H;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
       canvas.style.width = W + "px";
       canvas.style.height = H + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
     const particles = Array.from({ length: 25 }, () => ({

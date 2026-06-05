@@ -57,22 +57,24 @@ export function NeuralNetworkBackground() {
     let animId: number;
     let scrollProgress = 0;
     let W: number, H: number;
+    const dpr = 1;
 
     function resize() {
-      const dpr = 1;
       W = window.innerWidth;
       H = window.innerHeight;
-      canvas.width = W;
-      canvas.height = H;
+      canvas.width = Math.round(W * dpr);
+      canvas.height = Math.round(H * dpr);
       canvas.style.width = W + "px";
       canvas.style.height = H + "px";
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    window.addEventListener("scroll", () => {
+    const handleScroll = () => {
       const ms = Math.max(1, document.body.scrollHeight - window.innerHeight);
       scrollProgress = ms > 0 ? window.scrollY / ms : 0;
-    });
+    };
+
+    window.addEventListener("scroll", handleScroll);
 
     const nodes = () => NODE_DEFS.map((n) => ({ x: n.rx * W, y: n.ry * H }));
 
@@ -168,7 +170,7 @@ export function NeuralNetworkBackground() {
       cancelAnimationFrame(animId);
       clearInterval(spawnTimer);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("scroll", () => {});
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

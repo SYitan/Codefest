@@ -302,9 +302,9 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
             />
 
-            <div className="relative z-10 p-6 md:p-8">
+            <div className="relative z-10 p-4 md:p-8">
               <SectionFade delay={b}>
-                <div className="flex items-center gap-6 mb-6">
+                <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-6 mb-6">
                   <div className="relative flex-shrink-0">
                     <motion.div
                       className="w-36 h-36 md:w-40 md:h-40 rounded-xl overflow-hidden"
@@ -321,12 +321,12 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                     <motion.div className="absolute -bottom-2.5 -left-2.5 w-4 h-4 border-b-2 border-l-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.2 }} />
                     <motion.div className="absolute -bottom-2.5 -right-2.5 w-4 h-4 border-b-2 border-r-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.25 }} />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-3 mb-2">
+                    <div className="flex-1 min-w-0 text-center md:text-left">
+                    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-3 mb-2">
                       <motion.div className="flex items-center gap-2" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: b + 0.1 }}>
                         <motion.div className="w-2 h-2 rounded-full" style={{ background: "#22c55e", boxShadow: "0 0 10px #22c55e" }} animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 2, repeat: Infinity }} />
                       </motion.div>
-                      <h2 className="text-white text-3xl md:text-4xl font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.name}</h2>
+                      <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.name}</h2>
                       <motion.span className="text-sm px-3 py-0.5 rounded font-medium" style={{ background: `${member.color}12`, border: `1px solid ${member.color}25`, color: member.color, fontFamily: "'Orbitron', monospace" }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: b + 0.2 }}>
                         {member.rol}
                       </motion.span>
