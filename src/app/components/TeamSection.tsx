@@ -132,7 +132,7 @@ function CrewCard({ member, isSelected, onClick, index }: {
             filter: "blur(20px)",
           }}
         />
-        <div className="relative overflow-hidden" style={{ height: 240 }}>
+        <div className="relative overflow-hidden" style={{ height: 280 }}>
           <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 20%, ${member.color}10, transparent 70%)` }} />
           <motion.img
             src={member.photo} alt={member.name}
@@ -141,24 +141,27 @@ function CrewCard({ member, isSelected, onClick, index }: {
             initial={{ filter: "brightness(0.85)" }}
             whileHover={{ filter: "brightness(1.05)", scale: 1.05 }}
           />
-          <div className="absolute inset-x-0 bottom-0 h-20" style={{ background: "linear-gradient(to top, rgba(3,0,20,0.95), transparent)" }} />
-          <div className="absolute bottom-2.5 left-3">
-            <span className="px-2 py-0.5 rounded text-[10px] font-semibold" style={{ background: `${member.color}20`, border: `1px solid ${member.color}40`, color: member.color, fontFamily: "'Orbitron', monospace", letterSpacing: "0.08em" }}>
+          <div className="absolute inset-x-0 bottom-0 h-24" style={{ background: "linear-gradient(to top, rgba(3,0,20,0.95), transparent)" }} />
+          <div className="absolute bottom-3 left-3">
+            <span className="px-3 py-1 rounded text-[11px] font-semibold" style={{ background: `${member.color}20`, border: `1px solid ${member.color}40`, color: member.color, fontFamily: "'Orbitron', monospace", letterSpacing: "0.08em" }}>
               {member.rol}
             </span>
           </div>
         </div>
-        <div className="p-4">
-          <div className="flex items-center gap-2 mb-0.5">
-            <div className="w-1.5 h-1.5 rounded-full" style={{ background: member.color, boxShadow: `0 0 6px ${member.color}` }} />
-            <h3 className="text-white text-sm font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.shortName}</h3>
+        <div className="p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-2 h-2 rounded-full" style={{ background: member.color, boxShadow: `0 0 8px ${member.color}` }} />
+            <h3 className="text-white text-base font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.shortName}</h3>
           </div>
-          <p className="text-slate-600 text-[11px]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.rol}</p>
+          <p className="text-slate-500 text-xs leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.rol}</p>
+          <p className="mt-2 text-slate-600 text-[12px] leading-relaxed line-clamp-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+            {member.perfil}
+          </p>
           <motion.div
-            className="mt-2 text-[9px] uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="mt-3 text-[10px] uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}
           >
-            Click para ver dossier →
+            Ver dossier →
           </motion.div>
         </div>
       </motion.div>
@@ -503,7 +506,7 @@ export function TeamSection() {
     <section id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, #050510 0%, #04041c 50%, #050510 100%)" }}>
       <StarField count={80} />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px opacity-30" style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }} />
-      <div className="relative z-10 max-w-6xl mx-auto">
+      <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
@@ -518,7 +521,7 @@ export function TeamSection() {
           <p className="text-slate-600 max-w-md mx-auto text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{teamSection.subtitle}</p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {crewMembers.map((m, i) => (
             <CrewCard key={m.id} member={m} isSelected={selectedId === m.id} onClick={() => setSelectedId((prev) => (prev === m.id ? null : m.id))} index={i} />
           ))}
