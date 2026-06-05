@@ -151,7 +151,7 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
 
     groupRef.current.rotation.x = Math.sin(t * 0.06) * 0.05 + progress * 0.06;
     groupRef.current.position.x = Math.cos(scrollRotate) * 0.35;
-    groupRef.current.position.z = -0.8 + Math.sin(scrollRotate) * 0.3;
+    groupRef.current.position.z = -0.55 + Math.sin(scrollRotate) * 0.28;
 
     if (armsRef.current) {
       const sizes = armsRef.current.geometry.attributes.size.array as Float32Array;
@@ -212,7 +212,7 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.6, 0]}>
+    <group ref={groupRef} position={[0, -0.55, 0]}>
       {/* Core glow */}
       <sprite ref={coreGlowRef} scale={[0.55, 0.55, 1]}>
         <spriteMaterial

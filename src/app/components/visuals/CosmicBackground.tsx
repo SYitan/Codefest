@@ -38,12 +38,12 @@ export function CosmicBackground({ lowPower }: { lowPower?: boolean }) {
     : typeof window !== "undefined" && window.devicePixelRatio > 2
       ? [0.5, 0.7]
       : [0.6, 1];
-  const powerPreference = lowPower ? "low-power" : "high-performance";
+  const cameraPosition = lowPower ? [0, 0.6, 0.95] : [0, 0.5, 0.85];
 
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>
       <Canvas
-        camera={{ position: [0, 0.6, 1.0], fov: 65, near: 0.1, far: 30 }}
+        camera={{ position: cameraPosition, fov: 68, near: 0.1, far: 25 }}
         dpr={dpr}
         gl={{
           antialias: false,
