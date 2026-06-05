@@ -4,14 +4,14 @@ import { useRef } from "react";
 import { BrainCircuit, Code2, Smartphone, Zap } from "lucide-react";
 import { HeroSection } from "./components/HeroSection";
 import { TeamSection } from "./components/TeamSection";
-import { SectionBackground, SectionDivider } from "./components/Backgrounds";
+import { SectionBackground, SectionDivider, ShootingStars } from "./components/Backgrounds";
 import { teamCapabilities, teamStats } from "./data/landing";
 
 const capMeta = [
-  { icon: BrainCircuit, gradient: "linear-gradient(135deg, #a78bfa10, #7c3aed05)" },
-  { icon: Code2, gradient: "linear-gradient(135deg, #38bdf810, #0284c705)" },
-  { icon: Smartphone, gradient: "linear-gradient(135deg, #34d39910, #05966905)" },
-  { icon: Zap, gradient: "linear-gradient(135deg, #fb923c10, #ea580c05)" },
+  { icon: BrainCircuit, color: "#a78bfa", label: "IA" },
+  { icon: Code2, color: "#38bdf8", label: "Full Stack" },
+  { icon: Smartphone, color: "#34d399", label: "Mobile" },
+  { icon: Zap, color: "#fb923c", label: "Automatización" },
 ];
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -34,7 +34,7 @@ function CapabilitiesSection() {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <SectionBackground theme="deep">
+    <SectionBackground theme="deep" stars={40}>
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 20 }}
@@ -44,25 +44,33 @@ function CapabilitiesSection() {
         <SectionLabel>CAPACIDADES DEL EQUIPO</SectionLabel>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {teamCapabilities.map((cap, i) => {
-            const { icon: Icon, gradient } = capMeta[i];
+            const { icon: Icon, color } = capMeta[i];
             return (
               <motion.div
                 key={cap}
-                className="rounded-xl p-6 text-center relative overflow-hidden group"
+                className="rounded-xl p-6 text-center relative overflow-hidden group cursor-default"
                 style={{
-                  background: gradient,
+                  background: `linear-gradient(135deg, ${color}08, transparent 80%)`,
                   border: "1px solid rgba(255,255,255,0.06)",
                 }}
                 initial={{ opacity: 0, y: 16 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
-                whileHover={{ scale: 1.04, y: -4, borderColor: "rgba(56,189,248,0.3)", boxShadow: "0 8px 30px rgba(56,189,248,0.08)" }}
+                whileHover={{ scale: 1.04, y: -4, borderColor: `${color}40`, boxShadow: `0 8px 30px ${color}15` }}
               >
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                  <Icon size={22} className="text-white/70" />
+                {/* Icon glow on hover */}
+                <motion.div
+                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"
+                  style={{ background: `radial-gradient(ellipse at 50% 30%, ${color}20, transparent 70%)`, filter: "blur(40px)" }}
+                />
+                <div
+                  className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 relative transition-all duration-300 group-hover:scale-110"
+                  style={{ background: `${color}08`, border: `1px solid ${color}15` }}
+                >
+                  <Icon size={22} style={{ color: "rgba(255,255,255,0.6)", transition: "color 0.3s" }} className="group-hover:text-white" />
                 </div>
                 <span
-                  className="text-lg font-semibold block"
+                  className="text-lg font-semibold block relative"
                   style={{
                     color: "rgba(255,255,255,0.85)",
                     fontFamily: "'Space Grotesk', sans-serif",
@@ -91,38 +99,47 @@ function MetricsSection() {
   ];
 
   return (
-    <SectionBackground theme="navy">
+    <SectionBackground theme="navy" stars={20}>
       <SectionDivider />
+      <ShootingStars />
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="grid grid-cols-4 gap-6"
+        className="grid grid-cols-4 gap-6 max-w-3xl mx-auto"
       >
         {metrics.map((stat, i) => (
           <motion.div
             key={stat.label}
-            className="text-center"
+            className="text-center relative group"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={inView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.15 + i * 0.08, duration: 0.3 }}
           >
-            <div
-              className="text-2xl md:text-3xl font-bold"
-              style={{ color: "#38bdf8", fontFamily: "'Orbitron', monospace" }}
-            >
-              {stat.value}
-            </div>
-            <div
-              className="text-[9px] uppercase tracking-[0.2em] mt-1.5"
-              style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'Orbitron', monospace" }}
-            >
-              {stat.label}
+            <motion.div
+              className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(56,189,248,0.06), transparent 70%)", filter: "blur(20px)" }}
+            />
+            <div className="relative">
+              <div
+                className="text-2xl md:text-3xl font-bold"
+                style={{ color: "#38bdf8", fontFamily: "'Orbitron', monospace" }}
+              >
+                {stat.value}
+              </div>
+              <div
+                className="text-[9px] uppercase tracking-[0.2em] mt-1.5"
+                style={{ color: "rgba(255,255,255,0.25)", fontFamily: "'Orbitron', monospace" }}
+              >
+                {stat.label}
+              </div>
             </div>
           </motion.div>
         ))}
       </motion.div>
+      {/* Subtle bottom line */}
+      <div className="max-w-xs mx-auto mt-8 h-px opacity-20" style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }} />
     </SectionBackground>
   );
 }

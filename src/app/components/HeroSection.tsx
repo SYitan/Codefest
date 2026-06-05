@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { StarField, NebulaLayer, SpaceGrid, Planet } from "./SpaceElements";
+import { ShootingStars } from "./Backgrounds";
 import { mission } from "../data/landing";
 
 export function HeroSection() {
@@ -11,6 +12,7 @@ export function HeroSection() {
       <NebulaLayer />
       <StarField count={240} />
       <SpaceGrid />
+      <ShootingStars />
 
       {/* Planet — right side */}
       <div className="absolute right-[-10%] bottom-[-10%] sm:right-[-4%] sm:bottom-[-8%] opacity-50 sm:opacity-70 pointer-events-none hidden sm:block">
@@ -41,7 +43,12 @@ export function HeroSection() {
                 boxShadow: "0 0 20px rgba(56,189,248,0.1)",
               }}
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <motion.div
+                className="w-1.5 h-1.5 rounded-full"
+                style={{ background: "#38bdf8", boxShadow: "0 0 8px #38bdf8" }}
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
               <span
                 className="text-cyan-300 text-xs tracking-[0.2em] uppercase"
                 style={{ fontFamily: "'Orbitron', monospace" }}
@@ -83,7 +90,7 @@ export function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <button
+              <motion.button
                 onClick={() => document.getElementById('team-section')?.scrollIntoView({ behavior: 'smooth' })}
                 className="relative px-8 py-3 rounded-full text-sm font-semibold tracking-[0.15em] uppercase transition-all duration-300 hover:scale-105 active:scale-95"
                 style={{
@@ -93,9 +100,10 @@ export function HeroSection() {
                   boxShadow: "0 0 30px rgba(56,189,248,0.15), inset 0 0 20px rgba(56,189,248,0.05)",
                   color: "#e0f2fe",
                 }}
+                whileHover={{ boxShadow: "0 0 50px rgba(56,189,248,0.3), inset 0 0 30px rgba(56,189,248,0.08)" }}
               >
                 <span className="relative z-10">EXPLORAR TRIPULACIÓN</span>
-              </button>
+              </motion.button>
             </motion.div>
           </div>
 
