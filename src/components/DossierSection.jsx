@@ -157,4 +157,53 @@ function AnimatedContent({ member, onBack }) {
             <ul className="space-y-2">
               {member.logros.map((item, i) => (
                 <li key={i} className="text-sm text-slate-300 flex gap-2">
-                  <span className="text
+                  <span className="text-amber-400">★</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function DossierSection({ member, onBack }) {
+  const sectionRef = useRef(null)
+  const isFirstRender = useRef(true)
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
+    if (member) {
+      requestAnimationFrame(() => {
+        sectionRef.current?.scrollIntoView({ behavior: 'smooth' })
+      })
+    }
+  }, [member])
+
+  return (
+    <section
+      ref={sectionRef}
+      className={`min-h-screen py-16 px-4 md:px-8 transition-all duration-700 ${
+        member ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
+      <div className="relative max-w-6xl mx-auto">
+        <div className="absolute inset-0 -m-6 rounded-3xl bg-slate-900/40 backdrop-blur-[2px]" />
+        <div className="relative">
+          {member ? (
+            <AnimatedContent key={member.id} member={member} onBack={onBack} />
+          ) : (
+            <p className="text-center text-slate-500 text-sm font-mono">
+              Selecciona un miembro de la tripulación para ver su dossier.
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
