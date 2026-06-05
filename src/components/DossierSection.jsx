@@ -216,16 +216,17 @@ export default function DossierSection({ member, onBack }) {
         member
           ? {
               background: `
-                radial-gradient(ellipse at 30% 20%, ${member.color}18 0%, transparent 65%),
-                radial-gradient(ellipse at 70% 80%, ${member.color}12 0%, transparent 65%)
+                radial-gradient(ellipse at 30% 20%, ${member.color}25 0%, transparent 65%),
+                radial-gradient(ellipse at 70% 80%, ${member.color}20 0%, transparent 65%)
               `,
-              borderTop: `1px solid ${member.color}15`,
-              borderBottom: `1px solid ${member.color}10`,
+              borderBottom: `1px solid ${member.color}20`,
+              mask: `linear-gradient(to bottom, transparent 0%, black 12%)`,
+              WebkitMask: `linear-gradient(to bottom, transparent 0%, black 12%)`,
             }
           : {}
       }
     >
-      <div className="max-w-6xl mx-auto backdrop-blur-xl bg-slate-950/40 rounded-2xl p-6 md:p-8 border border-slate-800/40">
+      <div className="max-w-6xl mx-auto backdrop-blur-xl bg-slate-900/50 rounded-2xl p-6 md:p-8 border border-slate-700/40 relative">
         {member ? (
           <AnimatedContent key={member.id} member={member} onBack={onBack} />
         ) : (

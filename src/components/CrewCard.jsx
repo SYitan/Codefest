@@ -8,7 +8,7 @@ export default function CrewCard({ member, onSelect }) {
     <div
       ref={ref}
       onClick={() => onSelect(member)}
-      className={`group relative bg-slate-900/60 backdrop-blur-sm rounded-xl border border-cyan-900/40 p-5 cursor-pointer transition-all duration-700 ${
+      className={`group relative bg-slate-800/50 backdrop-blur-sm rounded-xl border border-cyan-700/30 p-5 cursor-pointer transition-all duration-700 ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
       } hover:border-cyan-400/60 hover:shadow-lg hover:shadow-cyan-500/20`}
     >
@@ -18,8 +18,8 @@ export default function CrewCard({ member, onSelect }) {
           alt={shortName}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
-        <div className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-900/70 backdrop-blur-sm text-green-400 text-[10px] font-mono uppercase tracking-wider">
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent" />
+        <div className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-800/60 backdrop-blur-sm text-green-300 text-[10px] font-mono uppercase tracking-wider">
           <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
           Activo
         </div>
@@ -28,11 +28,11 @@ export default function CrewCard({ member, onSelect }) {
         {rol}
       </p>
       <h3 className="text-xl font-bold text-white mb-1">{shortName}</h3>
-      <p className="text-sm text-slate-400 mb-2">
+      <p className="text-sm text-slate-300 mb-2">
         {tecnologias.slice(0, 4).join(' · ')}
       </p>
-      <p className="text-xs text-slate-500 font-mono mb-4">{experiencia.length}+ PROYECTOS</p>
-      <span className="text-teal-400 text-sm group-hover:underline transition-all">
+      <p className="text-xs text-slate-400 font-mono mb-4">{experiencia.length}+ PROYECTOS</p>
+      <span className="text-cyan-400 text-sm group-hover:underline transition-all">
         VER DOSSIER →
       </span>
     </div>

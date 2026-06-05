@@ -1,78 +1,69 @@
 import { useRef, useEffect } from 'react'
 
+const STAR_COLORS = [
+  [255, 255, 255], // white
+  [200, 220, 255], // blue-white
+  [255, 230, 200], // warm white
+  [255, 200, 180], // orange
+  [200, 200, 255], // pale blue
+  [255, 180, 150], // red-orange
+]
+
+function pickStarColor() {
+  const r = Math.random()
+  if (r < 0.4) return STAR_COLORS[0]
+  if (r < 0.65) return STAR_COLORS[1]
+  if (r < 0.8) return STAR_COLORS[2]
+  if (r < 0.9) return STAR_COLORS[3]
+  if (r < 0.96) return STAR_COLORS[4]
+  return STAR_COLORS[5]
+}
+
 function generateStars(w, h) {
   const stars = []
-  const count = Math.floor((w * h) / 2000)
+  const denseCount = Math.floor((w * h) / 1200)
 
-  for (let i = 0; i < count; i++) {
-    stars.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      size: 1 + Math.random(),
-      baseOpacity: 0.2 + Math.random() * 0.8,
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.15 + Math.random() * 0.2,
-      isSparkle: false,
-      isLarge: false,
-    })
-  }
-
-  const largeCount = 8 + Math.floor(Math.random() * 5)
-  for (let i = 0; i < largeCount; i++) {
-    const edge = Math.floor(Math.random() * 4)
-    let x, y
-    switch (edge) {
-      case 0: x = Math.random() * w; y = Math.random() * h * 0.15; break
-      case 1: x = w - Math.random() * 120; y = Math.random() * h; break
-      case 2: x = Math.random() * w; y = h - Math.random() * 120; break
-      case 3: x = Math.random() * 120; y = Math.random() * h; break
-      default: x = Math.random() * w; y = Math.random() * h; break
+  for (let i = 0; i < denseCount; i++) {
+    const color = pickStarColor()
+    const sizeRand = Math.random()
+    let size, baseOpacity
+    if (sizeRand < 0.6) {
+      size = 0.3 + Math.random() * 0.4
+      baseOpacity = 0.15 + Math.random() * 0.3
+    } else if (sizeRand < 0.85) {
+      size = 0.7 + Math.random() * 0.6
+      baseOpacity = 0.3 + Math.random() * 0.4
+    } else if (sizeRand < 0.96) {
+      size = 1.3 + Math.random() * 0.8
+      baseOpacity = 0.5 + Math.random() * 0.3
+    } else {
+      size = 2.2 + Math.random() * 1.2
+      baseOpacity = 0.7 + Math.random() * 0.3
     }
     stars.push({
-      x, y,
-      size: 2 + Math.random(),
-      baseOpacity: 0.6 + Math.random() * 0.4,
-      phase: Math.random() * Math.PI * 2,
-      speed: 0.12 + Math.random() * 0.2,
-      isSparkle: false,
-      isLarge: true,
-    })
-  }
-
-  for (let i = 0; i < 4; i++) {
-    stars.push({
       x: Math.random() * w,
       y: Math.random() * h,
-      size: 2 + Math.random() * 0.5,
-      baseOpacity: 0.8 + Math.random() * 0.2,
+      size,
+      baseOpacity,
       phase: Math.random() * Math.PI * 2,
-      speed: 0.1 + Math.random() * 0.15,
-      isSparkle: true,
-      isLarge: true,
+      speed: 0.08 + Math.random() * 0.25,
+      color,
+      glow: size > 1.8 ? 6 + Math.random() * 8 : 0,
+      spike: size > 2.2 && Math.random() < 0.5,
     })
   }
 
   return stars
 }
 
-function generateRings(w, h) {
-  const rings = []
-  const count = 5
-  const centerX = w / 2
-  const centerY = h + 60
-
-  for (let i = 0; i < count; i++) {
-    const t = (i + 1) / count
-    rings.push({
-      centerX,
-      centerY,
-      radiusX: w * 0.1 + w * 0.35 * t,
-      radiusY: (w * 0.1 + w * 0.35 * t) * 0.28,
-      opacity: 0.04 + t * 0.04,
-    })
-  }
-
-  return rings
+function generateNebulae(w, h) {
+  return [
+    { x: w * 0.2, y: h * 0.15, rx: w * 0.2, ry: h * 0.12, color: [40, 20, 80], opacity: 0.04 },
+    { x: w * 0.75, y: h * 0.3, rx: w * 0.25, ry: h * 0.15, color: [20, 40, 90], opacity: 0.035 },
+    { x: w * 0.5, y: h * 0.7, rx: w * 0.35, ry: h * 0.08, color: [60, 30, 100], opacity: 0.03 },
+    { x: w * 0.1, y: h * 0.6, rx: w * 0.15, ry: h * 0.1, color: [80, 40, 60], opacity: 0.025 },
+    { x: w * 0.85, y: h * 0.75, rx: w * 0.18, ry: h * 0.12, color: [30, 50, 90], opacity: 0.03 },
+  ]
 }
 
 export default function SpaceBackground() {
@@ -83,54 +74,89 @@ export default function SpaceBackground() {
     const ctx = canvas.getContext('2d')
     let animationId
     let stars = []
-    let rings = []
+    let nebulae = []
 
     const resize = () => {
       canvas.width = window.innerWidth
       canvas.height = window.innerHeight
       stars = generateStars(canvas.width, canvas.height)
-      rings = generateRings(canvas.width, canvas.height)
+      nebulae = generateNebulae(canvas.width, canvas.height)
     }
 
     resize()
     window.addEventListener('resize', resize)
 
+    // Pre-render noise texture
+    const noiseCanvas = document.createElement('canvas')
+    noiseCanvas.width = 256
+    noiseCanvas.height = 256
+    const nctx = noiseCanvas.getContext('2d')
+    const imgData = nctx.createImageData(256, 256)
+    for (let i = 0; i < imgData.data.length; i += 4) {
+      const v = Math.random() * 60
+      imgData.data[i] = v
+      imgData.data[i + 1] = v
+      imgData.data[i + 2] = v
+      imgData.data[i + 3] = 15 + Math.random() * 20
+    }
+    nctx.putImageData(imgData, 0, 0)
+
     const animate = (time) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-      for (const r of rings) {
-        ctx.strokeStyle = `rgba(180, 200, 255, ${r.opacity})`
-        ctx.lineWidth = 1
+      // Nebulae
+      for (const n of nebulae) {
+        const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.rx)
+        grad.addColorStop(0, `rgba(${n.color[0]},${n.color[1]},${n.color[2]},${n.opacity * 0.6})`)
+        grad.addColorStop(0.5, `rgba(${n.color[0]},${n.color[1]},${n.color[2]},${n.opacity * 0.2})`)
+        grad.addColorStop(1, `rgba(${n.color[0]},${n.color[1]},${n.color[2]},0)`)
+        ctx.fillStyle = grad
         ctx.beginPath()
-        ctx.ellipse(r.centerX, r.centerY, r.radiusX, r.radiusY, 0, Math.PI, 0, true)
-        ctx.stroke()
+        ctx.ellipse(n.x, n.y, n.rx, n.ry, 0, 0, Math.PI * 2)
+        ctx.fill()
       }
 
+      // Stars
       for (const s of stars) {
         const twinkle = Math.sin(time * 0.001 * s.speed * Math.PI * 2 + s.phase)
-        const opacity = Math.max(0.05, s.baseOpacity * (0.5 + 0.5 * twinkle))
+        const opacity = Math.max(0.01, s.baseOpacity * (0.1 + 0.9 * Math.abs(twinkle)))
+        const [r, g, b] = s.color
 
-        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`
+        // Glow for larger stars
+        if (s.glow > 0) {
+          const glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.glow)
+          glow.addColorStop(0, `rgba(${r},${g},${b},${opacity * 0.4})`)
+          glow.addColorStop(1, `rgba(${r},${g},${b},0)`)
+          ctx.fillStyle = glow
+          ctx.beginPath()
+          ctx.arc(s.x, s.y, s.glow, 0, Math.PI * 2)
+          ctx.fill()
+        }
+
+        ctx.fillStyle = `rgba(${r},${g},${b},${opacity})`
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
         ctx.fill()
 
-        if (s.isSparkle) {
+        // Diffraction spikes on brightest stars
+        if (s.spike && opacity > 0.4) {
           ctx.save()
           ctx.translate(s.x, s.y)
-          ctx.shadowColor = `rgba(255, 255, 255, ${opacity * 0.5})`
-          ctx.shadowBlur = 8
-          ctx.strokeStyle = `rgba(255, 255, 255, ${opacity * 0.6})`
-          ctx.lineWidth = 1.5
+          ctx.strokeStyle = `rgba(${r},${g},${b},${opacity * 0.35})`
+          ctx.lineWidth = 0.8
           ctx.beginPath()
-          ctx.moveTo(-8, 0)
-          ctx.lineTo(8, 0)
-          ctx.moveTo(0, -8)
-          ctx.lineTo(0, 8)
+          ctx.moveTo(-s.size * 4, 0); ctx.lineTo(s.size * 4, 0)
+          ctx.moveTo(0, -s.size * 4); ctx.lineTo(0, s.size * 4)
           ctx.stroke()
           ctx.restore()
         }
       }
+
+      // Noise overlay
+      ctx.save()
+      ctx.globalAlpha = 0.15
+      ctx.drawImage(noiseCanvas, 0, 0, canvas.width, canvas.height)
+      ctx.restore()
 
       animationId = requestAnimationFrame(animate)
     }
@@ -148,22 +174,17 @@ export default function SpaceBackground() {
       <div
         className="absolute inset-0"
         style={{
-          backgroundColor: '#000000',
+          backgroundColor: '#000002',
           backgroundImage: [
-            'radial-gradient(ellipse 100% 90% at 50% 50%, transparent 30%, #000000 90%)',
-            'radial-gradient(ellipse 55% 25% at 50% 100%, rgba(48,96,224,1) 0%, rgba(48,96,224,0.3) 40%, transparent 70%)',
-            'radial-gradient(ellipse 80% 40% at 50% 100%, #2050c8 0%, #1a3a8f 40%, transparent 75%)',
-            'radial-gradient(ellipse 75% 60% at 50% 45%, #0d2347 0%, #061020 50%, transparent 85%)',
+            'radial-gradient(ellipse 100% 80% at 50% 50%, transparent 20%, #000002 85%)',
+            'radial-gradient(ellipse 50% 30% at 50% 100%, rgba(20,50,120,0.6) 0%, rgba(20,50,120,0.15) 50%, transparent 80%)',
+            'radial-gradient(ellipse 60% 40% at 50% 100%, #102050 0%, #081030 50%, transparent 80%)',
+            'radial-gradient(ellipse 70% 50% at 50% 40%, rgba(10,20,50,0.5) 0%, transparent 75%)',
+            'radial-gradient(ellipse 40% 20% at 30% 20%, rgba(60,30,100,0.12) 0%, transparent 70%)',
           ].join(','),
         }}
       />
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.03 }}>
-        <filter id="spaceNoise">
-          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#spaceNoise)" />
-      </svg>
     </div>
   )
 }
