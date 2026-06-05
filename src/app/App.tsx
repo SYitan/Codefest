@@ -7,6 +7,8 @@ import { TeamSection } from "./components/TeamSection";
 import { SectionBackground, SectionDivider, ShootingStars, GrainOverlay, BottomFade } from "./components/Backgrounds";
 import { GlowDot } from "./components/SpaceElements";
 import { HolographicOverlay } from "./components/visuals/HolographicOverlay";
+import { NeuralNetworkBackground } from "./components/visuals/NeuralNetworkBackground";
+import { ForegroundParticles } from "./components/visuals/ForegroundParticles";
 import { teamCapabilities, teamStats } from "./data/landing";
 
 const CosmicBackground = lazy(() => import("./components/visuals/CosmicBackground").then(m => ({ default: m.CosmicBackground })));
@@ -208,7 +210,9 @@ export default function App() {
       <Suspense fallback={null}>
         <CosmicBackground />
       </Suspense>
+      <NeuralNetworkBackground />
       <HolographicOverlay />
+      <ForegroundParticles />
       <div className="relative z-10">
         <HeroSection />
         <CapabilitiesSection />

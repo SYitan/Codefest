@@ -7,6 +7,7 @@ const ARM_PARTICLES = 600;
 const DISK_PARTICLES = 800;
 const JET_PARTICLES = 200;
 const DUST_PARTICLES = 400;
+const FIELD_PARTICLES = 1200;
 const MAX_RADIUS = 5.0;
 const TWIST = 7.0;
 const ARM_WIDTH = 0.25;
@@ -33,6 +34,7 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
   const jetRef = useRef<THREE.Points>(null!);
   const dustRef = useRef<THREE.Points>(null!);
   const coreGlowRef = useRef<THREE.Sprite>(null!);
+  const fieldRef = useRef<THREE.Points>(null!);
   const timeRef = useRef(0);
   const sprite = useMemo(createSprite, []);
 
@@ -125,6 +127,24 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
       col[i * 3 + 2] = 0.6 * b;
     }
     return { pos, col };
+  }, []);
+
+  const fieldData = useMemo(() => {
+    const count = FIELD_PARTICLES;
+    const pos = new Float32Array(count * 3);
+    const col = new Float32Array(count * 3);
+    const siz = new Float32Array(count);
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 22;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 14;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 22 - 4;
+      const b = 0.15 + Math.random() * 0.35;
+      col[i * 3] = (0.6 + Math.random() * 0.4) * b;
+      col[i * 3 + 1] = (0.7 + Math.random() * 0.3) * b;
+      col[i * 3 + 2] = b;
+      siz[i] = 0.02 + Math.random() * 0.06;
+    }
+    return { pos, col, siz };
   }, []);
 
   useFrame((_, delta) => {
@@ -286,6 +306,25 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
           size={0.15}
           transparent
           opacity={0.12}
+          sizeAttenuation
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+          vertexColors
+        />
+      </points>
+
+      {/* Field stars */}
+      <points ref={fieldRef} frustumCulled>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[fieldData.pos, 3]} />
+          <bufferAttribute attach="attributes-color" args={[fieldData.col, 3]} />
+          <bufferAttribute attach="attributes-size" args={[fieldData.siz, 1]} />
+        </bufferGeometry>
+        <pointsMaterial
+          map={sprite}
+          size={0.04}
+          transparent
+          opacity={0.35}
           sizeAttenuation
           depthWrite={false}
           blending={THREE.AdditiveBlending}
