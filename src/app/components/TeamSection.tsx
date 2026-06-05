@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "motion/react";
 import { StarField, SectionLabel } from "./SpaceElements";
@@ -302,12 +302,12 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
             />
 
-            <div className="relative z-10 p-10 md:p-14">
+            <div className="relative z-10 p-6 md:p-8">
               <SectionFade delay={b}>
-                <div className="flex items-center gap-8 mb-8">
+                <div className="flex items-center gap-6 mb-6">
                   <div className="relative flex-shrink-0">
                     <motion.div
-                      className="w-32 h-32 md:w-36 md:h-36 rounded-xl overflow-hidden"
+                      className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden"
                       style={{ border: `1px solid ${member.color}40`, boxShadow: `0 0 50px ${member.color}15` }}
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -346,11 +346,12 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 </div>
               </SectionFade>
 
-              <div className="relative h-px mb-10" style={{ background: `linear-gradient(90deg, transparent, ${member.color}40, transparent)` }}>
+              <div className="relative h-px mb-6" style={{ background: `linear-gradient(90deg, transparent, ${member.color}40, transparent)` }}>
                 <motion.div className="absolute left-1/2 -top-1 w-2 h-2 rotate-45" style={{ background: member.color, boxShadow: `0 0 8px ${member.color}` }} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: b + 0.3 }} />
               </div>
 
-              <div className="grid md:grid-cols-2 gap-x-16 gap-y-12">
+              {/* 2-COLUMN CONTENT */}
+              <div className="grid md:grid-cols-2 gap-x-12 gap-y-8">
                 <div>
                   <SectionFade delay={b + 0.15}>
                     <SectionLabel2>DIAGNÓSTICO DEL OPERADOR</SectionLabel2>
@@ -361,7 +362,7 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                     </motion.div>
                   </SectionFade>
 
-                  <div className="mt-10">
+                  <div className="mt-6">
                     <SectionFade delay={b + 0.35}>
                       <button
                         onClick={() => setExpSect((p) => !p)}
@@ -421,7 +422,7 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                     </div>
                   </SectionFade>
 
-                  <div className="mt-10">
+                  <div className="mt-6">
                     <SectionFade delay={b + 0.35}>
                       <SectionLabel2>LOGROS DESTACADOS</SectionLabel2>
                       <ul className="space-y-2.5">
@@ -444,13 +445,13 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 </div>
               </div>
 
-              <div className="mt-10">
+              <div className="mt-6">
                 <TechBadges member={member} b={b + 0.5} />
               </div>
 
               <SectionFade delay={b + 0.55}>
                 <motion.div
-                  className="mt-10 p-6 md:p-8 rounded-xl relative overflow-hidden group"
+                  className="mt-6 p-5 md:p-6 rounded-xl relative overflow-hidden group"
                   style={{ background: `linear-gradient(135deg, ${member.color}06, transparent 60%)`, border: `1px solid ${member.color}12`, backdropFilter: "blur(8px)" }}
                   whileHover={{ borderColor: `${member.color}35`, boxShadow: `0 0 40px ${member.color}10` }}
                   transition={{ duration: 0.3 }}
@@ -477,20 +478,29 @@ export function TeamSection() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const ref = useRef(null);
   const profileRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const starY = useTransform(scrollYProgress, [0, 1], [-15, 15]);
   const selectedMember = selectedId !== null ? crewMembers.find((m) => m.id === selectedId) : null;
 
   const handleProfileReady = () => {
     setTimeout(() => {
       if (profileRef.current) {
-        profileRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        const top = profileRef.current.getBoundingClientRect().top + window.scrollY + 180;
+        window.scrollTo({ top, behavior: "smooth" });
       }
     }, 100);
   };
 
   return (
-    <section id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, #050510 0%, #04041c 50%, #050510 100%)" }}>
-      <StarField count={80} />
+    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, #050510 0%, #04041c 50%, #050510 100%)" }}>
+      <motion.div style={{ y: starY }}>
+        <StarField count={80} />
+      </motion.div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px opacity-30" style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }} />
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div

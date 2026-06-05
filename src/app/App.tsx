@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef } from "react";
 import { BrainCircuit, Code2, Smartphone, Zap } from "lucide-react";
@@ -31,68 +31,76 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 function CapabilitiesSection() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const sectionRef = useRef(null);
+  const inViewRef = useRef(null);
+  const inView = useInView(inViewRef, { once: true, margin: "-60px" });
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+  const cardY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
     <SectionBackground theme="deep" stars={40}>
       <SectionDivider />
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
-      >
-        <SectionLabel>CAPACIDADES DEL EQUIPO</SectionLabel>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {teamCapabilities.map((cap, i) => {
-            const { icon: Icon, color } = capMeta[i];
-            return (
-              <motion.div
-                key={cap}
-                className="rounded-xl p-7 text-center relative overflow-hidden group cursor-default"
-                style={{
-                  background: `linear-gradient(135deg, ${color}06, rgba(255,255,255,0.01))`,
-                  border: `1px solid rgba(255,255,255,0.06)`,
-                  backdropFilter: "blur(12px) saturate(1.1)",
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
-                }}
-                initial={{ opacity: 0, y: 24, scale: 0.95 }}
-                animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                transition={{ delay: 0.1 + i * 0.1, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
-                whileHover={{
-                  scale: 1.04, y: -6, borderColor: `${color}40`,
-                  boxShadow: `0 16px 48px ${color}20, 0 0 0 1px ${color}30`,
-                }}
-              >
+      <div ref={sectionRef}>
+        <motion.div
+          ref={inViewRef}
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+        >
+          <SectionLabel>CAPACIDADES DEL EQUIPO</SectionLabel>
+          <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-5" style={{ y: cardY }}>
+            {teamCapabilities.map((cap, i) => {
+              const { icon: Icon, color } = capMeta[i];
+              return (
                 <motion.div
-                  className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"
-                  style={{ background: `radial-gradient(ellipse at 50% 30%, ${color}15, transparent 70%)`, filter: "blur(40px)" }}
-                />
-                <div
-                  className="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4 relative transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                  key={cap}
+                  className="rounded-xl p-7 text-center relative overflow-hidden group cursor-default"
                   style={{
-                    background: `${color}08`,
-                    border: `1px solid ${color}15`,
-                    boxShadow: `0 0 20px ${color}05`,
+                    background: `linear-gradient(135deg, ${color}06, rgba(255,255,255,0.01))`,
+                    border: `1px solid rgba(255,255,255,0.06)`,
+                    backdropFilter: "blur(12px) saturate(1.1)",
+                    boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
+                  }}
+                  initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                  animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                  transition={{ delay: 0.1 + i * 0.1, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+                  whileHover={{
+                    scale: 1.04, y: -6, borderColor: `${color}40`,
+                    boxShadow: `0 16px 48px ${color}20, 0 0 0 1px ${color}30`,
                   }}
                 >
-                  <Icon size={24} style={{ color: "rgba(255,255,255,0.6)", transition: "color 0.3s" }} className="group-hover:text-white" />
-                </div>
-                <span
-                  className="text-lg font-semibold block relative"
-                  style={{
-                    color: "rgba(255,255,255,0.85)",
-                    fontFamily: "'Space Grotesk', sans-serif",
-                  }}
-                >
-                  {cap}
-                </span>
-              </motion.div>
-            );
-          })}
-        </div>
-      </motion.div>
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"
+                    style={{ background: `radial-gradient(ellipse at 50% 30%, ${color}15, transparent 70%)`, filter: "blur(40px)" }}
+                  />
+                  <div
+                    className="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4 relative transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                    style={{
+                      background: `${color}08`,
+                      border: `1px solid ${color}15`,
+                      boxShadow: `0 0 20px ${color}05`,
+                    }}
+                  >
+                    <Icon size={24} style={{ color: "rgba(255,255,255,0.6)", transition: "color 0.3s" }} className="group-hover:text-white" />
+                  </div>
+                  <span
+                    className="text-lg font-semibold block relative"
+                    style={{
+                      color: "rgba(255,255,255,0.85)",
+                      fontFamily: "'Space Grotesk', sans-serif",
+                    }}
+                  >
+                    {cap}
+                  </span>
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        </motion.div>
+      </div>
     </SectionBackground>
   );
 }
@@ -100,6 +108,10 @@ function CapabilitiesSection() {
 function MetricsSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
 
   const metrics = [
     { value: teamStats.solutions, label: "PROYECTOS" },
@@ -119,7 +131,6 @@ function MetricsSection() {
         transition={{ duration: 0.6 }}
         className="grid grid-cols-4 gap-8 max-w-3xl mx-auto relative"
       >
-        {/* Decorative glow dots on each side */}
         <GlowDot size={4} color="#38bdf8" style={{ left: "-20px", top: "50%" }} />
         <GlowDot size={4} color="#818cf8" style={{ right: "-20px", top: "50%" }} />
 
