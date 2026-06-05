@@ -47,7 +47,7 @@ const CONSTELLATION_LINKS: [number, number][] = [
   [5, 17], [4, 16],
 ];
 
-export function NeuralNetworkBackground() {
+export function NeuralNetworkBackground({ lowPower }: { lowPower?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -79,13 +79,16 @@ export function NeuralNetworkBackground() {
     const nodes = () => NODE_DEFS.map((n) => ({ x: n.rx * W, y: n.ry * H }));
 
     const pulses: { ci: number; t: number; speed: number }[] = [];
+    const pulseInterval = lowPower ? 1400 : 800;
+    const maxPulses = lowPower ? 5 : 10;
 
     function spawnPulse() {
+      if (pulses.length >= maxPulses) return;
       const ci = Math.floor(Math.random() * CONNECTIONS.length);
-      pulses.push({ ci, t: 0, speed: 0.004 + Math.random() * 0.003 });
+      pulses.push({ ci, t: 0, speed: lowPower ? 0.003 + Math.random() * 0.002 : 0.004 + Math.random() * 0.003 });
     }
 
-    const spawnTimer = setInterval(spawnPulse, 800);
+    const spawnTimer = setInterval(spawnPulse, pulseInterval);
 
     function draw() {
       const activation = Math.min(1, Math.max(0, scrollProgress / 0.5));
@@ -172,7 +175,7 @@ export function NeuralNetworkBackground() {
       window.removeEventListener("resize", resize);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [lowPower]);
 
   return (
     <canvas

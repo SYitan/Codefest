@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 
-export function ForegroundParticles() {
+export function ForegroundParticles({ lowPower }: { lowPower?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -11,6 +11,8 @@ export function ForegroundParticles() {
     let W: number, H: number;
 
     const dpr = 1;
+    const particleCount = lowPower ? 12 : 25;
+    const blurValue = lowPower ? "none" : "blur(2px)";
 
     function resize() {
       W = window.innerWidth;
@@ -22,7 +24,7 @@ export function ForegroundParticles() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    const particles = Array.from({ length: 25 }, () => ({
+    const particles = Array.from({ length: particleCount }, () => ({
       x: Math.random(),
       y: Math.random(),
       size: 2 + Math.random() * 4,
@@ -43,7 +45,7 @@ export function ForegroundParticles() {
         ctx.beginPath();
         ctx.arc(p.x * W, p.y * H, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(180,140,255,${p.opacity})`;
-        ctx.filter = "blur(2px)";
+        ctx.filter = blurValue;
         ctx.fill();
         ctx.filter = "none";
       }
@@ -62,7 +64,7 @@ export function ForegroundParticles() {
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [lowPower]);
 
   return (
     <canvas

@@ -13,7 +13,7 @@ function Scene({ progressRef }: { progressRef: React.MutableRefObject<number> })
   );
 }
 
-export function CosmicBackground() {
+export function CosmicBackground({ lowPower }: { lowPower?: boolean }) {
   const { scrollY } = useScroll();
   const progressRef = useRef(0);
   const smoothY = useMotionValue(0);
@@ -33,8 +33,12 @@ export function CosmicBackground() {
     return unsubscribe;
   }, [smoothY]);
 
-  const dpr = typeof window !== "undefined" && window.devicePixelRatio > 2
-    ? [0.5, 0.7] : [0.6, 1];
+  const dpr = lowPower
+    ? [0.5, 0.7]
+    : typeof window !== "undefined" && window.devicePixelRatio > 2
+      ? [0.5, 0.7]
+      : [0.6, 1];
+  const powerPreference = lowPower ? "low-power" : "high-performance";
 
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>

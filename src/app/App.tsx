@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useInView } from "motion/react";
-import { useRef, lazy, Suspense } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { BrainCircuit, Code2, Smartphone, Zap } from "lucide-react";
 import { HeroSection } from "./components/HeroSection";
 import { TeamSection } from "./components/TeamSection";
@@ -19,6 +19,14 @@ const capMeta = [
   { icon: Smartphone, color: "#34d399", label: "Mobile" },
   { icon: Zap, color: "#fb923c", label: "Automatización" },
 ];
+
+function getLowPowerMode() {
+  if (typeof window === "undefined") return false;
+  const isSmallScreen = window.innerWidth < 900;
+  const lowCpu = typeof navigator !== "undefined" && (navigator.hardwareConcurrency ?? 8) <= 4;
+  const highDpr = window.devicePixelRatio > 2;
+  return isSmallScreen || lowCpu || highDpr;
+}
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -180,6 +188,15 @@ function MetricsSection() {
 }
 
 export default function App() {
+  const [lowPower, setLowPower] = useState(false);
+
+  useEffect(() => {
+    const updateMode = () => setLowPower(getLowPowerMode());
+    updateMode();
+    window.addEventListener("resize", updateMode);
+    return () => window.removeEventListener("resize", updateMode);
+  }, []);
+
   return (
     <div
       className="min-h-screen relative"
@@ -208,11 +225,11 @@ export default function App() {
       </div>
       <GrainOverlay />
       <Suspense fallback={null}>
-        <CosmicBackground />
+        <CosmicBackground lowPower={lowPower} />
       </Suspense>
-      <NeuralNetworkBackground />
-      <HolographicOverlay />
-      <ForegroundParticles />
+      <NeuralNetworkBackground lowPower={lowPower} />
+      <HolographicOverlay lowPower={lowPower} />
+      <ForegroundParticles lowPower={lowPower} />
       <div className="relative z-10">
         <HeroSection />
         <CapabilitiesSection />

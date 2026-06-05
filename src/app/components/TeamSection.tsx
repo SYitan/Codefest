@@ -476,6 +476,7 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
 
 export function TeamSection() {
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [lowPower, setLowPower] = useState(false);
   const ref = useRef(null);
   const profileRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef(null);
@@ -487,19 +488,33 @@ export function TeamSection() {
   const starY = useTransform(scrollYProgress, [0, 1], [-15, 15]);
   const selectedMember = selectedId !== null ? crewMembers.find((m) => m.id === selectedId) : null;
 
+  useEffect(() => {
+    const updateMode = () => {
+      if (typeof window === "undefined") return;
+      const lowCpu = typeof navigator !== "undefined" && (navigator.hardwareConcurrency ?? 8) <= 4;
+      setLowPower(lowCpu || window.innerWidth < 900 || window.devicePixelRatio > 2);
+    };
+    updateMode();
+    window.addEventListener("resize", updateMode);
+    return () => window.removeEventListener("resize", updateMode);
+  }, []);
+
   const handleProfileReady = () => {
     setTimeout(() => {
       if (profileRef.current) {
-        const top = profileRef.current.getBoundingClientRect().top + window.scrollY + 1000;
+        const rect = profileRef.current.getBoundingClientRect();
+        const target = window.scrollY + rect.top - window.innerHeight / 2 + 1000;
+        const maxScroll = document.body.scrollHeight - window.innerHeight;
+        const top = Math.max(0, Math.min(target, maxScroll));
         window.scrollTo({ top, behavior: "smooth" });
       }
     }, 100);
   };
 
   return (
-    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(5,5,16,0.8) 0%, rgba(4,4,28,0.65) 50%, rgba(5,5,16,0.8) 100%)" }}>
+    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(8,10,24,0.92) 0%, rgba(7,8,24,0.62) 45%, rgba(4,4,18,0.95) 100%)" }}>
       <motion.div style={{ y: starY }}>
-        <StarField count={80} />
+        <StarField count={lowPower ? 35 : 80} />
       </motion.div>
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px opacity-30" style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }} />
       <div className="relative z-10 max-w-7xl mx-auto">

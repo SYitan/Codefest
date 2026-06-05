@@ -112,9 +112,9 @@ function NeuralConnection({ x1, y1, x2, y2, color }: {
   );
 }
 
-export function HolographicOverlay() {
+export function HolographicOverlay({ lowPower }: { lowPower?: boolean }) {
   return (
-    <div className="fixed inset-0 z-[1] pointer-events-none overflow-hidden">
+    <div className="fixed inset-0 z-[1] pointer-events-none overflow-hidden" style={{ opacity: lowPower ? 0.55 : 1 }}>
       {/* Corner brackets - Hero section */}
       <CornerBracket x="5%" y="15%" color="#38bdf8" />
       <CornerBracket x="95%" y="15%" color="#38bdf8" flipX />
