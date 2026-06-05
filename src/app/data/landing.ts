@@ -6,10 +6,10 @@ import {
   Globe,
   Database,
 } from "lucide-react";
-import img1 from "../../imports/image-1.png";
-import img2 from "../../imports/image-2.png";
-import img3 from "../../imports/image-3.png";
-import img4 from "../../imports/image-4.png";
+import yitanImg from "../../imports/yitan.png";
+import diegoImg from "../../imports/diego.png";
+import matheusImg from "../../imports/matheus.png";
+import ianImg from "../../imports/ian.png";
 
 export const mission = {
   badge: "Misión Activa · 2026",
@@ -53,7 +53,7 @@ export interface CrewMember {
 export const crewMembers: CrewMember[] = [
   {
     id: 0,
-    photo: img3,
+    photo: matheusImg,
     name: "Matheus Aponte",
     shortName: "Matheus",
     rol: "AI Systems Architect",
@@ -104,7 +104,7 @@ export const crewMembers: CrewMember[] = [
   },
   {
     id: 1,
-    photo: img4,
+    photo: ianImg,
     name: "Ian Di Filippo",
     shortName: "Ian",
     rol: "Automation, AI & Cybersecurity Specialist",
@@ -155,7 +155,7 @@ export const crewMembers: CrewMember[] = [
   },
   {
     id: 2,
-    photo: img1,
+    photo: yitanImg,
     name: "Brian Alba",
     shortName: "Brian",
     rol: "Lead Full Stack Developer",
@@ -210,7 +210,7 @@ export const crewMembers: CrewMember[] = [
   },
   {
     id: 3,
-    photo: img2,
+    photo: diegoImg,
     name: "Diego Alejandro Rojas Panteve",
     shortName: "Diego",
     rol: "Full Stack Developer & Software Engineering Student",
