@@ -1,16 +1,11 @@
 import { motion, useScroll, useTransform } from "motion/react";
-import { lazy, Suspense } from "react";
-import { SpaceGrid, Planet } from "./SpaceElements";
+import { SpaceGrid } from "./SpaceElements";
 import { ShootingStars, ScrollFadeOrbs } from "./Backgrounds";
 import { mission } from "../data/landing";
 import { ArrowRight } from "lucide-react";
 
-const GlobeScene = lazy(() => import("./visuals/GlobeScene"));
-
 export function HeroSection() {
   const { scrollY } = useScroll();
-  const planetY = useTransform(scrollY, [0, 600], [0, 140]);
-  const planetO = useTransform(scrollY, [0, 400], [0.7, 0]);
   const contentY = useTransform(scrollY, [0, 400], [0, -40]);
   const contentO = useTransform(scrollY, [0, 400], [1, 0]);
   const gridO = useTransform(scrollY, [0, 300], [1, 0]);
@@ -19,7 +14,7 @@ export function HeroSection() {
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: "linear-gradient(180deg, rgba(3,0,20,0.4) 0%, rgba(4,4,28,0.3) 60%, rgba(5,5,16,0.4) 100%)" }}
+      style={{ background: "linear-gradient(180deg, rgba(3,0,20,0.88) 0%, rgba(4,4,28,0.75) 60%, rgba(5,5,16,0.88) 100%)" }}
     >
       <ScrollFadeOrbs />
       <motion.div style={{ opacity: gridO }}>
@@ -27,26 +22,14 @@ export function HeroSection() {
       </motion.div>
       <ShootingStars />
 
-      <motion.div
-        className="absolute right-[-10%] bottom-[-10%] sm:right-[-4%] sm:bottom-[-8%] pointer-events-none hidden sm:block"
-        style={{ y: planetY, opacity: planetO }}
-      >
-        <Planet
-          size={500}
-          position={{}}
-          colorStart="#1d4ed8"
-          colorMid="#1e3a8a"
-          glowColor="rgba(37,99,235,0.4)"
-          showRing
-        />
-      </motion.div>
+
 
       <motion.div
         className="relative z-10 w-full px-6 md:px-16 lg:px-24"
         style={{ y: contentY, opacity: contentO }}
       >
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          <div className="max-w-xl">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-2xl">
             <motion.div
               initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -133,12 +116,6 @@ export function HeroSection() {
               </motion.button>
             </motion.div>
           </div>
-
-          <Suspense fallback={<div className="hidden lg:block" />}>
-            <div className="hidden lg:block relative h-[500px] w-full">
-              <GlobeScene className="w-full h-full" />
-            </div>
-          </Suspense>
         </div>
 
         <motion.div

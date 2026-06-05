@@ -1,18 +1,19 @@
 import { useRef, useEffect } from "react";
 import { useScroll, useMotionValue } from "motion/react";
 import { Canvas } from "@react-three/fiber";
-import { GalaxyParticles } from "./GalaxyParticles";
-import { NebulaClouds } from "./NebulaClouds";
-import { DeepStarField } from "./DeepStarField";
+import { GalaxyAtmosphere } from "./GalaxyAtmosphere";
+import { NebulaRibbons } from "./NebulaRibbons";
+import { ForegroundDust } from "./ForegroundDust";
 
-function CosmicScene({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
+function Scene({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
   return (
     <>
-      <ambientLight intensity={0.15} />
-      <directionalLight position={[5, 3, 5]} intensity={0.3} />
-      <DeepStarField scrollRef={scrollRef} />
-      <GalaxyParticles scrollRef={scrollRef} />
-      <NebulaClouds scrollRef={scrollRef} />
+      <ambientLight intensity={0.1} />
+      <directionalLight position={[4, 3, 5]} intensity={0.15} color="#6889ff" />
+      <fog attach="fog" args={["#030014", 6, 20]} />
+      <GalaxyAtmosphere scrollRef={scrollRef} />
+      <NebulaRibbons scrollRef={scrollRef} />
+      <ForegroundDust scrollRef={scrollRef} />
     </>
   );
 }
@@ -36,21 +37,22 @@ export function CosmicBackground() {
     return unsubscribe;
   }, [smoothY]);
 
-  const dpr = typeof window !== "undefined" && window.devicePixelRatio > 2 ? [0.5, 1] : [0.8, 1.5];
+  const dpr = typeof window !== "undefined" && window.devicePixelRatio > 2
+    ? [0.6, 1] : [0.8, 1.2];
 
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>
       <Canvas
-        camera={{ position: [0, 0, 14], fov: 60, near: 0.1, far: 100 }}
+        camera={{ position: [0, 0.5, 6], fov: 60, near: 0.1, far: 40 }}
         dpr={dpr}
         gl={{
-          antialias: true,
+          antialias: false,
           alpha: true,
           powerPreference: "high-performance",
         }}
         style={{ background: "transparent", width: "100%", height: "100%" }}
       >
-        <CosmicScene scrollRef={scrollRef} />
+        <Scene scrollRef={scrollRef} />
       </Canvas>
     </div>
   );
