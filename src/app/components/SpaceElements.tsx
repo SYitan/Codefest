@@ -1,10 +1,11 @@
 import { useMemo } from "react";
 import { motion } from "motion/react";
 
-export function StarField({ count = 220 }: { count?: number }) {
+export function StarField({ count = 220, lowPower }: { count?: number; lowPower?: boolean }) {
+  const effectiveCount = lowPower ? Math.max(10, Math.floor((count ?? 220) / 3)) : count;
   const stars = useMemo(
     () =>
-      Array.from({ length: count }, (_, i) => ({
+      Array.from({ length: effectiveCount }, (_, i) => ({
         id: i,
         x: Math.random() * 100,
         y: Math.random() * 100,
@@ -13,7 +14,7 @@ export function StarField({ count = 220 }: { count?: number }) {
         duration: Math.random() * 5 + 2.5,
         delay: Math.random() * 8,
       })),
-    [count]
+    [effectiveCount]
   );
 
   return (
@@ -32,8 +33,8 @@ export function StarField({ count = 220 }: { count?: number }) {
                 ? `rgba(148,215,255,${s.opacity})`
                 : `rgba(255,255,255,${s.opacity})`,
           }}
-          animate={{ opacity: [s.opacity * 0.2, s.opacity, s.opacity * 0.2] }}
-          transition={{ duration: s.duration, delay: s.delay, repeat: Infinity, ease: "easeInOut" }}
+          animate={lowPower ? undefined : { opacity: [s.opacity * 0.2, s.opacity, s.opacity * 0.2] }}
+          transition={lowPower ? undefined : { duration: s.duration, delay: s.delay, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
       {/* Extra bright stars */}
@@ -84,10 +85,12 @@ export function GlowDot({
   size = 6,
   color = "#38bdf8",
   style,
+  lowPower,
 }: {
   size?: number;
   color?: string;
   style?: React.CSSProperties;
+  lowPower?: boolean;
 }) {
   return (
     <motion.div
@@ -99,8 +102,8 @@ export function GlowDot({
         boxShadow: `0 0 ${size * 3}px ${size}px ${color}40`,
         ...style,
       }}
-      animate={{ scale: [0.8, 1.3, 0.8], opacity: [0.6, 1, 0.6] }}
-      transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      animate={lowPower ? undefined : { scale: [0.8, 1.3, 0.8], opacity: [0.6, 1, 0.6] }}
+      transition={lowPower ? undefined : { duration: 3, repeat: Infinity, ease: "easeInOut" }}
     />
   );
 }

@@ -43,7 +43,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function CapabilitiesSection() {
+function CapabilitiesSection({ lowPower }: { lowPower: boolean }) {
   const sectionRef = useRef(null);
   const inViewRef = useRef(null);
   const inView = useInView(inViewRef, { once: true, margin: "-60px" });
@@ -54,7 +54,7 @@ function CapabilitiesSection() {
   const cardY = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   return (
-    <SectionBackground theme="deep" stars={40}>
+    <SectionBackground theme="deep" stars={40} lowPower={lowPower}>
       <SectionDivider />
       <div ref={sectionRef}>
         <motion.div
@@ -118,7 +118,7 @@ function CapabilitiesSection() {
   );
 }
 
-function MetricsSection() {
+function MetricsSection({ lowPower }: { lowPower: boolean }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   const { scrollYProgress } = useScroll({
@@ -134,9 +134,9 @@ function MetricsSection() {
   ];
 
   return (
-    <SectionBackground theme="navy" stars={20}>
+    <SectionBackground theme="navy" stars={20} lowPower={lowPower}>
       <SectionDivider />
-      <ShootingStars />
+      <ShootingStars lowPower={lowPower} />
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 24 }}
@@ -231,10 +231,10 @@ export default function App() {
       <HolographicOverlay lowPower={lowPower} />
       <ForegroundParticles lowPower={lowPower} />
       <div className="relative z-10">
-        <HeroSection />
-        <CapabilitiesSection />
-        <MetricsSection />
-        <TeamSection />
+        <HeroSection lowPower={lowPower} />
+        <CapabilitiesSection lowPower={lowPower} />
+        <MetricsSection lowPower={lowPower} />
+        <TeamSection lowPower={lowPower} />
       </div>
     </div>
   );

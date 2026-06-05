@@ -29,8 +29,8 @@ const themeOrbs: Record<SectionTheme, Array<{ color: string; size: number; x: nu
   ],
 };
 
-function AmbientOrb({ color, size, x, y, blur, opacity, duration }: {
-  color: string; size: number; x: number; y: number; blur: number; opacity: number; duration: number;
+function AmbientOrb({ color, size, x, y, blur, opacity, duration, lowPower }: {
+  color: string; size: number; x: number; y: number; blur: number; opacity: number; duration: number; lowPower?: boolean;
 }) {
   return (
     <motion.div
@@ -44,8 +44,8 @@ function AmbientOrb({ color, size, x, y, blur, opacity, duration }: {
         filter: `blur(${blur}px)`,
         opacity,
       }}
-      animate={{ x: [0, 30, -20, 0], y: [0, -20, 15, 0] }}
-      transition={{ duration, repeat: Infinity, ease: "easeInOut" }}
+      animate={lowPower ? undefined : { x: [0, 30, -20, 0], y: [0, -20, 15, 0] }}
+      transition={lowPower ? undefined : { duration, repeat: Infinity, ease: "easeInOut" }}
     />
   );
 }
@@ -65,7 +65,9 @@ export function GrainOverlay() {
   );
 }
 
-export function ShootingStars() {
+export function ShootingStars({ lowPower }: { lowPower?: boolean }) {
+  if (lowPower) return null;
+
   const stars = useMemo(() =>
     Array.from({ length: 3 }, (_, i) => ({
       id: i,
@@ -109,18 +111,22 @@ export function ScrollFadeOrbs() {
       <motion.div
         className="absolute pointer-events-none rounded-full"
         style={{
-          width: 600, height: 600, left: "-15%", top: "-10%",
+          width: "clamp(260px, 30vw, 600px)",
+          height: "clamp(260px, 30vw, 600px)",
+          left: "-15%", top: "-10%",
           background: "radial-gradient(circle, #3b82f6 0%, transparent 70%)",
-          filter: "blur(120px)",
+          filter: "blur(10vw)",
           y: orb1Y, opacity: orb1O,
         }}
       />
       <motion.div
         className="absolute pointer-events-none rounded-full"
         style={{
-          width: 500, height: 500, left: "70%", top: "60%",
+          width: "clamp(220px, 25vw, 500px)",
+          height: "clamp(220px, 25vw, 500px)",
+          left: "70%", top: "60%",
           background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)",
-          filter: "blur(100px)",
+          filter: "blur(8vw)",
           y: orb2Y, opacity: orb2O,
         }}
       />
@@ -128,18 +134,19 @@ export function ScrollFadeOrbs() {
   );
 }
 
-export function SectionBackground({ children, theme = "deep", stars = 0, className = "" }: {
+export function SectionBackground({ children, theme = "deep", stars = 0, className = "", lowPower }: {
   children: React.ReactNode;
   theme?: SectionTheme;
   stars?: number;
   className?: string;
+  lowPower?: boolean;
 }) {
   const orbs = themeOrbs[theme];
   return (
     <section className={`relative py-20 px-6 overflow-hidden ${className}`} style={{ background: gradients[theme] }}>
-      {stars > 0 && <StarField count={stars} />}
+      {stars > 0 && <StarField count={lowPower ? Math.max(10, Math.floor(stars / 3)) : stars} lowPower={lowPower} />}
       {orbs.map((orb, i) => (
-        <AmbientOrb key={i} {...orb} />
+        <AmbientOrb key={i} {...orb} lowPower={lowPower} />
       ))}
       <div className="relative z-10 max-w-7xl mx-auto">
         {children}

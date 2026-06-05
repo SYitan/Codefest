@@ -4,9 +4,9 @@ import { ShootingStars, ScrollFadeOrbs } from "./Backgrounds";
 import { mission } from "../data/landing";
 import { ArrowRight } from "lucide-react";
 
-export function HeroSection() {
+export function HeroSection({ lowPower }: { lowPower?: boolean }) {
   const { scrollY } = useScroll();
-  const contentY = useTransform(scrollY, [0, 400], [0, -40]);
+  const contentY = useTransform(scrollY, [0, 400], [0, lowPower ? -20 : -40]);
   const contentO = useTransform(scrollY, [0, 400], [1, 0]);
   const gridO = useTransform(scrollY, [0, 300], [1, 0]);
   return (
@@ -14,20 +14,20 @@ export function HeroSection() {
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{ background: "linear-gradient(180deg, rgba(3,0,20,0.8) 0%, rgba(4,4,28,0.65) 60%, rgba(5,5,16,0.8) 100%)" }}
     >
-      <ScrollFadeOrbs />
+      <ScrollFadeOrbs lowPower={lowPower} />
       <motion.div style={{ opacity: gridO }}>
         <SpaceGrid />
       </motion.div>
-      <ShootingStars />
+      <ShootingStars lowPower={lowPower} />
 
 
 
       <motion.div
-        className="relative z-10 w-full px-6 md:px-16 lg:px-24"
+        className="relative z-10 w-full px-4 sm:px-6 md:px-16 lg:px-24"
         style={{ y: contentY, opacity: contentO }}
       >
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-2xl">
+        <div className="max-w-6xl mx-auto">
+          <div className="w-full max-w-3xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -54,9 +54,9 @@ export function HeroSection() {
             </motion.div>
 
             <motion.h1
-              initial={{ opacity: 0, y: 30 }}
+              initial={lowPower ? false : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.1 }}
+              transition={lowPower ? { duration: 0 } : { duration: 0.9, delay: 0.1 }}
               className="text-white leading-tight mb-4"
               style={{
                 fontFamily: "'Space Grotesk', sans-serif",
@@ -69,23 +69,23 @@ export function HeroSection() {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={lowPower ? false : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-slate-400 text-lg md:text-xl leading-relaxed mb-10"
+              transition={lowPower ? { duration: 0 } : { duration: 0.7, delay: 0.3 }}
+              className="text-slate-400 text-base sm:text-lg md:text-xl leading-relaxed mb-10"
               style={{ fontFamily: "'Space Grotesk', sans-serif" }}
             >
               {mission.description}
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              initial={lowPower ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
+              transition={lowPower ? { duration: 0 } : { delay: 0.6 }}
             >
               <motion.button
                 onClick={() => document.getElementById('team-section')?.scrollIntoView({ behavior: 'smooth' })}
-                className="group relative px-8 py-3 rounded-full text-sm font-semibold tracking-[0.15em] uppercase transition-all duration-300 active:scale-95"
+                className="group relative inline-flex w-full justify-center sm:w-auto px-6 sm:px-8 py-3 rounded-full text-sm sm:text-base font-semibold tracking-[0.15em] uppercase transition-all duration-300 active:scale-95"
                 style={{
                   fontFamily: "'Orbitron', monospace",
                   background: "linear-gradient(135deg, rgba(56,189,248,0.2), rgba(168,85,247,0.15))",
@@ -102,14 +102,20 @@ export function HeroSection() {
               >
                 <span className="relative z-10 inline-flex items-center gap-2">
                   EXPLORAR TRIPULACIÓN
-                  <motion.span
-                    className="inline-block"
-                    initial={{ x: -4, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 1, duration: 0.3 }}
-                  >
-                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1.5" />
-                  </motion.span>
+                  {lowPower ? (
+                    <span className="inline-block" style={{ opacity: 1 }}>
+                      <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+                    </span>
+                  ) : (
+                    <motion.span
+                      className="inline-block"
+                      initial={{ x: -4, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: 1, duration: 0.3 }}
+                    >
+                      <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1.5" />
+                    </motion.span>
+                  )}
                 </span>
               </motion.button>
             </motion.div>

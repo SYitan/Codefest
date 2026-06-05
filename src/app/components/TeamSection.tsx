@@ -503,7 +503,8 @@ export function TeamSection() {
     setTimeout(() => {
       if (profileRef.current) {
         const rect = profileRef.current.getBoundingClientRect();
-        const target = window.scrollY + rect.top - window.innerHeight / 2 + 1000;
+        const offset = window.innerWidth < 900 ? 420 : 1000;
+        const target = window.scrollY + rect.top - window.innerHeight / 2 + offset;
         const maxScroll = document.body.scrollHeight - window.innerHeight;
         const top = Math.max(0, Math.min(target, maxScroll));
         window.scrollTo({ top, behavior: "smooth" });
@@ -512,7 +513,7 @@ export function TeamSection() {
   };
 
   return (
-    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(8,10,24,0.92) 0%, rgba(7,8,24,0.62) 45%, rgba(4,4,18,0.95) 100%)" }}>
+    <section ref={sectionRef} id="team-section" className="relative py-20 sm:py-24 px-4 sm:px-6 md:px-8 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(8,10,24,0.92) 0%, rgba(7,8,24,0.62) 45%, rgba(4,4,18,0.95) 100%)" }}>
       <motion.div style={{ y: starY }}>
         <StarField count={lowPower ? 35 : 80} />
       </motion.div>
@@ -532,7 +533,7 @@ export function TeamSection() {
           <p className="text-slate-600 max-w-md mx-auto text-xs" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{teamSection.subtitle}</p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {crewMembers.map((m, i) => (
             <CrewCard key={m.id} member={m} isSelected={selectedId === m.id} onClick={() => setSelectedId((prev) => (prev === m.id ? null : m.id))} index={i} />
           ))}

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 
-function DataRing({ x, y, size, color, delay }: { x: string; y: string; size: number; color: string; delay: number }) {
+function DataRing({ x, y, size, color, delay, lowPower }: { x: string; y: string; size: number; color: string; delay: number; lowPower?: boolean }) {
   return (
     <motion.div
       className="absolute rounded-full pointer-events-none"
@@ -12,29 +12,29 @@ function DataRing({ x, y, size, color, delay }: { x: string; y: string; size: nu
         boxShadow: `0 0 ${size * 0.3}px ${color}20, inset 0 0 ${size * 0.3}px ${color}10`,
       }}
       initial={{ scale: 0.8, opacity: 0, rotate: 0 }}
-      whileInView={{ scale: 1, opacity: 1, rotate: 360 }}
+      whileInView={lowPower ? { scale: 1, opacity: 1, rotate: 0 } : { scale: 1, opacity: 1, rotate: 360 }}
       viewport={{ once: true }}
       transition={{ duration: 2, delay, ease: "easeOut" }}
     >
       <motion.div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
         style={{ background: color, boxShadow: `0 0 6px ${color}` }}
-        animate={{ rotate: [0, 360] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "linear", delay }}
+        animate={lowPower ? undefined : { rotate: [0, 360] }}
+        transition={lowPower ? undefined : { duration: 4, repeat: Infinity, ease: "linear", delay }}
       />
     </motion.div>
   );
 }
 
-function DataStream({ x, y, width, height, color, delay }: {
-  x: string; y: string; width: number; height: number; color: string; delay: number;
+function DataStream({ x, y, width, height, color, delay, lowPower }: {
+  x: string; y: string; width: number; height: number; color: string; delay: number; lowPower?: boolean;
 }) {
   return (
     <motion.div
       className="absolute pointer-events-none overflow-hidden"
-      style={{ left: x, top: y, width, height, opacity: 0.15 }}
+      style={{ left: x, top: y, width, height, opacity: lowPower ? 0.1 : 0.15 }}
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 0.15 }}
+      whileInView={{ opacity: lowPower ? 0.1 : 0.15 }}
       viewport={{ once: true }}
       transition={{ delay, duration: 0.8 }}
     >
@@ -47,8 +47,8 @@ function DataStream({ x, y, width, height, color, delay }: {
             background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
             filter: "blur(1px)",
           }}
-          animate={{ x: ["-100%", "100%"] }}
-          transition={{ duration: 3 + i * 0.5, delay: i * 0.2, repeat: Infinity, ease: "linear" }}
+          animate={lowPower ? undefined : { x: ["-100%", "100%"] }}
+          transition={lowPower ? undefined : { duration: 3 + i * 0.5, delay: i * 0.2, repeat: Infinity, ease: "linear" }}
         />
       ))}
     </motion.div>
@@ -73,8 +73,8 @@ function CornerBracket({ x, y, color, flipX, flipY }: {
   );
 }
 
-function NeuralNode({ x, y, color, size = 4 }: {
-  x: string; y: string; color: string; size?: number;
+function NeuralNode({ x, y, color, size = 4, lowPower }: {
+  x: string; y: string; color: string; size?: number; lowPower?: boolean;
 }) {
   return (
     <motion.div
@@ -84,8 +84,8 @@ function NeuralNode({ x, y, color, size = 4 }: {
         background: color,
         boxShadow: `0 0 ${size * 3}px ${color}60`,
       }}
-      animate={{ scale: [1, 1.5, 1], opacity: [0.4, 0.8, 0.4] }}
-      transition={{ duration: 2 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" }}
+      animate={lowPower ? undefined : { scale: [1, 1.5, 1], opacity: [0.4, 0.8, 0.4] }}
+      transition={lowPower ? undefined : { duration: 2 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" }}
     />
   );
 }
@@ -122,24 +122,24 @@ export function HolographicOverlay({ lowPower }: { lowPower?: boolean }) {
       <CornerBracket x="95%" y="85%" color="#818cf8" flipX flipY />
 
       {/* Data rings - scroll sections */}
-      <DataRing x="8%" y="20%" size={120} color="rgba(56,189,248,0.15)" delay={0.5} />
-      <DataRing x="85%" y="40%" size={80} color="rgba(129,140,248,0.12)" delay={0.8} />
-      <DataRing x="10%" y="60%" size={100} color="rgba(56,189,248,0.1)" delay={1.2} />
-      <DataRing x="80%" y="75%" size={140} color="rgba(168,85,247,0.08)" delay={1.5} />
+      <DataRing x="8%" y="20%" size={120} color="rgba(56,189,248,0.15)" delay={0.5} lowPower={lowPower} />
+      <DataRing x="85%" y="40%" size={80} color="rgba(129,140,248,0.12)" delay={0.8} lowPower={lowPower} />
+      <DataRing x="10%" y="60%" size={100} color="rgba(56,189,248,0.1)" delay={1.2} lowPower={lowPower} />
+      <DataRing x="80%" y="75%" size={140} color="rgba(168,85,247,0.08)" delay={1.5} lowPower={lowPower} />
 
       {/* Data streams */}
-      <DataStream x="15%" y="25%" width={120} height={80} color="#38bdf8" delay={0.3} />
-      <DataStream x="75%" y="55%" width={80} height={60} color="#818cf8" delay={0.6} />
-      <DataStream x="20%" y="70%" width={100} height={100} color="#a78bfa" delay={0.9} />
+      <DataStream x="15%" y="25%" width={120} height={80} color="#38bdf8" delay={0.3} lowPower={lowPower} />
+      <DataStream x="75%" y="55%" width={80} height={60} color="#818cf8" delay={0.6} lowPower={lowPower} />
+      <DataStream x="20%" y="70%" width={100} height={100} color="#a78bfa" delay={0.9} lowPower={lowPower} />
 
       {/* Neural network nodes */}
-      <NeuralNode x="12%" y="18%" color="#38bdf8" />
-      <NeuralNode x="18%" y="22%" color="#818cf8" />
-      <NeuralNode x="22%" y="16%" color="#a78bfa" />
-      <NeuralNode x="82%" y="38%" color="#38bdf8" />
-      <NeuralNode x="88%" y="42%" color="#818cf8" />
-      <NeuralNode x="15%" y="58%" color="#a78bfa" />
-      <NeuralNode x="85%" y="72%" color="#38bdf8" />
+      <NeuralNode x="12%" y="18%" color="#38bdf8" lowPower={lowPower} />
+      <NeuralNode x="18%" y="22%" color="#818cf8" lowPower={lowPower} />
+      <NeuralNode x="22%" y="16%" color="#a78bfa" lowPower={lowPower} />
+      <NeuralNode x="82%" y="38%" color="#38bdf8" lowPower={lowPower} />
+      <NeuralNode x="88%" y="42%" color="#818cf8" lowPower={lowPower} />
+      <NeuralNode x="15%" y="58%" color="#a78bfa" lowPower={lowPower} />
+      <NeuralNode x="85%" y="72%" color="#38bdf8" lowPower={lowPower} />
 
       {/* Neural connections */}
       <NeuralConnection x1={200} y1={300} x2={290} y2={340} color="#38bdf8" />
