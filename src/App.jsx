@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import SpaceBackground from './components/SpaceBackground'
 import HeroSection from './components/HeroSection'
 import CrewSection from './components/CrewSection'
@@ -153,6 +153,10 @@ const CREW_DATA = [
 
 export default function App() {
   const [selectedMember, setSelectedMember] = useState(CREW_DATA[0])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const crewRef = useRef(null)
   const dossierRef = useRef(null)
 

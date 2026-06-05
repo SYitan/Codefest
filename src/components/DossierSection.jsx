@@ -171,13 +171,11 @@ function AnimatedContent({ member, onBack }) {
 
 export default function DossierSection({ member, onBack }) {
   const sectionRef = useRef(null)
-  const isFirstRender = useRef(true)
+  const prevMember = useRef(member)
 
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false
-      return
-    }
+    if (prevMember.current === member) return
+    prevMember.current = member
     if (member) {
       requestAnimationFrame(() => {
         sectionRef.current?.scrollIntoView({ behavior: 'smooth' })
