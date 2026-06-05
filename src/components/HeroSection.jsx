@@ -1,6 +1,20 @@
 import useScrollReveal from '../hooks/useScrollReveal'
 
-const starPath = 'M14 0 C14 8 20 14 28 14 C20 14 14 20 14 28 C14 20 8 14 0 14 C8 14 14 8 14 0Z'
+const starPath = (() => {
+  const pts = []
+  const cx = 14, cy = 14, outer = 14, inner = 5.5, diag = 9
+  for (let i = 0; i < 16; i++) {
+    const angle = (i / 16) * Math.PI * 2 - Math.PI / 2
+    if (i % 2 === 0) {
+      const isDiag = i % 4 !== 0
+      const r = isDiag ? diag : outer
+      pts.push(`${(cx + Math.cos(angle) * r).toFixed(1)},${(cy + Math.sin(angle) * r).toFixed(1)}`)
+    } else {
+      pts.push(`${(cx + Math.cos(angle) * inner).toFixed(1)},${(cy + Math.sin(angle) * inner).toFixed(1)}`)
+    }
+  }
+  return `M${pts.join(' L')} Z`
+})()
 
 const constellationDots = [
   { cx: 85, cy: 10, label: 'Polaris' },
@@ -62,7 +76,7 @@ export default function HeroSection({ onExplore }) {
       >
         {/* Star */}
         <div className="flex justify-center mb-6 animate-star-fade" style={{ animation: 'fadeSlideIn 0.6s ease-out both' }}>
-          <svg width="28" height="28" viewBox="0 0 28 28" className="animate-star-pulse" style={{ filter: 'drop-shadow(0 0 12px #22d3ee)' }}>
+          <svg width="64" height="64" viewBox="0 0 28 28" className="animate-star-pulse mb-2" style={{ filter: 'drop-shadow(0 0 20px #22d3ee)' }}>
             <path d={starPath} fill="white" />
           </svg>
         </div>

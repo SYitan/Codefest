@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 const levelColors = {
   Experto: 'bg-green-900/60 border-green-400/40 text-green-300',
@@ -195,6 +196,7 @@ function AnimatedContent({ member, onBack }) {
 export default function DossierSection({ member, onBack }) {
   const sectionRef = useRef(null)
   const prevMember = useRef(member)
+  const [containerRef, visible] = useScrollReveal()
 
   useEffect(() => {
     if (prevMember.current === member) return
@@ -226,7 +228,12 @@ export default function DossierSection({ member, onBack }) {
           : {}
       }
     >
-      <div className="max-w-6xl mx-auto backdrop-blur-xl bg-slate-900/50 rounded-2xl p-6 md:p-8 border border-slate-700/40 relative">
+      <div
+        ref={containerRef}
+        className={`max-w-6xl mx-auto backdrop-blur-xl bg-slate-900/50 rounded-2xl p-6 md:p-8 border border-slate-700/40 relative transition-all duration-700 ${
+          visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
+      >
         {member ? (
           <AnimatedContent key={member.id} member={member} onBack={onBack} />
         ) : (
