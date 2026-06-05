@@ -1,19 +1,21 @@
 import { useRef, useEffect } from "react";
 import { useScroll, useMotionValue } from "motion/react";
 import { Canvas } from "@react-three/fiber";
-import { GalaxyAtmosphere } from "./GalaxyAtmosphere";
-import { NebulaRibbons } from "./NebulaRibbons";
-import { ForegroundDust } from "./ForegroundDust";
+import { IntelligenceNetwork } from "./IntelligenceNetwork";
+import { AtmosphericHaze } from "./AtmosphericHaze";
+import { CoreEnergy } from "./CoreEnergy";
 
-function Scene({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
+function Scene({ scrollRef, progressRef }: {
+  scrollRef: React.MutableRefObject<number>;
+  progressRef: React.MutableRefObject<number>;
+}) {
   return (
     <>
-      <ambientLight intensity={0.1} />
-      <directionalLight position={[4, 3, 5]} intensity={0.15} color="#6889ff" />
-      <fog attach="fog" args={["#030014", 6, 20]} />
-      <GalaxyAtmosphere scrollRef={scrollRef} />
-      <NebulaRibbons scrollRef={scrollRef} />
-      <ForegroundDust scrollRef={scrollRef} />
+      <ambientLight intensity={0.08} />
+      <fog attach="fog" args={["#030014", 5, 25]} />
+      <AtmosphericHaze progressRef={progressRef} />
+      <IntelligenceNetwork progressRef={progressRef} />
+      <CoreEnergy progressRef={progressRef} />
     </>
   );
 }
@@ -21,6 +23,7 @@ function Scene({ scrollRef }: { scrollRef: React.MutableRefObject<number> }) {
 export function CosmicBackground() {
   const { scrollY } = useScroll();
   const scrollRef = useRef(0);
+  const progressRef = useRef(0);
   const smoothY = useMotionValue(0);
 
   useEffect(() => {
@@ -33,6 +36,8 @@ export function CosmicBackground() {
   useEffect(() => {
     const unsubscribe = smoothY.on("change", (latest) => {
       scrollRef.current = latest;
+      const maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
+      progressRef.current = Math.min(Math.max(0, latest / maxScroll), 1);
     });
     return unsubscribe;
   }, [smoothY]);
@@ -43,7 +48,7 @@ export function CosmicBackground() {
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>
       <Canvas
-        camera={{ position: [0, 0.5, 6], fov: 60, near: 0.1, far: 40 }}
+        camera={{ position: [0, 0.3, 6], fov: 58, near: 0.1, far: 40 }}
         dpr={dpr}
         gl={{
           antialias: false,
@@ -52,7 +57,7 @@ export function CosmicBackground() {
         }}
         style={{ background: "transparent", width: "100%", height: "100%" }}
       >
-        <Scene scrollRef={scrollRef} />
+        <Scene scrollRef={scrollRef} progressRef={progressRef} />
       </Canvas>
     </div>
   );
