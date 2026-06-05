@@ -35,7 +35,7 @@ function createSprite() {
   return new THREE.CanvasTexture(canvas);
 }
 
-export function SpiralGalaxy() {
+export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefObject<number> }) {
   const groupRef = useRef<THREE.Group>(null!);
   const armsRef = useRef<THREE.Points>(null!);
   const coreRef = useRef<THREE.Points>(null!);
@@ -121,8 +121,14 @@ export function SpiralGalaxy() {
     timeRef.current += delta;
     const t = timeRef.current;
 
-    groupRef.current.rotation.y += delta * 0.03;
-    groupRef.current.rotation.x = Math.sin(t * 0.04) * 0.02;
+    const progress = progressRef?.current ?? 0;
+    const scrollRotate = progress * 0.8;
+    groupRef.current.rotation.y += delta * (0.03 + progress * 0.02);
+    groupRef.current.rotation.x = Math.sin(t * 0.04) * (0.02 + progress * 0.03);
+    const orbitY = Math.sin(scrollRotate) * 0.2;
+    const orbitX = Math.cos(scrollRotate) * 0.15;
+    groupRef.current.position.x = orbitX;
+    groupRef.current.position.z = -0.5 + orbitY;
 
     if (armsRef.current) {
       const sizes = armsRef.current.geometry.attributes.size.array as Float32Array;

@@ -307,7 +307,7 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 <div className="flex items-center gap-6 mb-6">
                   <div className="relative flex-shrink-0">
                     <motion.div
-                      className="w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden"
+                      className="w-28 h-28 md:w-32 md:h-32 rounded-xl overflow-hidden"
                       style={{ border: `1px solid ${member.color}40`, boxShadow: `0 0 50px ${member.color}15` }}
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -497,7 +497,7 @@ export function TeamSection() {
   };
 
   return (
-    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(5,5,16,0.88) 0%, rgba(4,4,28,0.75) 50%, rgba(5,5,16,0.88) 100%)" }}>
+    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(5,5,16,0.65) 0%, rgba(4,4,28,0.5) 50%, rgba(5,5,16,0.65) 100%)" }}>
       <motion.div style={{ y: starY }}>
         <StarField count={80} />
       </motion.div>

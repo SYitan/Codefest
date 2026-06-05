@@ -49,9 +49,9 @@ function CapabilitiesSection() {
       <div ref={sectionRef}>
         <motion.div
           ref={inViewRef}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <SectionLabel>CAPACIDADES DEL EQUIPO</SectionLabel>
           <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-5" style={{ y: cardY }}>
@@ -67,9 +67,9 @@ function CapabilitiesSection() {
                     backdropFilter: "blur(12px) saturate(1.1)",
                     boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
                   }}
-                  initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                  transition={{ delay: 0.1 + i * 0.1, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+                  transition={{ delay: 0.1 + i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                   whileHover={{
                     scale: 1.04, y: -6, borderColor: `${color}40`,
                     boxShadow: `0 16px 48px ${color}20, 0 0 0 1px ${color}30`,
@@ -129,9 +129,9 @@ function MetricsSection() {
       <ShootingStars />
       <motion.div
         ref={ref}
-        initial={{ opacity: 0, y: 16 }}
+        initial={{ opacity: 0, y: 24 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="grid grid-cols-4 gap-8 max-w-3xl mx-auto relative"
       >
         <GlowDot size={4} color="#38bdf8" style={{ left: "-20px", top: "50%" }} />
@@ -141,9 +141,9 @@ function MetricsSection() {
           <motion.div
             key={stat.label}
             className="text-center relative group"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={inView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.15 + i * 0.08, duration: 0.3 }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+            transition={{ delay: 0.15 + i * 0.1, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.div
               className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
@@ -180,13 +180,30 @@ function MetricsSection() {
 export default function App() {
   return (
     <div
-      className="min-h-screen"
+      className="min-h-screen relative"
       style={{
         fontFamily: "'Space Grotesk', 'Inter', system-ui, sans-serif",
-        background: "transparent",
+        background: "#030014",
         colorScheme: "dark",
       }}
     >
+      {/* Aurora gradient overlay */}
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{ zIndex: 0 }}
+      >
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 100% 60% at 20% 0%, rgba(120,0,200,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse 80% 50% at 80% 30%, rgba(0,180,255,0.08) 0%, transparent 50%),
+              radial-gradient(ellipse 60% 40% at 50% 60%, rgba(200,0,180,0.06) 0%, transparent 50%),
+              radial-gradient(ellipse 90% 50% at 30% 80%, rgba(0,255,180,0.04) 0%, transparent 50%)
+            `,
+          }}
+        />
+      </div>
       <GrainOverlay />
       <Suspense fallback={null}>
         <CosmicBackground />

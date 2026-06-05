@@ -1,17 +1,38 @@
+import { useRef, useEffect } from "react";
+import { useScroll, useMotionValue } from "motion/react";
 import { Canvas } from "@react-three/fiber";
 import { SpiralGalaxy } from "./SpiralGalaxy";
 
-function Scene() {
+function Scene({ progressRef }: { progressRef: React.MutableRefObject<number> }) {
   return (
     <>
       <ambientLight intensity={0.03} />
-      <fog attach="fog" args={["#030014", 2, 18]} />
-      <SpiralGalaxy />
+      <fog attach="fog" args={["#030014", 1.5, 16]} />
+      <SpiralGalaxy progressRef={progressRef} />
     </>
   );
 }
 
 export function CosmicBackground() {
+  const { scrollY } = useScroll();
+  const progressRef = useRef(0);
+  const smoothY = useMotionValue(0);
+
+  useEffect(() => {
+    const unsubscribe = scrollY.on("change", (latest) => {
+      smoothY.set(latest);
+    });
+    return unsubscribe;
+  }, [scrollY, smoothY]);
+
+  useEffect(() => {
+    const unsubscribe = smoothY.on("change", (latest) => {
+      const maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
+      progressRef.current = Math.min(Math.max(0, latest / maxScroll), 1);
+    });
+    return unsubscribe;
+  }, [smoothY]);
+
   const dpr = typeof window !== "undefined" && window.devicePixelRatio > 2
     ? [0.6, 1] : [0.8, 1.2];
 
@@ -27,7 +48,7 @@ export function CosmicBackground() {
         }}
         style={{ background: "transparent", width: "100%", height: "100%" }}
       >
-        <Scene />
+        <Scene progressRef={progressRef} />
       </Canvas>
     </div>
   );
