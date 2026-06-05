@@ -152,7 +152,6 @@ const CREW_DATA = [
       "Implementación de medidas de seguridad.",
     ],
 
-    
     logros: [
       "Certificación CS50x de Harvard.",
       "Formación en criptografía aplicada.",
@@ -169,7 +168,7 @@ const CREW_DATA = [
     photo: diegoImg,
     name: "Diego Alejandro Rojas Panteve",
     shortName: "Diego",
-    rol: "Desarrollador Full Stack & Estudiante de Ingeniería de Software",
+    rol: "Full-Stack Engineer & Software Engineering student",
     perfil:
       "Estudiante de Ingeniería de Software enfocado en desarrollo full stack, con experiencia real construyendo sistemas completos desde el backend hasta interfaces modernas. Apasionado por la arquitectura de software, la ciberseguridad y la creación de productos funcionales que resuelvan problemas reales.",
     skills: [
@@ -308,7 +307,6 @@ const CREW_DATA = [
       "Optimización de flujos operativos digitales.",
     ],
 
-    
     logros: [
       "Participación en múltiples proyectos empresariales reales.",
       "Implementación de sistemas CRM y gestión de información.",

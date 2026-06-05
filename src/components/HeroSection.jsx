@@ -78,7 +78,7 @@ export default function HeroSection({ onExplore }) {
 
         {/* Title */}
         <h1
-          className="text-7xl md:text-9xl font-bold tracking-tighter text-white mb-4"
+          className="text-7xl md:text-9xl font-bold tracking-tighter text-white mb-4 uppercase tracking-widest"
           style={{
             textShadow: '0 0 40px #0d9488',
             animation: 'fadeSlideIn 0.6s 0.3s ease-out both',
