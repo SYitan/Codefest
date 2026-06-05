@@ -4,14 +4,16 @@ const levelColors = {
   Experto: 'bg-green-900/60 border-green-400/40 text-green-300',
   Avanzado: 'bg-cyan-900/60 border-cyan-400/40 text-cyan-300',
   Intermedio: 'bg-slate-700/60 border-slate-500/40 text-slate-300',
+  Basico: 'bg-zinc-800/60 border-zinc-600/40 text-zinc-400',
 }
 
 function getLevel(skill) {
   if (skill.level) return skill.level
   if (skill.value != null) {
-    if (skill.value >= 80) return 'Experto'
-    if (skill.value >= 65) return 'Avanzado'
-    return 'Intermedio'
+    if (skill.value >= 75) return 'Experto'
+    if (skill.value >= 50) return 'Avanzado'
+    if (skill.value >= 25) return 'Intermedio'
+    return 'Basico'
   }
   return 'Intermedio'
 }
@@ -172,21 +174,6 @@ function AnimatedContent({ member, onBack }) {
               </li>
             ))}
           </ul>
-
-          <div
-            className="rounded-lg p-4 mb-6 text-sm leading-relaxed"
-            style={{
-              backgroundColor: `${member.color}10`,
-              border: `1px solid ${member.color}25`,
-            }}
-          >
-            <p className="text-xs text-slate-500 tracking-[0.2em] uppercase font-mono mb-2">
-              VALOR EN EQUIPO
-            </p>
-            <p className="text-white/80 italic">
-              "{member.valorEquipo}"
-            </p>
-          </div>
 
           <h3 className="text-xs text-slate-500 tracking-[0.2em] uppercase font-mono mb-4">
             LOGROS DESTACADOS

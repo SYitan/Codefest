@@ -87,8 +87,6 @@ const CREW_DATA = [
       "Experiencia en proyectos de gestión de datos y sistemas operativos.",
       "Construcción de soluciones web enfocadas en eficiencia y escalabilidad.",
     ],
-    valorEquipo:
-      "Conecta tecnologías y personas para construir soluciones completas y funcionales.",
     color: "#6366f1",
   },
   {
@@ -154,9 +152,7 @@ const CREW_DATA = [
       "Implementación de medidas de seguridad.",
     ],
 
-    valorEquipo:
-      "Es el motor técnico detrás de la arquitectura, automatización y seguridad del proyecto. Convierte ideas complejas en soluciones escalables e inteligentes, aportando visión estratégica, capacidad analítica y una fuerte orientación a la innovación.",
-
+    
     logros: [
       "Certificación CS50x de Harvard.",
       "Formación en criptografía aplicada.",
@@ -171,52 +167,77 @@ const CREW_DATA = [
   {
     id: 3,
     photo: diegoImg,
-    name: "Diego Panteve",
+    name: "Diego Alejandro Rojas Panteve",
     shortName: "Diego",
-    rol: "Frontend & Mobile Engineer",
+    rol: "Desarrollador Full Stack & Estudiante de Ingeniería de Software",
     perfil:
-      "Estudiante enfocado en desarrollo frontend y mobile, construcción de interfaces modernas y experiencias de usuario intuitivas.",
+      "Estudiante de Ingeniería de Software enfocado en desarrollo full stack, con experiencia real construyendo sistemas completos desde el backend hasta interfaces modernas. Apasionado por la arquitectura de software, la ciberseguridad y la creación de productos funcionales que resuelvan problemas reales.",
     skills: [
-      { label: "Frontend", level: "Avanzado" },
-      { label: "Mobile Development", level: "Avanzado" },
-      { label: "UI/UX Design", level: "Intermedio" },
-      { label: "TypeScript", level: "Avanzado" },
-      { label: "APIs REST", level: "Avanzado" },
+      { label: "Dominio Técnico", value: 82 },
+      { label: "Diseño de Sistemas", value: 80 },
+      { label: "Resolución de Problemas", value: 85 },
+      { label: "Conocimiento en IA", value: 70 },
+      { label: "Experiencia en Desarrollo", value: 78 },
     ],
     experiencia: [
-      "Desarrollo de interfaces de usuario con React y React Native.",
-      "Construcción de aplicaciones mobile funcionales con navegación.",
-      "Maquetación y prototipado con HTML5, CSS3 y TypeScript.",
-      "Consumo e integración de APIs REST en aplicaciones.",
-      "Control de versiones y trabajo colaborativo con Git.",
-    ],
-    tecnologias: [
-      "React",
-      "React Native",
-      "TypeScript",
-      "Español (Nativo)",
-      "Inglés (Técnico)",
-    ],
-    logros: [
-      "App mobile con navegación completa y consumo de APIs.",
-      "Sistema de componentes reutilizables para múltiples proyectos.",
-      "Interfaces responsivas implementadas en producción.",
+      "Desarrollo de aplicaciones desktop con Electron y Angular 19+.",
+      "Construcción de APIs REST con NestJS y Prisma ORM.",
+      "Gestión de bases de datos PostgreSQL con migraciones y optimización de queries.",
+      "Implementación de arquitecturas con NgRx Signal Store y Signals.",
+      "Migración de directorio activo local a la nube con Microsoft Intune.",
+      "Desarrollo de prototipo con IA para traducción en tiempo real durante llamadas.",
+      "Soporte técnico de hardware, software y red mediante sistema de tickets.",
+      "Gestión de infraestructura tecnológica empresarial.",
     ],
     fortalezas: [
-      "React",
-      "React Native",
-      "TypeScript",
-      "UI/UX",
+      "Desarrollo Full Stack",
+      "Arquitectura de Software",
+      "Backend con NestJS",
+      "Frontend con Angular",
+      "Resolución de Problemas",
+      "Ciberseguridad Básica",
+      "Aprendizaje Autónomo",
       "Trabajo en Equipo",
     ],
-    contribuciones: [
-      "Desarrollo de interfaces modulares y reutilizables.",
-      "Implementación de navegación y lógica en apps mobile.",
-      "Optimización de rendimiento en aplicaciones frontend.",
+    tecnologias: [
+      "Angular 19+",
+      "NestJS",
+      "Electron",
+      "PostgreSQL",
+      "Prisma ORM",
+      "TypeScript",
+      "JavaScript",
+      "Node.js",
+      "Express",
+      "HTML5",
+      "CSS3",
+      "TailwindCSS",
+      "DaisyUI",
+      "NgRx Signal Store",
+      "Git",
+      "GitHub",
+      "MongoDB",
+      "SQL",
+      "Microsoft Intune",
+      "Python",
+      "Java",
+      "Docker",
     ],
-    valorEquipo:
-      "Traduce diseños en interfaces funcionales y experiencias de usuario fluidas.",
-    color: "rgb(27, 231, 54)",
+    contribuciones: [
+      "Diseño e implementación de arquitecturas full stack escalables.",
+      "Construcción de sistemas POS completos con módulos de caja, gastos e inventario.",
+      "Implementación de autenticación JWT y guards de seguridad.",
+      "Desarrollo de componentes reutilizables y directivas personalizadas en Angular.",
+    ],
+    logros: [
+      "Sistema POS desktop funcional con Electron, Angular y NestJS.",
+      "Certificación B2 de inglés Cambridge Linguaskill.",
+      "Técnico en Programación y Servicios para la Nube — SENA.",
+      "Prototipo de IA para traducción en tiempo real en entorno empresarial.",
+      "Migración exitosa de infraestructura a la nube en RSec.",
+      "Curso de SQL con MinTIC y Universidad Distrital (50h).",
+    ],
+    color: "#1be736",
   },
   {
     id: 4,
@@ -287,9 +308,7 @@ const CREW_DATA = [
       "Optimización de flujos operativos digitales.",
     ],
 
-    valorEquipo:
-      "Aporta una combinación de desarrollo Full-Stack, automatización e Inteligencia Artificial que permite transformar procesos empresariales en soluciones digitales eficientes, escalables y centradas en el usuario.",
-
+    
     logros: [
       "Participación en múltiples proyectos empresariales reales.",
       "Implementación de sistemas CRM y gestión de información.",
