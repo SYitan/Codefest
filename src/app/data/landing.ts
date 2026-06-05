@@ -12,11 +12,9 @@ import matheusImg from "../../imports/matheus.webp";
 import ianImg from "../../imports/ian.webp";
 
 export const mission = {
-  badge: "Misión Activa · 2026",
-  title: "MISIÓN:",
-  subtitle: "CODEFEST AD ASTRA",
-  year: "2026",
-  description: "Construyendo Agentes Inteligentes para un Impacto Real",
+  badge: "MISIÓN: CODEFEST AD ASTRA 2026",
+  title: "Construimos soluciones reales",
+  description: "mediante IA, automatización e ingeniería de software.",
 };
 
 export const heroTags = [
@@ -65,12 +63,10 @@ export interface CrewMember {
 }
 
 export const teamCapabilities = [
-  "IA Generativa",
+  "IA",
+  "Full Stack",
+  "Mobile",
   "Automatización",
-  "Desarrollo Full Stack",
-  "Aplicaciones Móviles",
-  "APIs e Integraciones",
-  "Bases de Datos",
 ];
 
 export const teamStats = {
@@ -83,47 +79,49 @@ export const teamStats = {
 export const crewMembers: CrewMember[] = [
   {
     id: 0,
-    photo: matheusImg,
-    name: "Matheus Aponte",
-    shortName: "Matheus",
-    rol: "AI Systems Architect",
-    perfil: "Arquitectura de IA, sistemas inteligentes y prototipos funcionales.",
-    focus: "Arquitectura de IA y Sistemas Inteligentes",
-    specialties: ["Python", "Java", "OpenAI", "Arquitectura IA"],
-    idiomas: ["Español (Nativo)", "Inglés (Avanzado)"],
+    photo: yitanImg,
+    name: "Brian Stiven Alba Celis",
+    shortName: "Brian",
+    rol: "Lead Full Stack Developer",
+    perfil: "Productos SaaS, IA aplicada y arquitectura full stack.",
+    focus: "Producto, Full Stack y Liderazgo Técnico",
+    specialties: ["React", "Node.js", "IA", "Mobile"],
+    idiomas: ["Español (Nativo)", "Inglés (Intermedio)"],
     skills: [
-      { label: "IA y Machine Learning", level: "Experto" },
-      { label: "Arquitectura de Sistemas", level: "Avanzado" },
-      { label: "Investigación Técnica", level: "Avanzado" },
-      { label: "Resolución de Problemas", level: "Avanzado" },
-      { label: "Desarrollo de Software", level: "Sólido" },
+      { label: "Full Stack", level: "Experto" },
+      { label: "Liderazgo Técnico", level: "Avanzado" },
+      { label: "IA Aplicada", level: "Avanzado" },
+      { label: "Arquitectura Frontend", level: "Avanzado" },
+      { label: "Automatización", level: "Avanzado" },
     ],
     techGroups: [
-      { category: "Lenguajes", items: ["Python", "Java", "SQL"] },
-      { category: "Frontend", items: ["React"] },
-      { category: "IA", items: ["OpenAI APIs", "Prompt Engineering"] },
-      { category: "Herramientas", items: ["Git", "APIs REST"] },
+      { category: "Frontend", items: ["Angular", "TypeScript", "JavaScript"] },
+      { category: "Backend", items: ["Node.js", "APIs REST"] },
+      { category: "Bases de Datos", items: ["PostgreSQL", "Supabase"] },
+      { category: "Automatización", items: ["Power Platform", "Power Automate"] },
+      { category: "Herramientas", items: ["Git", "GitHub", "Vercel", "Figma"] },
     ],
     stats: [
-      { label: "Proyectos IA", value: "4+" },
-      { label: "Tecnologías", value: "10+" },
-      { label: "Prototipos", value: "3+" },
-      { label: "Modelos", value: "5+" },
+      { label: "Proyectos", value: "8+" },
+      { label: "Tecnologías", value: "15+" },
+      { label: "Apps Web", value: "6+" },
+      { label: "Apps Móviles", value: "2+" },
     ],
     experiencia: [
-      "Investigación de agentes inteligentes y sus aplicaciones.",
-      "Integración de modelos de IA en prototipos funcionales.",
-      "Diseño de arquitecturas para aplicaciones modernas.",
-      "Desarrollo de prototipos basados en IA.",
-      "Evaluación de tecnologías emergentes para proyectos.",
+      "Desarrollo de plataformas de gestión con interfaces modernas, paneles administrativos y gestión de usuarios.",
+      "Automatización de procesos empresariales mediante Power Platform, Power Automate y flujos inteligentes.",
+      "Construcción de soluciones académicas para gestión estudiantil, asistencia y seguimiento de indicadores.",
+      "Implementación de herramientas basadas en IA generativa, asistentes inteligentes y prompt engineering.",
+      "Integración de APIs REST, bases de datos PostgreSQL y servicios externos.",
     ],
     valorEquipo:
-      "Convierte requerimientos complejos en soluciones funcionales y escalables, conectando tecnología, producto y experiencia de usuario.",
+      "Convierte necesidades del mundo real en productos de software funcionales, combinando visión de producto, solidez técnica y automatización.",
     logros: [
-      "Prototipo funcional de agente con IA.",
-      "Integración temprana de LLMs en proyectos académicos.",
+      "Aplicación móvil PWA con Angular y TypeScript.",
+      "Automatización de procesos empresariales con Power Platform.",
+      "Prototipos funcionales integrando IA generativa en flujos de trabajo.",
     ],
-    color: "#f97316",
+    color: "#06b6d4",
   },
   {
     id: 1,
@@ -171,52 +169,6 @@ export const crewMembers: CrewMember[] = [
   },
   {
     id: 2,
-    photo: yitanImg,
-    name: "Brian Stiven Alba Celis",
-    shortName: "Brian",
-    rol: "Lead Full Stack Developer",
-    perfil: "Productos SaaS, IA aplicada y arquitectura full stack.",
-    focus: "Producto, Full Stack y Liderazgo Técnico",
-    specialties: ["React", "Node.js", "IA", "Mobile"],
-    idiomas: ["Español (Nativo)", "Inglés (Intermedio)"],
-    skills: [
-      { label: "Full Stack", level: "Experto" },
-      { label: "Liderazgo Técnico", level: "Avanzado" },
-      { label: "IA Aplicada", level: "Avanzado" },
-      { label: "Arquitectura Frontend", level: "Avanzado" },
-      { label: "Automatización", level: "Avanzado" },
-    ],
-    techGroups: [
-      { category: "Frontend", items: ["Angular", "TypeScript", "JavaScript"] },
-      { category: "Backend", items: ["Node.js", "APIs REST"] },
-      { category: "Bases de Datos", items: ["PostgreSQL", "Supabase"] },
-      { category: "Automatización", items: ["Power Platform", "Power Automate"] },
-      { category: "Herramientas", items: ["Git", "GitHub", "Vercel", "Figma"] },
-    ],
-    stats: [
-      { label: "Proyectos", value: "8+" },
-      { label: "Tecnologías", value: "15+" },
-      { label: "Apps Web", value: "6+" },
-      { label: "Apps Móviles", value: "2+" },
-    ],
-    experiencia: [
-      "Desarrollo de plataformas de gestión con interfaces modernas, paneles administrativos y gestión de usuarios.",
-      "Automatización de procesos empresariales mediante Power Platform, Power Automate y flujos inteligentes.",
-      "Construcción de soluciones académicas para gestión estudiantil, asistencia y seguimiento de indicadores.",
-      "Implementación de herramientas basadas en IA generativa, asistentes inteligentes y prompt engineering.",
-      "Integración de APIs REST, bases de datos PostgreSQL y servicios externos.",
-    ],
-    valorEquipo:
-      "Convierte necesidades del mundo real en productos de software funcionales, combinando visión de producto, solidez técnica y automatización.",
-    logros: [
-      "Aplicación móvil PWA con Angular y TypeScript.",
-      "Automatización de procesos empresariales con Power Platform.",
-      "Prototipos funcionales integrando IA generativa en flujos de trabajo.",
-    ],
-    color: "#06b6d4",
-  },
-  {
-    id: 3,
     photo: diegoImg,
     name: "Diego Alejandro Rojas Panteve",
     shortName: "Diego",
@@ -266,6 +218,50 @@ export const crewMembers: CrewMember[] = [
       "Curso de SQL con MinTIC y Universidad Distrital (50h).",
     ],
     color: "#22c55e",
+  },
+  {
+    id: 3,
+    photo: matheusImg,
+    name: "Matheus Aponte",
+    shortName: "Matheus",
+    rol: "AI Systems Architect",
+    perfil: "Arquitectura de IA, sistemas inteligentes y prototipos funcionales.",
+    focus: "Arquitectura de IA y Sistemas Inteligentes",
+    specialties: ["Python", "Java", "OpenAI", "Arquitectura IA"],
+    idiomas: ["Español (Nativo)", "Inglés (Avanzado)"],
+    skills: [
+      { label: "IA y Machine Learning", level: "Experto" },
+      { label: "Arquitectura de Sistemas", level: "Avanzado" },
+      { label: "Investigación Técnica", level: "Avanzado" },
+      { label: "Resolución de Problemas", level: "Avanzado" },
+      { label: "Desarrollo de Software", level: "Sólido" },
+    ],
+    techGroups: [
+      { category: "Lenguajes", items: ["Python", "Java", "SQL"] },
+      { category: "Frontend", items: ["React"] },
+      { category: "IA", items: ["OpenAI APIs", "Prompt Engineering"] },
+      { category: "Herramientas", items: ["Git", "APIs REST"] },
+    ],
+    stats: [
+      { label: "Proyectos IA", value: "4+" },
+      { label: "Tecnologías", value: "10+" },
+      { label: "Prototipos", value: "3+" },
+      { label: "Modelos", value: "5+" },
+    ],
+    experiencia: [
+      "Investigación de agentes inteligentes y sus aplicaciones.",
+      "Integración de modelos de IA en prototipos funcionales.",
+      "Diseño de arquitecturas para aplicaciones modernas.",
+      "Desarrollo de prototipos basados en IA.",
+      "Evaluación de tecnologías emergentes para proyectos.",
+    ],
+    valorEquipo:
+      "Convierte requerimientos complejos en soluciones funcionales y escalables, conectando tecnología, producto y experiencia de usuario.",
+    logros: [
+      "Prototipo funcional de agente con IA.",
+      "Integración temprana de LLMs en proyectos académicos.",
+    ],
+    color: "#f97316",
   },
 ];
 
