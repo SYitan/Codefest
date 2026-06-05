@@ -1,49 +1,24 @@
-import { useRef, useEffect } from "react";
-import { useScroll, useMotionValue } from "motion/react";
 import { Canvas } from "@react-three/fiber";
 import { SpiralGalaxy } from "./SpiralGalaxy";
-import { AtmosphericHaze } from "./AtmosphericHaze";
 
-function Scene({ progressRef }: {
-  progressRef: React.MutableRefObject<number>;
-}) {
+function Scene() {
   return (
     <>
-      <ambientLight intensity={0.05} />
-      <fog attach="fog" args={["#030014", 3, 20]} />
-      <AtmosphericHaze progressRef={progressRef} />
-      <SpiralGalaxy progressRef={progressRef} />
+      <ambientLight intensity={0.03} />
+      <fog attach="fog" args={["#030014", 2, 18]} />
+      <SpiralGalaxy />
     </>
   );
 }
 
 export function CosmicBackground() {
-  const { scrollY } = useScroll();
-  const progressRef = useRef(0);
-  const smoothY = useMotionValue(0);
-
-  useEffect(() => {
-    const unsubscribe = scrollY.on("change", (latest) => {
-      smoothY.set(latest);
-    });
-    return unsubscribe;
-  }, [scrollY, smoothY]);
-
-  useEffect(() => {
-    const unsubscribe = smoothY.on("change", (latest) => {
-      const maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
-      progressRef.current = Math.min(Math.max(0, latest / maxScroll), 1);
-    });
-    return unsubscribe;
-  }, [smoothY]);
-
   const dpr = typeof window !== "undefined" && window.devicePixelRatio > 2
     ? [0.6, 1] : [0.8, 1.2];
 
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>
       <Canvas
-        camera={{ position: [0, 1.5, 5.5], fov: 55, near: 0.1, far: 40 }}
+        camera={{ position: [0, 1.2, 5], fov: 50, near: 0.1, far: 30 }}
         dpr={dpr}
         gl={{
           antialias: false,
@@ -52,7 +27,7 @@ export function CosmicBackground() {
         }}
         style={{ background: "transparent", width: "100%", height: "100%" }}
       >
-        <Scene progressRef={progressRef} />
+        <Scene />
       </Canvas>
     </div>
   );
