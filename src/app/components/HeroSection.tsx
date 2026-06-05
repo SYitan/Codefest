@@ -1,27 +1,34 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { StarField, NebulaLayer, SpaceGrid, Planet } from "./SpaceElements";
-import { ShootingStars } from "./Backgrounds";
+import { ShootingStars, ScrollFadeOrbs } from "./Backgrounds";
 import { mission } from "../data/landing";
 import { ArrowRight } from "lucide-react";
 
 export function HeroSection() {
   const { scrollY } = useScroll();
-  const planetY = useTransform(scrollY, [0, 600], [0, 120]);
+  const planetY = useTransform(scrollY, [0, 600], [0, 140]);
+  const planetO = useTransform(scrollY, [0, 400], [0.7, 0]);
+  const contentY = useTransform(scrollY, [0, 400], [0, -40]);
+  const contentO = useTransform(scrollY, [0, 400], [1, 0]);
+  const gridO = useTransform(scrollY, [0, 300], [1, 0]);
+  const scrollDotO = useTransform(scrollY, [0, 200], [1, 0]);
 
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden"
       style={{ background: "linear-gradient(180deg, #030014 0%, #04041c 60%, #050510 100%)" }}
     >
+      <ScrollFadeOrbs />
       <NebulaLayer />
+      <motion.div style={{ opacity: gridO }}>
+        <SpaceGrid />
+      </motion.div>
       <StarField count={240} />
-      <SpaceGrid />
       <ShootingStars />
 
-      {/* Planet — right side with parallax */}
       <motion.div
-        className="absolute right-[-10%] bottom-[-10%] sm:right-[-4%] sm:bottom-[-8%] opacity-50 sm:opacity-70 pointer-events-none hidden sm:block"
-        style={{ y: planetY }}
+        className="absolute right-[-10%] bottom-[-10%] sm:right-[-4%] sm:bottom-[-8%] pointer-events-none hidden sm:block"
+        style={{ y: planetY, opacity: planetO }}
       >
         <Planet
           size={500}
@@ -33,12 +40,12 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* Content */}
-      <div className="relative z-10 w-full px-6 md:px-16 lg:px-24">
+      <motion.div
+        className="relative z-10 w-full px-6 md:px-16 lg:px-24"
+        style={{ y: contentY, opacity: contentO }}
+      >
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Mission */}
           <div className="max-w-xl">
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: -16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -64,7 +71,6 @@ export function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Title */}
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -80,7 +86,6 @@ export function HeroSection() {
               {mission.title}
             </motion.h1>
 
-            {/* Description */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -91,7 +96,6 @@ export function HeroSection() {
               {mission.description}
             </motion.p>
 
-            {/* CTA */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -107,7 +111,12 @@ export function HeroSection() {
                   boxShadow: "0 0 30px rgba(56,189,248,0.15), inset 0 0 20px rgba(56,189,248,0.05)",
                   color: "#e0f2fe",
                 }}
-                whileHover={{ scale: 1.05, boxShadow: "0 0 50px rgba(56,189,248,0.3), inset 0 0 30px rgba(56,189,248,0.08)" }}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 50px rgba(56,189,248,0.3), inset 0 0 30px rgba(56,189,248,0.08)",
+                  borderColor: "rgba(56,189,248,0.7)",
+                }}
+                whileTap={{ scale: 0.97 }}
               >
                 <span className="relative z-10 inline-flex items-center gap-2">
                   EXPLORAR TRIPULACIÓN
@@ -117,27 +126,25 @@ export function HeroSection() {
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 1, duration: 0.3 }}
                   >
-                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1.5" />
                   </motion.span>
                 </span>
               </motion.button>
             </motion.div>
           </div>
 
-          {/* Right: empty on mobile, planet shows on desktop */}
           <div className="hidden lg:block" />
         </div>
 
-        {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.4 }}
+          style={{ opacity: scrollDotO }}
           className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         >
           <motion.div
-            className="w-4 h-7 rounded-full border border-slate-700/50 flex items-start justify-center p-1"
+            className="w-4 h-7 rounded-full border flex items-start justify-center p-1"
             style={{ borderColor: "rgba(56,189,248,0.15)" }}
+            animate={{ borderColor: ["rgba(56,189,248,0.15)", "rgba(56,189,248,0.35)", "rgba(56,189,248,0.15)"] }}
+            transition={{ duration: 2, repeat: Infinity }}
           >
             <motion.div
               className="w-1 h-1.5 rounded-full"
@@ -147,9 +154,8 @@ export function HeroSection() {
             />
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
 
-      {/* Bottom gradient fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
         style={{ background: "linear-gradient(to bottom, transparent, #050510)" }}

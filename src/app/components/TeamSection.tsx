@@ -61,7 +61,7 @@ function CrewCard({ member, isSelected, onClick, index }: {
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
       className="relative cursor-pointer group"
       onClick={onClick}
       onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } }}
@@ -69,7 +69,6 @@ function CrewCard({ member, isSelected, onClick, index }: {
       role="button"
       aria-label={`Ver dossier de ${member.name}`}
     >
-      {/* Card glow on select/hover */}
       <motion.div
         className="absolute inset-0 rounded-2xl pointer-events-none transition-all duration-500"
         style={{
@@ -79,7 +78,6 @@ function CrewCard({ member, isSelected, onClick, index }: {
         animate={isSelected ? { opacity: [0.3, 0.9, 0.3], scale: [1, 1.05, 1] } : { opacity: 0, scale: 0.9 }}
         transition={isSelected ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" } : { duration: 0.4 }}
       />
-      {/* Hover glow */}
       <motion.div
         className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
@@ -100,7 +98,6 @@ function CrewCard({ member, isSelected, onClick, index }: {
         whileHover={{ scale: 1.03, y: -6 }}
         transition={{ duration: 0.25, ease: "easeOut" }}
       >
-        {/* Hover border glow overlay */}
         <motion.div
           className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
           style={{
@@ -109,7 +106,6 @@ function CrewCard({ member, isSelected, onClick, index }: {
           }}
         />
 
-        {/* Photo */}
         <div className="relative" style={{ height: 240 }}>
           <div className="absolute inset-0 z-[1]" style={{ background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 40%)` }} />
           <motion.img
@@ -120,7 +116,6 @@ function CrewCard({ member, isSelected, onClick, index }: {
             transition={{ duration: 0.4 }}
           />
 
-          {/* ACTIVO badge - bottom left of photo */}
           <div className="absolute bottom-3 left-3 z-[2] flex items-center gap-1.5">
             <motion.div
               className="w-1.5 h-1.5 rounded-full"
@@ -134,19 +129,15 @@ function CrewCard({ member, isSelected, onClick, index }: {
           </div>
         </div>
 
-        {/* Content */}
         <div className="p-4">
-          {/* Rol */}
           <div className="text-[9px] uppercase tracking-[0.2em] mb-1" style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}>
             {member.rol}
           </div>
 
-          {/* Name */}
           <h3 className="text-white font-bold leading-tight mb-2" style={{ fontSize: "1.1rem", fontFamily: "'Space Grotesk', sans-serif" }}>
             {member.shortName}
           </h3>
 
-          {/* Specialties dot-separated */}
           <div className="flex flex-wrap gap-x-1 gap-y-0.5 mb-3">
             {member.specialties.map((s, i) => (
               <span key={s} className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)", fontFamily: "'Space Grotesk', sans-serif" }}>
@@ -156,16 +147,13 @@ function CrewCard({ member, isSelected, onClick, index }: {
             ))}
           </div>
 
-          {/* Divider */}
           <div className="h-px mb-3" style={{ background: `linear-gradient(90deg, ${member.color}30, transparent)` }} />
 
-          {/* First stat */}
           <div className="flex items-center gap-2">
             <span className="text-sm font-bold text-white" style={{ fontFamily: "'Orbitron', monospace" }}>{member.stats[0].value}</span>
             <span className="text-[8px] uppercase tracking-[0.12em]" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Orbitron', monospace" }}>{member.stats[0].label}</span>
           </div>
 
-          {/* VER DOSSIER — appears on hover */}
           <motion.div
             className="mt-3 text-[9px] uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}
@@ -307,7 +295,6 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
               boxShadow: `0 24px 100px rgba(0,0,0,0.8), 0 0 0 1px ${member.color}15, inset 0 1px 0 rgba(255,255,255,0.04)`,
             }}
           >
-            {/* Scan line */}
             <motion.div
               className="absolute inset-x-0 h-px pointer-events-none z-10"
               style={{ background: `linear-gradient(90deg, transparent, ${member.color}60, transparent)`, filter: "blur(2px)" }}
@@ -316,7 +303,6 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
             />
 
             <div className="relative z-10 p-10 md:p-14">
-              {/* HEADER — bigger */}
               <SectionFade delay={b}>
                 <div className="flex items-center gap-8 mb-8">
                   <div className="relative flex-shrink-0">
@@ -325,12 +311,11 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                       style={{ border: `1px solid ${member.color}40`, boxShadow: `0 0 50px ${member.color}15` }}
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: b, duration: 0.4 }}
+                      transition={{ delay: b, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
                     >
                       <img src={member.photo} alt={member.name} className="w-full h-full object-cover object-top" />
                       <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${member.color}15, transparent 30%, ${member.color}08)`, mixBlendMode: "overlay" }} />
                     </motion.div>
-                    {/* Corner decorations */}
                     <motion.div className="absolute -top-2.5 -left-2.5 w-4 h-4 border-t-2 border-l-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.1 }} />
                     <motion.div className="absolute -top-2.5 -right-2.5 w-4 h-4 border-t-2 border-r-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.15 }} />
                     <motion.div className="absolute -bottom-2.5 -left-2.5 w-4 h-4 border-b-2 border-l-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.2 }} />
@@ -361,15 +346,12 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 </div>
               </SectionFade>
 
-              {/* Divider */}
               <div className="relative h-px mb-10" style={{ background: `linear-gradient(90deg, transparent, ${member.color}40, transparent)` }}>
                 <motion.div className="absolute left-1/2 -top-1 w-2 h-2 rotate-45" style={{ background: member.color, boxShadow: `0 0 8px ${member.color}` }} initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: b + 0.3 }} />
               </div>
 
-              {/* 2-COLUMN CONTENT */}
               <div className="grid md:grid-cols-2 gap-x-16 gap-y-12">
                 <div>
-                  {/* Skills */}
                   <SectionFade delay={b + 0.15}>
                     <SectionLabel2>DIAGNÓSTICO DEL OPERADOR</SectionLabel2>
                     <motion.div className="rounded-lg overflow-hidden" style={{ background: `${member.color}04`, border: `1px solid ${member.color}10` }} whileHover={{ boxShadow: `0 0 20px ${member.color}08` }} transition={{ duration: 0.3 }}>
@@ -379,7 +361,6 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                     </motion.div>
                   </SectionFade>
 
-                  {/* COLLAPSIBLE EXPERIENCE */}
                   <div className="mt-10">
                     <SectionFade delay={b + 0.35}>
                       <button
@@ -420,7 +401,6 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 </div>
 
                 <div>
-                  {/* Stats */}
                   <SectionFade delay={b + 0.2}>
                     <SectionLabel2>ESTADÍSTICAS DE MISIÓN</SectionLabel2>
                     <div className="grid grid-cols-2 gap-4">
@@ -441,7 +421,6 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                     </div>
                   </SectionFade>
 
-                  {/* Logros */}
                   <div className="mt-10">
                     <SectionFade delay={b + 0.35}>
                       <SectionLabel2>LOGROS DESTACADOS</SectionLabel2>
@@ -465,12 +444,10 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 </div>
               </div>
 
-              {/* Tech Badges — full width below columns */}
               <div className="mt-10">
                 <TechBadges member={member} b={b + 0.5} />
               </div>
 
-              {/* Impact */}
               <SectionFade delay={b + 0.55}>
                 <motion.div
                   className="mt-10 p-6 md:p-8 rounded-xl relative overflow-hidden group"

@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { StarField } from "./SpaceElements";
 
 type SectionTheme = "deep" | "navy" | "dark" | "purple";
@@ -53,9 +53,10 @@ function AmbientOrb({ color, size, x, y, blur, opacity, duration }: {
 export function GrainOverlay() {
   return (
     <div
-      className="fixed inset-0 pointer-events-none z-50"
+      className="fixed inset-0 pointer-events-none"
       style={{
-        opacity: 0.025,
+        zIndex: 9999,
+        opacity: 0.03,
         backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
         backgroundRepeat: "repeat",
         backgroundSize: "256px 256px",
@@ -93,6 +94,37 @@ export function ShootingStars() {
         />
       ))}
     </div>
+  );
+}
+
+export function ScrollFadeOrbs() {
+  const { scrollY } = useScroll();
+  const orb1Y = useTransform(scrollY, [0, 400], [0, -60]);
+  const orb1O = useTransform(scrollY, [0, 400], [0.08, 0]);
+  const orb2Y = useTransform(scrollY, [0, 400], [0, -40]);
+  const orb2O = useTransform(scrollY, [0, 400], [0.06, 0]);
+
+  return (
+    <>
+      <motion.div
+        className="absolute pointer-events-none rounded-full"
+        style={{
+          width: 600, height: 600, left: "-15%", top: "-10%",
+          background: "radial-gradient(circle, #3b82f6 0%, transparent 70%)",
+          filter: "blur(120px)",
+          y: orb1Y, opacity: orb1O,
+        }}
+      />
+      <motion.div
+        className="absolute pointer-events-none rounded-full"
+        style={{
+          width: 500, height: 500, left: "70%", top: "60%",
+          background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)",
+          filter: "blur(100px)",
+          y: orb2Y, opacity: orb2O,
+        }}
+      />
+    </>
   );
 }
 

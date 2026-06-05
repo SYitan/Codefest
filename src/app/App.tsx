@@ -4,7 +4,8 @@ import { useRef } from "react";
 import { BrainCircuit, Code2, Smartphone, Zap } from "lucide-react";
 import { HeroSection } from "./components/HeroSection";
 import { TeamSection } from "./components/TeamSection";
-import { SectionBackground, SectionDivider, ShootingStars, GrainOverlay } from "./components/Backgrounds";
+import { SectionBackground, SectionDivider, ShootingStars, GrainOverlay, BottomFade } from "./components/Backgrounds";
+import { GlowDot } from "./components/SpaceElements";
 import { teamCapabilities, teamStats } from "./data/landing";
 
 const capMeta = [
@@ -35,6 +36,7 @@ function CapabilitiesSection() {
 
   return (
     <SectionBackground theme="deep" stars={40}>
+      <SectionDivider />
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 20 }}
@@ -52,20 +54,21 @@ function CapabilitiesSection() {
                 style={{
                   background: `linear-gradient(135deg, ${color}06, rgba(255,255,255,0.01))`,
                   border: `1px solid rgba(255,255,255,0.06)`,
-                  backdropFilter: "blur(12px)",
+                  backdropFilter: "blur(12px) saturate(1.1)",
                   boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
                 }}
-                initial={{ opacity: 0, y: 16 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
-                whileHover={{ scale: 1.04, y: -6, borderColor: `${color}40`, boxShadow: `0 12px 40px ${color}15` }}
+                initial={{ opacity: 0, y: 24, scale: 0.95 }}
+                animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ delay: 0.1 + i * 0.1, duration: 0.45, ease: [0.25, 0.1, 0.25, 1] }}
+                whileHover={{
+                  scale: 1.04, y: -6, borderColor: `${color}40`,
+                  boxShadow: `0 16px 48px ${color}20, 0 0 0 1px ${color}30`,
+                }}
               >
-                {/* Hover glow */}
                 <motion.div
                   className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"
                   style={{ background: `radial-gradient(ellipse at 50% 30%, ${color}15, transparent 70%)`, filter: "blur(40px)" }}
                 />
-                {/* Icon container */}
                 <div
                   className="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4 relative transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                   style={{
@@ -114,8 +117,12 @@ function MetricsSection() {
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="grid grid-cols-4 gap-8 max-w-3xl mx-auto"
+        className="grid grid-cols-4 gap-8 max-w-3xl mx-auto relative"
       >
+        {/* Decorative glow dots on each side */}
+        <GlowDot size={4} color="#38bdf8" style={{ left: "-20px", top: "50%" }} />
+        <GlowDot size={4} color="#818cf8" style={{ right: "-20px", top: "50%" }} />
+
         {metrics.map((stat, i) => (
           <motion.div
             key={stat.label}
@@ -151,6 +158,7 @@ function MetricsSection() {
         ))}
       </motion.div>
       <div className="max-w-xs mx-auto mt-8 h-px opacity-20" style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }} />
+      <BottomFade />
     </SectionBackground>
   );
 }
