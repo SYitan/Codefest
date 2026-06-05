@@ -194,9 +194,9 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
     }
 
     if (coreGlowRef.current) {
-      const pulse = 0.55 + Math.sin(t * 1.8) * 0.08;
+      const pulse = 0.65 + Math.sin(t * 1.8) * 0.12;
       coreGlowRef.current.scale.setScalar(pulse);
-      (coreGlowRef.current.material as THREE.SpriteMaterial).opacity = 0.7 + Math.sin(t * 1.8) * 0.15;
+      (coreGlowRef.current.material as THREE.SpriteMaterial).opacity = 0.8 + Math.sin(t * 1.8) * 0.2;
     }
 
     if (dustRef.current) {
@@ -252,9 +252,9 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
         </bufferGeometry>
         <pointsMaterial
           map={STAR_TEX}
-          size={0.04}
+          size={0.05}
           transparent
-          opacity={0.72}
+          opacity={0.85}
           sizeAttenuation
           depthWrite={false}
           blending={THREE.AdditiveBlending}
@@ -270,9 +270,9 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
         <pointsMaterial
           map={CYAN_TEX}
           color={new THREE.Color(0x00ddff)}
-          size={0.018}
+          size={0.025}
           transparent
-          opacity={0.55}
+          opacity={0.75}
           sizeAttenuation
           depthWrite={false}
           blending={THREE.AdditiveBlending}
@@ -306,9 +306,9 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
         </bufferGeometry>
         <pointsMaterial
           map={STAR_TEX}
-          size={0.012}
+          size={0.018}
           transparent
-          opacity={0.28}
+          opacity={0.40}
           sizeAttenuation
           depthWrite={false}
           blending={THREE.AdditiveBlending}

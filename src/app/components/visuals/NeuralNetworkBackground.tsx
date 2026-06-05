@@ -67,7 +67,7 @@ export function NeuralNetworkBackground() {
     const spawnTimer = setInterval(spawnPulse, 800);
 
     function draw() {
-      const activation = Math.min(1, Math.max(0, (scrollProgress - 0.1) / 0.5));
+      const activation = Math.min(1, Math.max(0, scrollProgress / 0.5));
       ctx.clearRect(0, 0, W, H);
 
       if (activation < 0.02) return;
@@ -80,8 +80,8 @@ export function NeuralNetworkBackground() {
         ctx.beginPath();
         ctx.moveTo(na.x, na.y);
         ctx.quadraticCurveTo(cp.cx, cp.cy, nb.x, nb.y);
-        ctx.strokeStyle = `rgba(120,60,200,${0.08 * activation})`;
-        ctx.lineWidth = 0.8;
+        ctx.strokeStyle = `rgba(120,60,200,${0.15 * activation})`;
+        ctx.lineWidth = 1.2;
         ctx.stroke();
       }
 
@@ -95,7 +95,7 @@ export function NeuralNetworkBackground() {
         const cp = cpOf(na.x, na.y, nb.x, nb.y);
         const pt = bezierPt(p.t, na.x, na.y, cp.cx, cp.cy, nb.x, nb.y);
 
-        const alpha = Math.sin(p.t * Math.PI) * 0.7 * activation;
+        const alpha = Math.sin(p.t * Math.PI) * 1.0 * activation;
         const g = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 6);
         g.addColorStop(0, `rgba(168,85,247,${alpha})`);
         g.addColorStop(0.5, `rgba(120,60,200,${alpha * 0.5})`);
@@ -108,7 +108,7 @@ export function NeuralNetworkBackground() {
 
       for (const n of ns) {
         const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, 4);
-        g.addColorStop(0, `rgba(200,140,255,${0.55 * activation})`);
+        g.addColorStop(0, `rgba(200,140,255,${0.85 * activation})`);
         g.addColorStop(1, "rgba(0,0,0,0)");
         ctx.beginPath();
         ctx.arc(n.x, n.y, 4, 0, Math.PI * 2);
