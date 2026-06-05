@@ -483,8 +483,7 @@ export function TeamSection() {
   const handleProfileReady = () => {
     setTimeout(() => {
       if (profileRef.current) {
-        const top = profileRef.current.getBoundingClientRect().top + window.scrollY + 500;
-        window.scrollTo({ top, behavior: "smooth" });
+        profileRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }, 100);
   };

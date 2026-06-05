@@ -1,8 +1,11 @@
 import { motion, useScroll, useTransform } from "motion/react";
+import { lazy, Suspense } from "react";
 import { StarField, NebulaLayer, SpaceGrid, Planet } from "./SpaceElements";
 import { ShootingStars, ScrollFadeOrbs } from "./Backgrounds";
 import { mission } from "../data/landing";
 import { ArrowRight } from "lucide-react";
+
+const GlobeScene = lazy(() => import("./visuals/GlobeScene"));
 
 export function HeroSection() {
   const { scrollY } = useScroll();
@@ -133,7 +136,11 @@ export function HeroSection() {
             </motion.div>
           </div>
 
-          <div className="hidden lg:block" />
+          <Suspense fallback={<div className="hidden lg:block" />}>
+            <div className="hidden lg:block relative h-[500px] w-full">
+              <GlobeScene className="w-full h-full" />
+            </div>
+          </Suspense>
         </div>
 
         <motion.div
