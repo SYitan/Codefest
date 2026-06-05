@@ -2,53 +2,9 @@ import { motion } from "motion/react";
 import { useInView } from "motion/react";
 import { useRef } from "react";
 import { SectionLabel, StarField, GlassCard } from "./SpaceElements";
-import { Globe, Smartphone, Database, Code2, Zap, GitMerge, Layers, Brain, MessageSquareCode, Cpu, BotMessageSquare, Network } from "lucide-react";
+import { skillGroups, type SkillGroup } from "../data/landing";
 
-const skillGroups = [
-  {
-    emoji: "🚀",
-    title: "Software Development",
-    color: "#38bdf8",
-    gradient: "from-cyan-500/10 to-cyan-500/0",
-    borderColor: "rgba(56,189,248,0.2)",
-    glowColor: "rgba(56,189,248,0.08)",
-    skills: [
-      { icon: Globe, label: "Web Applications", desc: "Full-stack web development" },
-      { icon: Smartphone, label: "Mobile Apps", desc: "Cross-platform applications" },
-      { icon: Code2, label: "APIs & Services", desc: "RESTful & GraphQL endpoints" },
-      { icon: Database, label: "Databases", desc: "SQL & NoSQL data systems" },
-    ],
-  },
-  {
-    emoji: "⚡",
-    title: "Automation",
-    color: "#34d399",
-    gradient: "from-emerald-500/10 to-emerald-500/0",
-    borderColor: "rgba(52,211,153,0.2)",
-    glowColor: "rgba(52,211,153,0.08)",
-    skills: [
-      { icon: Zap, label: "Workflow Automation", desc: "End-to-end process flows" },
-      { icon: GitMerge, label: "Process Optimization", desc: "Reduce manual bottlenecks" },
-      { icon: Layers, label: "System Integration", desc: "Connect disparate platforms" },
-    ],
-  },
-  {
-    emoji: "🧠",
-    title: "Artificial Intelligence",
-    color: "#a78bfa",
-    gradient: "from-violet-500/10 to-violet-500/0",
-    borderColor: "rgba(167,139,250,0.2)",
-    glowColor: "rgba(167,139,250,0.08)",
-    skills: [
-      { icon: BotMessageSquare, label: "AI Agents", desc: "Autonomous intelligent systems" },
-      { icon: Brain, label: "LLM Integration", desc: "Large language model orchestration" },
-      { icon: MessageSquareCode, label: "NLP", desc: "Natural language processing" },
-      { icon: Network, label: "Intelligent Automation", desc: "AI-powered decision flows" },
-    ],
-  },
-];
-
-function SkillCard({ group, index }: { group: (typeof skillGroups)[0]; index: number }) {
+function SkillCard({ group, index }: { group: SkillGroup; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
 

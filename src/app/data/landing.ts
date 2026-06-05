@@ -1,4 +1,7 @@
-import { BrainCircuit, Zap, Cpu, Smartphone, Globe, Database } from "lucide-react";
+import {
+  BrainCircuit, Zap, Cpu, Smartphone, Globe, Database,
+  Code2, GitMerge, Layers, Brain, MessageSquareCode, BotMessageSquare, Network,
+} from "lucide-react";
 import img1 from "../../imports/image-1.png";
 import img2 from "../../imports/image-2.png";
 import img3 from "../../imports/image-3.png";
@@ -205,3 +208,63 @@ export const teamSection = {
   title: "BASE DE DATOS DE TRIPULACIÓN",
   subtitle: "Selecciona un miembro para acceder a su perfil de misión.",
 };
+
+export interface SkillGroupSkill {
+  icon: typeof Globe;
+  label: string;
+  desc: string;
+}
+
+export interface SkillGroup {
+  emoji: string;
+  title: string;
+  color: string;
+  gradient: string;
+  borderColor: string;
+  glowColor: string;
+  skills: SkillGroupSkill[];
+}
+
+export const skillGroups: SkillGroup[] = [
+  {
+    emoji: "🚀",
+    title: "Software Development",
+    color: "#38bdf8",
+    gradient: "from-cyan-500/10 to-cyan-500/0",
+    borderColor: "rgba(56,189,248,0.2)",
+    glowColor: "rgba(56,189,248,0.08)",
+    skills: [
+      { icon: Globe, label: "Web Applications", desc: "Full-stack web development" },
+      { icon: Smartphone, label: "Mobile Apps", desc: "Cross-platform applications" },
+      { icon: Code2, label: "APIs & Services", desc: "RESTful & GraphQL endpoints" },
+      { icon: Database, label: "Databases", desc: "SQL & NoSQL data systems" },
+    ],
+  },
+  {
+    emoji: "⚡",
+    title: "Automation",
+    color: "#34d399",
+    gradient: "from-emerald-500/10 to-emerald-500/0",
+    borderColor: "rgba(52,211,153,0.2)",
+    glowColor: "rgba(52,211,153,0.08)",
+    skills: [
+      { icon: Zap, label: "Workflow Automation", desc: "End-to-end process flows" },
+      { icon: GitMerge, label: "Process Optimization", desc: "Reduce manual bottlenecks" },
+      { icon: Layers, label: "System Integration", desc: "Connect disparate platforms" },
+    ],
+  },
+  {
+    emoji: "🧠",
+    title: "Artificial Intelligence",
+    color: "#a78bfa",
+    gradient: "from-violet-500/10 to-violet-500/0",
+    borderColor: "rgba(167,139,250,0.2)",
+    glowColor: "rgba(167,139,250,0.08)",
+    skills: [
+      { icon: BotMessageSquare, label: "AI Agents", desc: "Autonomous intelligent systems" },
+      { icon: Brain, label: "LLM Integration", desc: "Large language model orchestration" },
+      { icon: MessageSquareCode, label: "NLP", desc: "Natural language processing" },
+      { icon: Network, label: "Intelligent Automation", desc: "AI-powered decision flows" },
+    ],
+  },
+];
