@@ -503,7 +503,7 @@ export function TeamSection() {
   const selectedMember = selectedId !== null ? crewMembers.find((m) => m.id === selectedId) : null;
 
   const handleProfileReady = () => {
-    setTimeout(() => profileRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+    setTimeout(() => profileRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }), 100);
   };
 
   return (
