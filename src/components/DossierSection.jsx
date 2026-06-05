@@ -191,7 +191,7 @@ export default function DossierSection({ member, onBack }) {
       }`}
     >
       <div className="relative max-w-6xl mx-auto">
-        <div className="absolute inset-0 -m-6 rounded-3xl bg-slate-900/60 backdrop-blur-sm" />
+        <div className="absolute inset-0 -m-6 rounded-3xl bg-slate-900/85 backdrop-blur-md border border-slate-700/30" />
         <div className="relative">
           {member ? (
             <AnimatedContent key={member.id} member={member} onBack={onBack} />
