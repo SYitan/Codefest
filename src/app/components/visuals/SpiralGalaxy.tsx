@@ -39,6 +39,7 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
   const coreGlowRef = useRef<THREE.Sprite>(null!);
   const fieldRef = useRef<THREE.Points>(null!);
   const timeRef = useRef(0);
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 900;
 
   const armData = useMemo(() => {
     const count = ARM_COUNT * ARM_PARTICLES;
@@ -151,7 +152,7 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
 
     groupRef.current.rotation.x = Math.sin(t * 0.06) * 0.05 + progress * 0.06;
     groupRef.current.position.x = Math.cos(scrollRotate) * 0.35;
-    groupRef.current.position.z = -0.55 + Math.sin(scrollRotate) * 0.28;
+    groupRef.current.position.z = isMobile ? -0.45 + Math.sin(scrollRotate) * 0.28 : -0.55 + Math.sin(scrollRotate) * 0.28;
 
     if (armsRef.current) {
       const sizes = armsRef.current.geometry.attributes.size.array as Float32Array;

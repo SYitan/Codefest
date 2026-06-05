@@ -33,12 +33,17 @@ export function CosmicBackground({ lowPower }: { lowPower?: boolean }) {
     return unsubscribe;
   }, [smoothY]);
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 900;
   const dpr = lowPower
     ? [0.5, 0.7]
     : typeof window !== "undefined" && window.devicePixelRatio > 2
       ? [0.5, 0.7]
       : [0.6, 1];
-  const cameraPosition = lowPower ? [0, 0.6, 0.95] : [0, 0.5, 0.85];
+  const cameraPosition = lowPower
+    ? [0, 0.6, 0.95]
+    : isMobile
+      ? [0, 0.55, 0.8]
+      : [0, 0.5, 0.85];
 
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>
