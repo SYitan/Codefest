@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { BrainCircuit, Code2, Smartphone, Zap } from "lucide-react";
 import { HeroSection } from "./components/HeroSection";
 import { TeamSection } from "./components/TeamSection";
-import { SectionBackground, SectionDivider, ShootingStars } from "./components/Backgrounds";
+import { SectionBackground, SectionDivider, ShootingStars, GrainOverlay } from "./components/Backgrounds";
 import { teamCapabilities, teamStats } from "./data/landing";
 
 const capMeta = [
@@ -16,7 +16,7 @@ const capMeta = [
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3 justify-center mb-6">
+    <div className="flex items-center gap-3 justify-center mb-8">
       <div className="h-px w-8 bg-gradient-to-r from-transparent to-cyan-400/60" />
       <span
         className="text-cyan-400 text-xs tracking-[0.25em] uppercase"
@@ -42,32 +42,39 @@ function CapabilitiesSection() {
         transition={{ duration: 0.6 }}
       >
         <SectionLabel>CAPACIDADES DEL EQUIPO</SectionLabel>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {teamCapabilities.map((cap, i) => {
             const { icon: Icon, color } = capMeta[i];
             return (
               <motion.div
                 key={cap}
-                className="rounded-xl p-6 text-center relative overflow-hidden group cursor-default"
+                className="rounded-xl p-7 text-center relative overflow-hidden group cursor-default"
                 style={{
-                  background: `linear-gradient(135deg, ${color}08, transparent 80%)`,
-                  border: "1px solid rgba(255,255,255,0.06)",
+                  background: `linear-gradient(135deg, ${color}06, rgba(255,255,255,0.01))`,
+                  border: `1px solid rgba(255,255,255,0.06)`,
+                  backdropFilter: "blur(12px)",
+                  boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
                 }}
                 initial={{ opacity: 0, y: 16 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.08, duration: 0.4 }}
-                whileHover={{ scale: 1.04, y: -4, borderColor: `${color}40`, boxShadow: `0 8px 30px ${color}15` }}
+                whileHover={{ scale: 1.04, y: -6, borderColor: `${color}40`, boxShadow: `0 12px 40px ${color}15` }}
               >
-                {/* Icon glow on hover */}
+                {/* Hover glow */}
                 <motion.div
                   className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"
-                  style={{ background: `radial-gradient(ellipse at 50% 30%, ${color}20, transparent 70%)`, filter: "blur(40px)" }}
+                  style={{ background: `radial-gradient(ellipse at 50% 30%, ${color}15, transparent 70%)`, filter: "blur(40px)" }}
                 />
+                {/* Icon container */}
                 <div
-                  className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 relative transition-all duration-300 group-hover:scale-110"
-                  style={{ background: `${color}08`, border: `1px solid ${color}15` }}
+                  className="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4 relative transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                  style={{
+                    background: `${color}08`,
+                    border: `1px solid ${color}15`,
+                    boxShadow: `0 0 20px ${color}05`,
+                  }}
                 >
-                  <Icon size={22} style={{ color: "rgba(255,255,255,0.6)", transition: "color 0.3s" }} className="group-hover:text-white" />
+                  <Icon size={24} style={{ color: "rgba(255,255,255,0.6)", transition: "color 0.3s" }} className="group-hover:text-white" />
                 </div>
                 <span
                   className="text-lg font-semibold block relative"
@@ -107,7 +114,7 @@ function MetricsSection() {
         initial={{ opacity: 0, y: 16 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
-        className="grid grid-cols-4 gap-6 max-w-3xl mx-auto"
+        className="grid grid-cols-4 gap-8 max-w-3xl mx-auto"
       >
         {metrics.map((stat, i) => (
           <motion.div
@@ -124,7 +131,12 @@ function MetricsSection() {
             <div className="relative">
               <div
                 className="text-2xl md:text-3xl font-bold"
-                style={{ color: "#38bdf8", fontFamily: "'Orbitron', monospace" }}
+                style={{
+                  background: "linear-gradient(135deg, #38bdf8, #818cf8)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontFamily: "'Orbitron', monospace",
+                }}
               >
                 {stat.value}
               </div>
@@ -138,7 +150,6 @@ function MetricsSection() {
           </motion.div>
         ))}
       </motion.div>
-      {/* Subtle bottom line */}
       <div className="max-w-xs mx-auto mt-8 h-px opacity-20" style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }} />
     </SectionBackground>
   );
@@ -154,6 +165,7 @@ export default function App() {
         colorScheme: "dark",
       }}
     >
+      <GrainOverlay />
       <HeroSection />
       <CapabilitiesSection />
       <MetricsSection />

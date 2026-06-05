@@ -90,8 +90,8 @@ function CrewCard({ member, isSelected, onClick, index }: {
       <motion.div
         className="relative overflow-hidden rounded-2xl"
         style={{
-          background: "rgba(255,255,255,0.015)",
-          backdropFilter: "blur(12px)",
+          background: "linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.005) 100%)",
+          backdropFilter: "blur(16px) saturate(1.1)",
           border: `1px solid ${isSelected ? member.color + "60" : "rgba(255,255,255,0.06)"}`,
           boxShadow: isSelected
             ? `0 0 60px ${member.color}20, 0 0 0 1px ${member.color}40`
@@ -111,12 +111,12 @@ function CrewCard({ member, isSelected, onClick, index }: {
 
         {/* Photo */}
         <div className="relative" style={{ height: 240 }}>
-          <div className="absolute inset-0 z-[1]" style={{ background: `linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 50%)` }} />
+          <div className="absolute inset-0 z-[1]" style={{ background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 40%)` }} />
           <motion.img
             src={member.photo} alt={member.name}
             className="w-full h-full object-cover object-top"
-            initial={{ filter: "brightness(0.85)" }}
-            whileHover={{ filter: "brightness(1.08)", scale: 1.05 }}
+            initial={{ filter: "brightness(0.8)" }}
+            whileHover={{ filter: "brightness(1.05)", scale: 1.05 }}
             transition={{ duration: 0.4 }}
           />
 
@@ -128,7 +128,7 @@ function CrewCard({ member, isSelected, onClick, index }: {
               animate={{ opacity: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             />
-            <span className="text-[8px] uppercase tracking-[0.15em] text-white/50" style={{ fontFamily: "'Orbitron', monospace" }}>
+            <span className="text-[8px] uppercase tracking-[0.15em] text-white/40" style={{ fontFamily: "'Orbitron', monospace" }}>
               ACTIVO
             </span>
           </div>
@@ -301,9 +301,10 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
           <div
             className="relative rounded-2xl overflow-hidden mt-6"
             style={{
-              background: "linear-gradient(180deg, rgba(6,8,28,0.98), rgba(3,3,18,0.98))",
+              background: "linear-gradient(180deg, rgba(8,10,30,0.95), rgba(3,3,18,0.95))",
               border: `1px solid ${member.color}35`,
-              boxShadow: `0 20px 80px rgba(0,0,0,0.7), 0 0 0 1px ${member.color}15, inset 0 1px 0 rgba(255,255,255,0.03)`,
+              backdropFilter: "blur(24px) saturate(1.2)",
+              boxShadow: `0 24px 100px rgba(0,0,0,0.8), 0 0 0 1px ${member.color}15, inset 0 1px 0 rgba(255,255,255,0.04)`,
             }}
           >
             {/* Scan line */}
@@ -473,14 +474,14 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
               <SectionFade delay={b + 0.55}>
                 <motion.div
                   className="mt-10 p-6 md:p-8 rounded-xl relative overflow-hidden group"
-                  style={{ background: `linear-gradient(135deg, ${member.color}08, transparent 60%)`, border: `1px solid ${member.color}15` }}
-                  whileHover={{ borderColor: `${member.color}40`, boxShadow: `0 0 40px ${member.color}10` }}
+                  style={{ background: `linear-gradient(135deg, ${member.color}06, transparent 60%)`, border: `1px solid ${member.color}12`, backdropFilter: "blur(8px)" }}
+                  whileHover={{ borderColor: `${member.color}35`, boxShadow: `0 0 40px ${member.color}10` }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at 30% 50%, ${member.color}10, transparent 70%)` }} />
-                  <motion.div className="absolute -top-6 -right-6 w-12 h-12 rounded-full opacity-10" style={{ background: member.color, filter: "blur(20px)" }} animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 4, repeat: Infinity }} />
+                  <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse at 30% 50%, ${member.color}08, transparent 70%)` }} />
+                  <motion.div className="absolute -top-6 -right-6 w-16 h-16 rounded-full opacity-10" style={{ background: member.color, filter: "blur(24px)" }} animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} />
                   <div className="relative z-10">
-                    <div className="text-xs uppercase tracking-[0.2em] mb-2" style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}>DECLARACIÓN DE IMPACTO</div>
+                    <div className="text-[10px] uppercase tracking-[0.2em] mb-2" style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}>DECLARACIÓN DE IMPACTO</div>
                     <p className="text-base md:text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.7)", fontFamily: "'Space Grotesk', sans-serif", fontStyle: "italic" }}>
                       &ldquo;{member.valorEquipo}&rdquo;
                     </p>
