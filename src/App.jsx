@@ -1,158 +1,332 @@
-import { useState, useRef, useEffect } from 'react'
-import SpaceBackground from './components/SpaceBackground'
-import HeroSection from './components/HeroSection'
-import CrewSection from './components/CrewSection'
-import DossierSection from './components/DossierSection'
-import brianImg from './imports/yitan.webp'
-import ianImg from './imports/ian.webp'
-import diegoImg from './imports/diego.webp'
-import matheusImg from './imports/matheus.webp'
+import { useState, useRef, useEffect } from "react";
+import SpaceBackground from "./components/SpaceBackground";
+import HeroSection from "./components/HeroSection";
+import CrewSection from "./components/CrewSection";
+import DossierSection from "./components/DossierSection";
+import brianImg from "./imports/yitan.webp";
+import ianImg from "./imports/ian.webp";
+import diegoImg from "./imports/diego.webp";
+import matheusImg from "./imports/matheus.webp";
 
 const CREW_DATA = [
   {
     id: 1,
     photo: brianImg,
-    name: 'Brian Stiven Alba Celis',
-    shortName: 'Brian',
-    rol: 'Lead Full Stack Developer',
-    perfil: 'Desarrollador full-stack con experiencia en React, Node.js e integración de IA. Apasionado por construir soluciones escalables y de alto rendimiento.',
+    name: "Brian Alba",
+    shortName: "Brian",
+
+    rol: "Full-Stack & AI Automation Engineer",
+
+    perfil:
+      "Estudiante de Ingeniería de Software con experiencia práctica en desarrollo Full-Stack, automatización de procesos e integración de Inteligencia Artificial. Ha trabajado en proyectos personales y entornos reales de desarrollo durante aproximadamente 6 meses, construyendo aplicaciones web, sistemas de gestión empresarial y soluciones enfocadas en optimización de procesos mediante tecnología moderna.",
+
     skills: [
-      { label: 'Full Stack', level: 'Experto' },
-      { label: 'Liderazgo Técnico', level: 'Avanzado' },
-      { label: 'IA Aplicada', level: 'Avanzado' },
-      { label: 'Arquitectura Frontend', level: 'Avanzado' },
-      { label: 'Automatización', level: 'Avanzado' },
+      { label: "Dominio Técnico", value: 78 },
+      { label: "Diseño de Sistemas", value: 74 },
+      { label: "Resolución de Problemas", value: 88 },
+      { label: "Conocimiento en IA", value: 85 },
+      { label: "Experiencia de Desarrollo", value: 75 },
     ],
+
     experiencia: [
-      'Desarrollo de plataformas de gestión con interfaces modernas, paneles administrativos y gestión de usuarios.',
-      'Automatización de procesos empresariales mediante Power Platform, Power Automate y flujos inteligentes.',
-      'Construcción de soluciones académicas para gestión estudiantil, asistencia y seguimiento de indicadores.',
-      'Implementación de herramientas basadas en IA generativa, asistentes inteligentes y prompt engineering.',
-      'Integración de APIs REST, bases de datos PostgreSQL y servicios cloud.',
+      "Desarrollo de aplicaciones Full-Stack con React, Next.js y TypeScript.",
+      "Creación de sistemas CRM y plataformas de gestión de información.",
+      "Implementación de bases de datos con Supabase y PostgreSQL.",
+      "Diseño de sistemas de gestión para procesos empresariales (HSE y operativos).",
+      "Automatización de flujos de trabajo con n8n y herramientas de IA.",
+      "Integración de modelos de Inteligencia Artificial en aplicaciones web.",
+      "Desarrollo de portafolios interactivos y aplicaciones personalizadas.",
+      "Construcción de soluciones orientadas a optimización de procesos.",
     ],
-    tecnologias: ['React', 'Node.js', 'IA', 'Español (Nativo)', 'Inglés (Intermedio)'],
-    stats: { proyectos: '8+', tecnologias: '15+', appsWeb: '6+', appsMoviles: '2+' },
+
+    fortalezas: [
+      "Full-Stack Development",
+      "AI Automation",
+      "Problem Solving",
+      "System Design",
+      "Prompt Engineering",
+      "Process Automation",
+      "Product Thinking",
+      "Adaptabilidad",
+    ],
+
+    tecnologias: [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "HTML5",
+      "CSS3",
+      "Supabase",
+      "PostgreSQL",
+      "Python",
+      "Java",
+      "n8n",
+      "Power Apps",
+      "Power Automate",
+      "OpenAI APIs",
+      "REST APIs",
+    ],
+
+    contribuciones: [
+      "Diseño y desarrollo de aplicaciones web completas.",
+      "Implementación de sistemas de automatización empresarial.",
+      "Integración de Inteligencia Artificial en flujos de trabajo.",
+      "Desarrollo de interfaces funcionales y optimizadas.",
+      "Estructuración de bases de datos y lógica backend.",
+      "Optimización de procesos mediante herramientas low-code y AI.",
+      "Apoyo en definición de arquitectura de proyectos.",
+    ],
+
     logros: [
-      'Aplicación móvil PWA con Angular y TypeScript.',
-      'Automatización de procesos empresariales con Power Platform.',
-      'Prototipos funcionales integrando IA generativa en flujos de trabajo.',
+      "Desarrollo de múltiples proyectos Full-Stack personales.",
+      "Implementación de sistemas CRM y plataformas empresariales.",
+      "Automatización de procesos con n8n y herramientas de IA.",
+      "Integración de APIs de Inteligencia Artificial en aplicaciones.",
+      "Experiencia en proyectos de gestión de datos y sistemas operativos.",
+      "Construcción de soluciones web enfocadas en eficiencia y escalabilidad.",
     ],
-    color: '#22d3ee',
+    valorEquipo:
+      "Conecta tecnologías y personas para construir soluciones completas y funcionales.",
+    color: "#6366f1",
   },
   {
     id: 2,
     photo: ianImg,
-    name: 'Ian Lorenzo',
-    shortName: 'Ian',
-    rol: 'Automation, AI & Cybersecurity Specialist',
-    perfil: 'Especialista en automatización, ciberseguridad e IA. Experto en Python, n8n y flujos automatizados para optimización de infraestructura.',
+    name: "Ian Di Filippo Espeleta",
+    shortName: "Ian",
+    rol: "Full-Stack Engineer & Cybersecurity Specialist",
+
+    perfil:
+      "Estudiante de Ingeniería de Software enfocado en desarrollo full-stack, ciberseguridad, automatización e inteligencia artificial. Destaca por su capacidad para diseñar soluciones escalables, optimizar procesos complejos y desarrollar sistemas seguros impulsados por tecnología moderna.",
+
     skills: [
-      { label: 'Automatización', level: 'Experto' },
-      { label: 'Ciberseguridad', level: 'Avanzado' },
-      { label: 'Python Avanzado', level: 'Experto' },
-      { label: 'Redes', level: 'Avanzado' },
-      { label: 'Administración Linux', level: 'Avanzado' },
+      { label: "Dominio Técnico", value: 88 },
+      { label: "Diseño de Sistemas", value: 84 },
+      { label: "Resolución de Problemas", value: 91 },
+      { label: "Inteligencia Artificial", value: 87 },
+      { label: "Experiencia de Desarrollo", value: 86 },
     ],
+
     experiencia: [
-      'Desarrollo de flujos de automatización complejos con n8n y Python.',
-      'Implementación de medidas de ciberseguridad en infraestructura cloud.',
-      'Administración de servidores Linux, monitoreo y despliegues automatizados.',
-      'Creación de APIs REST y microservicios para integración de sistemas.',
+      "Desarrollo de aplicaciones web full-stack.",
+      "Construcción de APIs y servicios backend.",
+      "Automatización de procesos con Python.",
+      "Análisis de fraude y validación de datos.",
+      "Implementación de soluciones de ciberseguridad.",
+      "Desarrollo de dashboards y análisis de información.",
     ],
-    tecnologias: ['Python', 'n8n', 'Ciberseguridad', 'Español (Nativo)', 'Inglés (Técnico)'],
-    stats: { proyectos: '6+', tecnologias: '12+', appsWeb: '4+', appsMoviles: '1+' },
+
+    fortalezas: [
+      "Full-Stack Development",
+      "Cybersecurity",
+      "Artificial Intelligence",
+      "Backend Engineering",
+      "System Architecture",
+      "Automation",
+      "Data Analysis",
+    ],
+
+    tecnologias: [
+      "Python",
+      "Java",
+      "JavaScript",
+      "Swift",
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "MySQL",
+      "SQL Server",
+      "Power BI",
+      "REST APIs",
+      "Machine Learning",
+      "Cryptography",
+    ],
+
+    contribuciones: [
+      "Diseño de arquitectura técnica.",
+      "Desarrollo de sistemas backend.",
+      "Automatización de procesos operativos.",
+      "Integración de soluciones de IA.",
+      "Optimización del flujo de datos.",
+      "Implementación de medidas de seguridad.",
+    ],
+
+    valorEquipo:
+      "Es el motor técnico detrás de la arquitectura, automatización y seguridad del proyecto. Convierte ideas complejas en soluciones escalables e inteligentes, aportando visión estratégica, capacidad analítica y una fuerte orientación a la innovación.",
+
     logros: [
-      'Automatización completa de procesos de CI/CD con n8n.',
-      'Sistema de monitoreo de seguridad 24/7 implementado.',
-      '15+ APIs integradas en flujos automatizados de producción.',
+      "Certificación CS50x de Harvard.",
+      "Formación en criptografía aplicada.",
+      "Experiencia en análisis de fraude financiero.",
+      "Participación en proyectos tecnológicos internacionales.",
+      "Implementación de automatizaciones basadas en IA.",
+      "Desarrollo de plataformas web escalables.",
     ],
-    color: '#a78bfa',
+
+    color: "#3b82f6",
   },
   {
     id: 3,
     photo: diegoImg,
-    name: 'Diego Panteve',
-    shortName: 'Diego',
-    rol: 'Frontend & Mobile Engineer',
-    perfil: 'Estudiante enfocado en desarrollo frontend y mobile, construcción de interfaces modernas y experiencias de usuario intuitivas.',
+    name: "Diego Panteve",
+    shortName: "Diego",
+    rol: "Frontend & Mobile Engineer",
+    perfil:
+      "Estudiante enfocado en desarrollo frontend y mobile, construcción de interfaces modernas y experiencias de usuario intuitivas.",
     skills: [
-      { label: 'Frontend', level: 'Avanzado' },
-      { label: 'Mobile Development', level: 'Avanzado' },
-      { label: 'UI/UX Design', level: 'Intermedio' },
-      { label: 'TypeScript', level: 'Avanzado' },
-      { label: 'APIs REST', level: 'Avanzado' },
+      { label: "Frontend", level: "Avanzado" },
+      { label: "Mobile Development", level: "Avanzado" },
+      { label: "UI/UX Design", level: "Intermedio" },
+      { label: "TypeScript", level: "Avanzado" },
+      { label: "APIs REST", level: "Avanzado" },
     ],
     experiencia: [
-      'Desarrollo de interfaces de usuario con React y React Native.',
-      'Construcción de aplicaciones mobile funcionales con navegación.',
-      'Maquetación y prototipado con HTML5, CSS3 y TypeScript.',
-      'Consumo e integración de APIs REST en aplicaciones.',
-      'Control de versiones y trabajo colaborativo con Git.',
+      "Desarrollo de interfaces de usuario con React y React Native.",
+      "Construcción de aplicaciones mobile funcionales con navegación.",
+      "Maquetación y prototipado con HTML5, CSS3 y TypeScript.",
+      "Consumo e integración de APIs REST en aplicaciones.",
+      "Control de versiones y trabajo colaborativo con Git.",
     ],
-    tecnologias: ['React', 'React Native', 'TypeScript', 'Español (Nativo)', 'Inglés (Técnico)'],
-    stats: { proyectos: '10+', tecnologias: '18+', appsWeb: '15+', appsMoviles: '3+' },
+    tecnologias: [
+      "React",
+      "React Native",
+      "TypeScript",
+      "Español (Nativo)",
+      "Inglés (Técnico)",
+    ],
     logros: [
-      'App mobile con navegación completa y consumo de APIs.',
-      'Sistema de componentes reutilizables para múltiples proyectos.',
-      'Interfaces responsivas implementadas en producción.',
+      "App mobile con navegación completa y consumo de APIs.",
+      "Sistema de componentes reutilizables para múltiples proyectos.",
+      "Interfaces responsivas implementadas en producción.",
     ],
-    color: '#fb923c',
+    fortalezas: [
+      "React",
+      "React Native",
+      "TypeScript",
+      "UI/UX",
+      "Trabajo en Equipo",
+    ],
+    contribuciones: [
+      "Desarrollo de interfaces modulares y reutilizables.",
+      "Implementación de navegación y lógica en apps mobile.",
+      "Optimización de rendimiento en aplicaciones frontend.",
+    ],
+    valorEquipo:
+      "Traduce diseños en interfaces funcionales y experiencias de usuario fluidas.",
+    color: "rgb(27, 231, 54)",
   },
   {
     id: 4,
     photo: matheusImg,
-    name: 'Matheus Rocha',
-    shortName: 'Matheus',
-    rol: 'AI Systems Architect',
-    perfil: 'Arquitecto de sistemas de IA especializado en modelos LLM, fine-tuning y soluciones empresariales de inteligencia artificial.',
+    name: "Matheus Aponte",
+    shortName: "Matheus",
+
+    rol: "Full-Stack & AI Automation Engineer",
+
+    perfil:
+      "Estudiante de Ingeniería de Software con experiencia en desarrollo Full-Stack, automatización de procesos e integración de soluciones basadas en Inteligencia Artificial. Ha participado en la construcción de aplicaciones web empresariales, sistemas de gestión de datos y plataformas orientadas a optimizar procesos mediante tecnologías modernas, arquitecturas escalables y automatización inteligente.",
+
     skills: [
-      { label: 'Arquitectura IA', level: 'Experto' },
-      { label: 'Python', level: 'Experto' },
-      { label: 'LLMs', level: 'Experto' },
-      { label: 'MLOps', level: 'Avanzado' },
-      { label: 'APIs IA', level: 'Avanzado' },
+      { label: "Dominio Técnico", value: 84 },
+      { label: "Diseño de Sistemas", value: 80 },
+      { label: "Resolución de Problemas", value: 90 },
+      { label: "Conocimiento en IA", value: 88 },
+      { label: "Experiencia de Desarrollo", value: 86 },
     ],
+
     experiencia: [
-      'Arquitectura de sistemas de IA para soluciones empresariales escalables.',
-      'Implementación de modelos LLM con fine-tuning y optimización.',
-      'Integración de APIs de OpenAI en productos de producción.',
-      'Diseño de pipelines de datos para entrenamiento y evaluación de modelos.',
+      "Desarrollo de aplicaciones Full-Stack con React, Next.js y TypeScript.",
+      "Construcción de sistemas CRM y plataformas empresariales.",
+      "Implementación de soluciones con Supabase y bases de datos en la nube.",
+      "Diseño de sistemas de gestión para procesos HSE.",
+      "Automatización de procesos mediante n8n y Power Platform.",
+      "Integración de Inteligencia Artificial en flujos empresariales.",
+      "Desarrollo de aplicaciones web personalizadas.",
+      "Diseño de arquitecturas orientadas a escalabilidad y mantenimiento.",
     ],
-    tecnologias: ['Python', 'OpenAI', 'LLMs', 'Español (Nativo)', 'Inglés (Avanzado)'],
-    stats: { proyectos: '4+', tecnologias: '14+', sistemasIA: '7+', modelosDeploy: '12+' },
+
+    fortalezas: [
+      "Full-Stack Development",
+      "AI Automation",
+      "Prompt Engineering",
+      "Database Design",
+      "System Design",
+      "Problem Solving",
+      "Product Thinking",
+      "Trabajo en Equipo",
+    ],
+
+    tecnologias: [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "HTML5",
+      "CSS3",
+      "Supabase",
+      "PostgreSQL",
+      "Java",
+      "Python",
+      "n8n",
+      "Power Apps",
+      "Power Automate",
+      "REST APIs",
+      "OpenAI",
+    ],
+
+    contribuciones: [
+      "Desarrollo de plataformas empresariales.",
+      "Diseño e implementación de automatizaciones.",
+      "Integración de herramientas de Inteligencia Artificial.",
+      "Construcción de módulos Full-Stack.",
+      "Diseño de estructuras de datos y bases de datos.",
+      "Optimización de flujos operativos digitales.",
+    ],
+
+    valorEquipo:
+      "Aporta una combinación de desarrollo Full-Stack, automatización e Inteligencia Artificial que permite transformar procesos empresariales en soluciones digitales eficientes, escalables y centradas en el usuario.",
+
     logros: [
-      'Sistema RAG implementado para búsqueda empresarial.',
-      'Plataforma multi-agente con IA desplegada en producción.',
-      'Reducción de costos de inferencia en 45% mediante optimización.',
+      "Participación en múltiples proyectos empresariales reales.",
+      "Implementación de sistemas CRM y gestión de información.",
+      "Automatización de procesos con n8n y Power Platform.",
+      "Integración de IA en herramientas y flujos de trabajo.",
+      "Desarrollo de aplicaciones web modernas y escalables.",
+      "Implementación de soluciones seguras utilizando Supabase y RLS.",
     ],
-    color: '#60a5fa',
+
+    color: "#fb923c",
   },
-]
+];
 
 export default function App() {
-  const [selectedMember, setSelectedMember] = useState(CREW_DATA[0])
+  const [selectedMember, setSelectedMember] = useState(CREW_DATA[0]);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-  const crewRef = useRef(null)
-  const dossierRef = useRef(null)
+    window.scrollTo(0, 0);
+  }, []);
+  const crewRef = useRef(null);
+  const dossierRef = useRef(null);
 
   const scrollToCrew = () => {
-    crewRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
+    crewRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const openDossier = (member) => {
-    setSelectedMember(member)
+    setSelectedMember(member);
     requestAnimationFrame(() => {
-      dossierRef.current?.scrollIntoView({ behavior: 'smooth' })
-    })
-  }
+      dossierRef.current?.scrollIntoView({ behavior: "smooth" });
+    });
+  };
 
   const backToCrew = () => {
-    crewRef.current?.scrollIntoView({ behavior: 'smooth' })
-    setTimeout(() => setSelectedMember(null), 500)
-  }
+    crewRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => setSelectedMember(null), 500);
+  };
 
   return (
     <div className="relative min-h-screen text-white font-sans">
@@ -170,5 +344,5 @@ export default function App() {
         </div>
       </div>
     </div>
-  )
+  );
 }
