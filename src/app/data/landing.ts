@@ -33,6 +33,16 @@ export interface Skill {
   value: number;
 }
 
+export interface TechGroup {
+  category: string;
+  items: string[];
+}
+
+export interface Stat {
+  label: string;
+  value: string;
+}
+
 export interface CrewMember {
   id: number;
   photo: string;
@@ -41,9 +51,9 @@ export interface CrewMember {
   rol: string;
   perfil: string;
   skills: Skill[];
+  techGroups: TechGroup[];
+  stats: Stat[];
   experiencia: string[];
-  fortalezas: string[];
-  tecnologias: string[];
   contribuciones: string[];
   valorEquipo: string;
   logros: string[];
@@ -66,28 +76,24 @@ export const crewMembers: CrewMember[] = [
       { label: "AI Knowledge", value: 85 },
       { label: "Development Experience", value: 72 },
     ],
+    techGroups: [
+      { category: "Lenguajes", items: ["Python", "Java", "SQL"] },
+      { category: "Frontend", items: ["React"] },
+      { category: "IA", items: ["OpenAI APIs", "Prompt Engineering"] },
+      { category: "Herramientas", items: ["Git", "APIs REST"] },
+    ],
+    stats: [
+      { label: "Proyectos IA", value: "4+" },
+      { label: "Tecnologías", value: "10+" },
+      { label: "Prototipos", value: "3+" },
+      { label: "Modelos", value: "5+" },
+    ],
     experiencia: [
       "Investigación de agentes inteligentes y sus aplicaciones.",
       "Integración de modelos de IA en prototipos funcionales.",
       "Diseño de arquitecturas para aplicaciones modernas.",
       "Desarrollo de prototipos basados en IA.",
       "Evaluación de tecnologías emergentes para proyectos.",
-    ],
-    fortalezas: [
-      "Arquitectura de Software",
-      "Inteligencia Artificial",
-      "Investigación Técnica",
-      "Pensamiento Analítico",
-      "Diseño de Soluciones",
-    ],
-    tecnologias: [
-      "Python",
-      "Java",
-      "React",
-      "Git",
-      "SQL",
-      "APIs REST",
-      "OpenAI APIs",
     ],
     contribuciones: [
       "Diseño de la arquitectura del agente.",
@@ -117,28 +123,24 @@ export const crewMembers: CrewMember[] = [
       { label: "AI Knowledge", value: 82 },
       { label: "Development Experience", value: 75 },
     ],
+    techGroups: [
+      { category: "Lenguajes", items: ["Python", "Java"] },
+      { category: "IA", items: ["OpenAI APIs", "n8n"] },
+      { category: "Infra", items: ["Linux", "APIs REST"] },
+      { category: "Herramientas", items: ["Git"] },
+    ],
+    stats: [
+      { label: "Flujos Auto.", value: "6+" },
+      { label: "Tecnologías", value: "8+" },
+      { label: "Agentes IA", value: "3+" },
+      { label: "Integraciones", value: "5+" },
+    ],
     experiencia: [
       "Automatización de procesos con n8n y APIs.",
       "Integración de modelos de IA en flujos automatizados.",
       "Implementación de medidas básicas de ciberseguridad.",
       "Desarrollo de scripts para análisis de datos.",
       "Administración de sistemas Linux.",
-    ],
-    fortalezas: [
-      "Automatización",
-      "Inteligencia Artificial",
-      "Ciberseguridad",
-      "Resolución de Problemas",
-      "Adaptabilidad",
-    ],
-    tecnologias: [
-      "Python",
-      "Java",
-      "Git",
-      "Linux",
-      "n8n",
-      "OpenAI APIs",
-      "APIs REST",
     ],
     contribuciones: [
       "Automatización de flujos de trabajo.",
@@ -168,35 +170,25 @@ export const crewMembers: CrewMember[] = [
       { label: "AI Knowledge", value: 72 },
       { label: "Development Experience", value: 82 },
     ],
+    techGroups: [
+      { category: "Frontend", items: ["Angular", "TypeScript", "JavaScript"] },
+      { category: "Backend", items: ["Node.js", "APIs REST"] },
+      { category: "Database", items: ["PostgreSQL", "Supabase"] },
+      { category: "Automation", items: ["Power Platform", "Power Automate"] },
+      { category: "Tools", items: ["Git", "GitHub", "Vercel", "Figma"] },
+    ],
+    stats: [
+      { label: "Proyectos", value: "8+" },
+      { label: "Tecnologías", value: "15+" },
+      { label: "Apps Web", value: "6+" },
+      { label: "Apps Móviles", value: "2+" },
+    ],
     experiencia: [
       "Desarrollo de plataformas de gestión con interfaces modernas, paneles administrativos y gestión de usuarios.",
       "Automatización de procesos empresariales mediante Power Platform, Power Automate y flujos inteligentes.",
       "Construcción de soluciones académicas para gestión estudiantil, asistencia y seguimiento de indicadores.",
       "Implementación de herramientas basadas en IA generativa, asistentes inteligentes y prompt engineering.",
       "Integración de APIs REST, bases de datos PostgreSQL y servicios externos.",
-    ],
-    fortalezas: [
-      "Desarrollo Full Stack",
-      "Resolución de Problemas",
-      "Aprendizaje Autónomo",
-      "Pensamiento Analítico",
-      "Trabajo en Equipo",
-      "Adaptabilidad Tecnológica",
-    ],
-    tecnologias: [
-      "Angular",
-      "Node.js",
-      "JavaScript",
-      "TypeScript",
-      "PostgreSQL",
-      "Supabase",
-      "Power Platform",
-      "Power Automate",
-      "APIs REST",
-      "Git",
-      "GitHub",
-      "Vercel",
-      "Figma",
     ],
     contribuciones: [
       "Liderazgo técnico del equipo y desarrollo full stack.",
@@ -228,6 +220,19 @@ export const crewMembers: CrewMember[] = [
       { label: "AI Knowledge", value: 70 },
       { label: "Development Experience", value: 78 },
     ],
+    techGroups: [
+      { category: "Frontend", items: ["Angular 19+", "TypeScript", "HTML5", "CSS3", "TailwindCSS", "DaisyUI"] },
+      { category: "Backend", items: ["NestJS", "Node.js", "Express", "APIs REST"] },
+      { category: "Database", items: ["PostgreSQL", "Prisma ORM", "MongoDB", "SQL"] },
+      { category: "Desktop", items: ["Electron"] },
+      { category: "Tools", items: ["Git", "GitHub", "Microsoft Intune", "Python", "Java"] },
+    ],
+    stats: [
+      { label: "Proyectos", value: "10+" },
+      { label: "Tecnologías", value: "22+" },
+      { label: "Apps Desktop", value: "3+" },
+      { label: "Cert.", value: "3" },
+    ],
     experiencia: [
       "Desarrollo de aplicaciones desktop con Electron y Angular 19+.",
       "Construcción de APIs REST con NestJS y Prisma ORM.",
@@ -237,39 +242,6 @@ export const crewMembers: CrewMember[] = [
       "Desarrollo de prototipo con IA para traducción en tiempo real durante llamadas.",
       "Soporte técnico de hardware, software y red mediante sistema de tickets.",
       "Gestión de infraestructura tecnológica empresarial.",
-    ],
-    fortalezas: [
-      "Full Stack Development",
-      "Arquitectura de Software",
-      "Backend con NestJS",
-      "Frontend con Angular",
-      "Resolución de Problemas",
-      "Ciberseguridad Básica",
-      "Aprendizaje Autónomo",
-      "Trabajo en Equipo",
-    ],
-    tecnologias: [
-      "Angular 19+",
-      "NestJS",
-      "Electron",
-      "PostgreSQL",
-      "Prisma ORM",
-      "TypeScript",
-      "JavaScript",
-      "Node.js",
-      "Express",
-      "HTML5",
-      "CSS3",
-      "TailwindCSS",
-      "DaisyUI",
-      "NgRx Signal Store",
-      "Git",
-      "GitHub",
-      "MongoDB",
-      "SQL",
-      "Microsoft Intune",
-      "Python",
-      "Java",
     ],
     contribuciones: [
       "Diseño e implementación de arquitecturas full stack escalables.",
