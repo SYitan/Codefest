@@ -28,6 +28,25 @@ function bezierPt(t: number, x1: number, y1: number, cx: number, cy: number, x2:
   };
 }
 
+const CONSTELLATION_POINTS = [
+  { rx: 0.05, ry: 0.08 }, { rx: 0.12, ry: 0.04 }, { rx: 0.20, ry: 0.06 },
+  { rx: 0.04, ry: 0.20 }, { rx: 0.08, ry: 0.35 }, { rx: 0.03, ry: 0.50 },
+  { rx: 0.06, ry: 0.65 }, { rx: 0.04, ry: 0.80 }, { rx: 0.10, ry: 0.92 },
+  { rx: 0.20, ry: 0.96 }, { rx: 0.35, ry: 0.97 }, { rx: 0.50, ry: 0.98 },
+  { rx: 0.65, ry: 0.97 }, { rx: 0.80, ry: 0.96 }, { rx: 0.90, ry: 0.92 },
+  { rx: 0.96, ry: 0.80 }, { rx: 0.94, ry: 0.65 }, { rx: 0.97, ry: 0.50 },
+  { rx: 0.95, ry: 0.35 }, { rx: 0.96, ry: 0.20 }, { rx: 0.92, ry: 0.08 },
+  { rx: 0.85, ry: 0.04 }, { rx: 0.78, ry: 0.06 },
+];
+
+const CONSTELLATION_LINKS: [number, number][] = [
+  [0, 1], [1, 2], [0, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8],
+  [8, 9], [9, 10], [10, 11], [11, 12], [12, 13], [13, 14], [14, 15],
+  [15, 16], [16, 17], [17, 18], [18, 19], [19, 20], [20, 21], [21, 22],
+  [0, 21], [2, 22], [1, 20], [3, 6], [7, 10], [11, 14], [15, 18], [19, 22],
+  [5, 17], [4, 16],
+];
+
 export function NeuralNetworkBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -73,6 +92,24 @@ export function NeuralNetworkBackground() {
       if (activation < 0.02) return;
 
       const ns = nodes();
+
+      // Constellations around edges
+      const cpts = CONSTELLATION_POINTS.map((p) => ({ x: p.rx * W, y: p.ry * H }));
+      for (const [a, b] of CONSTELLATION_LINKS) {
+        const pa = cpts[a], pb = cpts[b];
+        ctx.beginPath();
+        ctx.moveTo(pa.x, pa.y);
+        ctx.lineTo(pb.x, pb.y);
+        ctx.strokeStyle = `rgba(180,140,255,${0.035 * activation})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+      for (const pt of cpts) {
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, 0.8, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200,180,255,${0.04 * activation})`;
+        ctx.fill();
+      }
 
       for (const [a, b] of CONNECTIONS) {
         const na = ns[a], nb = ns[b];

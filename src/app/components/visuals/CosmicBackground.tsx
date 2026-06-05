@@ -39,7 +39,7 @@ export function CosmicBackground() {
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>
       <Canvas
-        camera={{ position: [0, 1.2, 1.0], fov: 65, near: 0.1, far: 30 }}
+        camera={{ position: [0, 0.6, 1.0], fov: 65, near: 0.1, far: 30 }}
         dpr={dpr}
         gl={{
           antialias: false,

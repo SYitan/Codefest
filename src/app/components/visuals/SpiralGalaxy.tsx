@@ -147,16 +147,16 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
     const scrollRotate = progress * 0.6;
 
     // Faster inner rotation for black hole accretion feel
-    groupRef.current.rotation.y += delta * (0.04 + progress * 0.015);
+    groupRef.current.rotation.y += delta * (0.08 + progress * 0.025);
 
-    groupRef.current.rotation.x = Math.sin(t * 0.03) * 0.03 + progress * 0.04;
-    groupRef.current.position.x = Math.cos(scrollRotate) * 0.25;
+    groupRef.current.rotation.x = Math.sin(t * 0.06) * 0.05 + progress * 0.06;
+    groupRef.current.position.x = Math.cos(scrollRotate) * 0.35;
     groupRef.current.position.z = -0.8 + Math.sin(scrollRotate) * 0.3;
 
     if (armsRef.current) {
       const sizes = armsRef.current.geometry.attributes.size.array as Float32Array;
       for (let i = 0; i < armData.pos.length / 3; i++) {
-        sizes[i] = armData.siz[i] * (0.5 + Math.sin(t * 0.5 + armData.off[i]) * 0.5);
+        sizes[i] = armData.siz[i] * (0.5 + Math.sin(t * 1.2 + armData.off[i]) * 0.5);
       }
       armsRef.current.geometry.attributes.size.needsUpdate = true;
     }
@@ -164,7 +164,7 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
     if (diskRef.current) {
       const sizes = diskRef.current.geometry.attributes.size.array as Float32Array;
       for (let i = 0; i < DISK_PARTICLES; i++) {
-        sizes[i] = diskData.siz[i] * (0.6 + Math.sin(t * 0.8 + i * 0.05) * 0.4);
+        sizes[i] = diskData.siz[i] * (0.5 + Math.sin(t * 1.5 + i * 0.05) * 0.5);
       }
       diskRef.current.geometry.attributes.size.needsUpdate = true;
 
@@ -187,8 +187,8 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
       const pos = jetRef.current.geometry.attributes.position.array as Float32Array;
       for (let i = 0; i < JET_PARTICLES; i++) {
         const i3 = i * 3;
-        pos[i3] += Math.sin(t * 0.1 + i * 0.05) * 0.0005;
-        pos[i3 + 2] += Math.cos(t * 0.08 + i * 0.07) * 0.0005;
+        pos[i3] += Math.sin(t * 0.2 + i * 0.05) * 0.001;
+        pos[i3 + 2] += Math.cos(t * 0.15 + i * 0.07) * 0.001;
       }
       jetRef.current.geometry.attributes.position.needsUpdate = true;
     }
@@ -203,16 +203,16 @@ export function SpiralGalaxy({ progressRef }: { progressRef?: React.MutableRefOb
       const pos = dustRef.current.geometry.attributes.position.array as Float32Array;
       for (let i = 0; i < DUST_PARTICLES; i++) {
         const i3 = i * 3;
-        pos[i3] += Math.sin(t * 0.012 + i * 0.01) * 0.0003;
-        pos[i3 + 1] += Math.cos(t * 0.01 + i * 0.02) * 0.0002;
-        pos[i3 + 2] += Math.sin(t * 0.008 + i * 0.015) * 0.0003;
+        pos[i3] += Math.sin(t * 0.02 + i * 0.01) * 0.0005;
+        pos[i3 + 1] += Math.cos(t * 0.018 + i * 0.02) * 0.0004;
+        pos[i3 + 2] += Math.sin(t * 0.015 + i * 0.015) * 0.0005;
       }
       dustRef.current.geometry.attributes.position.needsUpdate = true;
     }
   });
 
   return (
-    <group ref={groupRef} position={[0, 0.3, 0]}>
+    <group ref={groupRef} position={[0, -0.6, 0]}>
       {/* Core glow */}
       <sprite ref={coreGlowRef} scale={[0.55, 0.55, 1]}>
         <spriteMaterial
