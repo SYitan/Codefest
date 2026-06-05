@@ -112,7 +112,7 @@ function CrewCard({ member, isSelected, onClick, index }: {
             filter: "blur(20px)",
           }}
         />
-        <div className="relative overflow-hidden" style={{ height: 280 }}>
+        <div className="relative overflow-hidden" style={{ height: 340 }}>
           <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 20%, ${member.color}10, transparent 70%)` }} />
           <motion.img
             src={member.photo} alt={member.name}
@@ -121,7 +121,7 @@ function CrewCard({ member, isSelected, onClick, index }: {
             initial={{ filter: "brightness(0.85)" }}
             whileHover={{ filter: "brightness(1.05)", scale: 1.05 }}
           />
-          <div className="absolute inset-x-0 bottom-0 h-24" style={{ background: "linear-gradient(to top, rgba(3,0,20,0.95), transparent)" }} />
+          <div className="absolute inset-x-0 bottom-0 h-28" style={{ background: "linear-gradient(to top, rgba(3,0,20,0.95), transparent)" }} />
           <div className="absolute bottom-3 left-3">
             <span className="px-3 py-1 rounded text-[11px] font-semibold" style={{ background: `${member.color}20`, border: `1px solid ${member.color}40`, color: member.color, fontFamily: "'Orbitron', monospace", letterSpacing: "0.08em" }}>
               {member.rol}
@@ -133,10 +133,17 @@ function CrewCard({ member, isSelected, onClick, index }: {
             <div className="w-2 h-2 rounded-full" style={{ background: member.color, boxShadow: `0 0 8px ${member.color}` }} />
             <h3 className="text-white text-base font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.shortName}</h3>
           </div>
-          <p className="text-slate-500 text-xs leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.rol}</p>
-          <p className="mt-2 text-slate-600 text-[12px] leading-relaxed line-clamp-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+          <p className="text-slate-400 text-xs leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.rol}</p>
+          <p className="mt-2 text-slate-500 text-sm leading-relaxed line-clamp-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             {member.perfil}
           </p>
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {member.idiomas.map((idioma) => (
+              <span key={idioma} className="px-1.5 py-0.5 rounded text-[9px] uppercase tracking-[0.08em]" style={{ background: `${member.color}08`, border: `1px solid ${member.color}15`, color: "rgba(255,255,255,0.35)", fontFamily: "'Orbitron', monospace" }}>
+                {idioma}
+              </span>
+            ))}
+          </div>
           <motion.div
             className="mt-3 text-[10px] uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}

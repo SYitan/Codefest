@@ -54,6 +54,7 @@ export interface CrewMember {
   perfil: string;
   focus: string;
   specialties: string[];
+  idiomas: string[];
   skills: Skill[];
   techGroups: TechGroup[];
   stats: Stat[];
@@ -89,6 +90,7 @@ export const crewMembers: CrewMember[] = [
     perfil: "Arquitectura de IA y sistemas inteligentes.",
     focus: "Arquitectura de IA y Sistemas Inteligentes",
     specialties: ["Agentes IA", "Modelos de Lenguaje", "Arquitectura de Software"],
+    idiomas: ["Español (Nativo)", "Inglés (Avanzado)"],
     skills: [
       { label: "IA y Machine Learning", level: "Experto" },
       { label: "Arquitectura de Sistemas", level: "Avanzado" },
@@ -132,6 +134,7 @@ export const crewMembers: CrewMember[] = [
     perfil: "Automatización inteligente y seguridad informática.",
     focus: "Automatización, Integraciones y Ciberseguridad",
     specialties: ["Automatización de Flujos", "Seguridad en APIs", "Integración de IA"],
+    idiomas: ["Español (Nativo)", "Inglés (Avanzado)"],
     skills: [
       { label: "Automatización", level: "Experto" },
       { label: "Ciberseguridad", level: "Avanzado" },
@@ -175,6 +178,7 @@ export const crewMembers: CrewMember[] = [
     perfil: "Producto, desarrollo full stack y liderazgo técnico.",
     focus: "Producto, Full Stack y Liderazgo Técnico",
     specialties: ["Aplicaciones Web", "Automatización Empresarial", "IA Aplicada"],
+    idiomas: ["Español (Nativo)", "Inglés (Intermedio)"],
     skills: [
       { label: "Full Stack", level: "Experto" },
       { label: "Liderazgo Técnico", level: "Avanzado" },
@@ -220,6 +224,7 @@ export const crewMembers: CrewMember[] = [
     perfil: "Ingeniería de software, backend y sistemas escalables.",
     focus: "Ingeniería de Software, Backend y Sistemas Escalables",
     specialties: ["Arquitectura Backend", "Bases de Datos", "Aplicaciones Desktop"],
+    idiomas: ["Español (Nativo)", "Inglés (B2 - Cambridge)"],
     skills: [
       { label: "Backend y APIs", level: "Experto" },
       { label: "Arquitectura de Software", level: "Avanzado" },
