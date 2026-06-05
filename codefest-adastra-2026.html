@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Equipo · Codefest Ad Astra 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #030014;
+      color: rgba(255,255,255,0.88);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── CSS Variables ─────────────────────────────────────────────── */
+    :root {
+      --bg-deep:       #030014;
+      --bg-dark:       #050510;
+      --purple:        #7c3aed;
+      --purple-mid:    #9333ea;
+      --purple-light:  #a855f7;
+      --magenta:       #c026d3;
+      --cyan:          #06b6d4;
+      --cyan-light:    #67e8f9;
+      --white:         #ffffff;
+      --text-primary:  rgba(255,255,255,0.92);
+      --text-secondary:rgba(255,255,255,0.52);
+      --text-muted:    rgba(255,255,255,0.28);
+      --glass-bg:      rgba(255,255,255,0.032);
+      --glass-border:  rgba(255,255,255,0.072);
+      --glass-hover:   rgba(255,255,255,0.058);
+      --radius-card:   16px;
+      --radius-pill:   999px;
+      --transition:    all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ─── Canvas Layers ─────────────────────────────────────────────── */
+    #galaxy-canvas, #neural-canvas, #particle-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    #galaxy-canvas  { z-index: 1; }
+    #neural-canvas  { z-index: 2; }
+    #particle-canvas{ z-index: 3; }
+
+    /* ─── Nav ───────────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      transition: var(--transition);
+    }
+    nav.scrolled {
+      background: rgba(3,0,20,0.82);
+      backdrop-filter: blur(20px) saturate(1.2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.2);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 14px 48px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.5px;
+    }
+    .nav-logo-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: 0.02em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-cta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .nav-cta:hover {
+      background: var(--glass-hover);
+      border-color: rgba(124,58,237,0.4);
+    }
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+      .nav-links { display: none; }
+    }
+
+    /* ─── Content wrapper ───────────────────────────────────────────── */
+    main {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ─── Section base ──────────────────────────────────────────────── */
+    section {
+      position: relative;
+      padding: 120px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (max-width: 768px) {
+      section { padding: 80px 24px; }
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 1px;
+      background: var(--purple-light);
+    }
+
+    /* ─── Hero ──────────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.28);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--purple-light);
+      letter-spacing: 0.06em;
+      margin-bottom: 40px;
+      width: fit-content;
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--purple-light);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+    .hero-title {
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+    .hero-title .gradient-text {
+      background: linear-gradient(135deg, #a855f7 0%, #06b6d4 60%, #67e8f9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-subtitle {
+      font-size: clamp(16px, 2vw, 19px);
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin-bottom: 48px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--purple-mid) 100%);
+      border: none;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 500;
+      color: white;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 32px rgba(124,58,237,0.4); }
+    .btn-primary .arrow {
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .btn-primary:hover .arrow { transform: translateX(4px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 24px;
+      background: transparent;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    .btn-ghost:hover {
+      color: var(--text-primary);
+      border-color: rgba(255,255,255,0.18);
+      background: var(--glass-bg);
+    }
+
+    /* ─── Capabilities ──────────────────────────────────────────────── */
+    #capabilities {
+      padding-top: 80px;
+    }
+    .capabilities-header {
+      margin-bottom: 56px;
+    }
+    .capabilities-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      max-width: 600px;
+    }
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    @media (max-width: 1024px) {
+      .capabilities-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+    .cap-card {
+      padding: 32px 28px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .cap-card:first-child { border-radius: var(--radius-card) 0 0 0; }
+    .cap-card:nth-child(3) { border-radius: 0 var(--radius-card) 0 0; }
+    .cap-card:nth-child(4) { border-radius: 0 0 0 var(--radius-card); }
+    .cap-card:last-child { border-radius: 0 0 var(--radius-card) 0; }
+    @media (max-width: 1024px) {
+      .cap-card:first-child { border-radius: var(--radius-card) 0 0 0; }
+      .cap-card:nth-child(2) { border-radius: 0 var(--radius-card) 0 0; }
+      .cap-card:nth-child(3) { border-radius: 0; }
+      .cap-card:nth-child(4) { border-radius: 0; }
+      .cap-card:nth-child(5) { border-radius: 0 0 0 var(--radius-card); }
+      .cap-card:last-child  { border-radius: 0 0 var(--radius-card) 0; }
+    }
+    .cap-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--cap-color, rgba(124,58,237,0.08)), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .cap-card:hover { background: var(--glass-hover); }
+    .cap-card:hover::before { opacity: 1; }
+    .cap-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--cap-color, rgba(124,58,237,0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    .cap-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .cap-desc {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    /* ─── Metrics ───────────────────────────────────────────────────── */
+    #metrics {
+      padding: 80px 48px;
+    }
+    .metrics-inner {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+    .metric-item {
+      flex: 1;
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+      transition: var(--transition);
+    }
+    .metric-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 25%;
+      height: 50%;
+      width: 1px;
+      background: var(--glass-border);
+    }
+    .metric-item:hover { background: var(--glass-hover); }
+    .metric-value {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .metric-label {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 640px) {
+      #metrics { padding: 60px 24px; }
+      .metrics-inner { flex-direction: column; }
+      .metric-item:not(:last-child)::after {
+        top: auto;
+        bottom: 0;
+        left: 25%;
+        width: 50%;
+        height: 1px;
+      }
+    }
+
+    /* ─── Crew Section ──────────────────────────────────────────────── */
+    #crew .crew-header {
+      margin-bottom: 64px;
+    }
+    .crew-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      max-width: 560px;
+      margin-bottom: 16px;
+    }
+    .crew-subtitle {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.65;
+    }
+    .crew-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 1024px) {
+      .crew-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .crew-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Member Card ───────────────────────────────────────────────── */
+    .member-card {
+      position: relative;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-card);
+      padding: 24px 20px 20px;
+      cursor: pointer;
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.32s,
+                  box-shadow 0.32s,
+                  background 0.32s;
+      overflow: hidden;
+    }
+    .member-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top center, var(--member-color, rgba(124,58,237,0.12)), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s;
+      pointer-events: none;
+    }
+    .member-card:hover {
+      transform: translateY(-4px) scale(1.005);
+      border-color: var(--member-border, rgba(124,58,237,0.32));
+      box-shadow: 0 16px 48px var(--member-shadow, rgba(124,58,237,0.18)),
+                  0 0 0 1px var(--member-border, rgba(124,58,237,0.12)) inset;
+      background: var(--glass-hover);
+    }
+    .member-card:hover::before { opacity: 1; }
+
+    .card-status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.22);
+      font-size: 10px;
+      font-weight: 600;
+      color: #34d399;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .status-pill::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #34d399;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .card-role-badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--member-accent, var(--purple-light));
+      padding: 3px 8px;
+      border-radius: 5px;
+      background: rgba(168,85,247,0.1);
+    }
+
+    .card-avatar-wrap {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      margin-bottom: 16px;
+    }
+    .card-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      background: var(--member-grad, linear-gradient(135deg, #7c3aed, #06b6d4));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.5px;
+      position: relative;
+      z-index: 1;
+    }
+    .avatar-ring {
+      position: absolute;
+      inset: -3px;
+      border-radius: 17px;
+      background: var(--member-grad, linear-gradient(135deg, #7c3aed, #06b6d4));
+      opacity: 0.2;
+      z-index: 0;
+    }
+
+    .card-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .card-specialty {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 20px;
+    }
+    .tag {
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .member-card:hover .tag {
+      background: rgba(255,255,255,0.07);
+      color: var(--text-primary);
+    }
+
+    .card-projects {
+      margin-bottom: 20px;
+    }
+    .card-projects-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .card-project-item {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .card-project-item:last-child { border-bottom: none; }
+    .card-project-item::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--member-accent, var(--purple-light));
+      flex-shrink: 0;
+    }
+
+    .card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .card-cta-text {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--member-accent, var(--purple-light));
+      transition: all 0.2s;
+    }
+    .card-cta-arrow {
+      font-size: 14px;
+      color: var(--member-accent, var(--purple-light));
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .member-card:hover .card-cta-arrow { transform: translateX(5px); }
+
+    /* ─── Dossier Overlay ───────────────────────────────────────────── */
+    #dossier-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    #dossier-overlay.open {
+      pointer-events: all;
+      opacity: 1;
+    }
+    .dossier-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(3,0,20,0.6);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      cursor: pointer;
+    }
+    .dossier-panel {
+      position: relative;
+      z-index: 1;
+      width: 420px;
+      height: 100vh;
+      background: rgba(8, 4, 28, 0.92);
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      border-left: 1px solid var(--glass-border);
+      padding: 0;
+      transform: translateX(100%);
+      transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+    #dossier-overlay.open .dossier-panel {
+      transform: translateX(0);
+    }
+    @media (max-width: 480px) {
+      .dossier-panel { width: 100vw; }
+    }
+
+    /* Scan line effect */
+    .dossier-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--dossier-color, var(--purple-light)), transparent);
+      animation: scan-line 3s ease-in-out infinite;
+      z-index: 10;
+    }
+    @keyframes scan-line {
+      0%, 100% { opacity: 0; transform: translateY(0); }
+      10% { opacity: 1; }
+      90% { opacity: 0.3; }
+      50% { transform: translateY(100vh); }
+    }
+
+    /* Corner brackets */
+    .dossier-corner {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      z-index: 11;
+      pointer-events: none;
+    }
+    .dossier-corner.tl { top: 12px; left: 12px; border-top: 1px solid; border-left: 1px solid; border-color: var(--dossier-color, var(--purple-light)); opacity: 0.5; }
+    .dossier-corner.tr { top: 12px; right: 12px; border-top: 1px solid; border-right: 1px solid; border-color: var(--dossier-color, var(--purple-light)); opacity: 0.5; }
+    .dossier-corner.bl { bottom: 12px; left: 12px; border-bottom: 1px solid; border-left: 1px solid; border-color: var(--dossier-color, var(--purple-light)); opacity: 0.5; }
+    .dossier-corner.br { bottom: 12px; right: 12px; border-bottom: 1px solid; border-right: 1px solid; border-color: var(--dossier-color, var(--purple-light)); opacity: 0.5; }
+
+    .dossier-header {
+      padding: 40px 32px 28px;
+      border-bottom: 1px solid var(--glass-border);
+      position: relative;
+    }
+    .dossier-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      color: var(--text-secondary);
+      transition: var(--transition);
+    }
+    .dossier-close:hover {
+      background: var(--glass-hover);
+      color: var(--text-primary);
+    }
+    .dossier-mission-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dossier-color, var(--purple-light));
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dossier-mission-label::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .dossier-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+      position: relative;
+    }
+    .dossier-name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    .dossier-role {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .dossier-level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      background: rgba(124,58,237,0.12);
+      border: 1px solid rgba(124,58,237,0.24);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--dossier-color, var(--purple-light));
+    }
+
+    .dossier-body {
+      padding: 28px 32px;
+    }
+    .dossier-section {
+      margin-bottom: 32px;
+    }
+    .dossier-section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* Capability rows */
+    .cap-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .cap-row:last-child { border-bottom: none; }
+    .cap-row-name {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+    .cap-row-level {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 5px;
+    }
+    .level-expert   { background: rgba(124,58,237,0.15); color: var(--purple-light); }
+    .level-advanced { background: rgba(6,182,212,0.12);  color: var(--cyan-light); }
+    .level-solid    { background: rgba(52,211,153,0.12); color: #34d399; }
+
+    /* Tech groups */
+    .tech-group { margin-bottom: 14px; }
+    .tech-group-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+    }
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .tech-tag {
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.09);
+      font-size: 11.5px;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    /* Experience items */
+    .exp-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 7px 0;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .exp-check {
+      color: var(--dossier-color, var(--purple-light));
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Impact */
+    .impact-box {
+      padding: 16px 18px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-left: 2px solid var(--dossier-color, var(--purple-light));
+      border-radius: 0 10px 10px 0;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-primary);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ─── Section Divider ───────────────────────────────────────────── */
+    .section-divider {
+      width: 100%;
+      max-width: 400px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+      margin: 0 auto;
+      opacity: 0.6;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 60px 48px 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      border-top: 1px solid var(--glass-border);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .footer-text {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .footer-right {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--purple-light);
+      opacity: 0.5;
+    }
+    @media (max-width: 768px) {
+      footer { padding: 48px 24px 40px; }
+    }
+
+    /* ─── Reveal animations ─────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+    .reveal-delay-5 { transition-delay: 0.40s; }
+    .reveal-delay-6 { transition-delay: 0.48s; }
+
+    /* ─── Scrollbar ─────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(124,58,237,0.3);
+      border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.5); }
+  </style>
+</head>
+<body>
+
+<!-- ─── Canvas Layers ──────────────────────────────────────── -->
+<canvas id="galaxy-canvas"></canvas>
+<canvas id="neural-canvas"></canvas>
+<canvas id="particle-canvas"></canvas>
+
+<!-- ─── Nav ───────────────────────────────────────────────── -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">AA</div>
+    <span class="nav-logo-text">Ad Astra · 2026</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#capabilities">Capacidades</a></li>
+    <li><a href="#crew">Tripulación</a></li>
+  </ul>
+  <a href="#crew" class="nav-cta">Ver Equipo</a>
+</nav>
+
+<!-- ─── Main Content ───────────────────────────────────────── -->
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-badge reveal">
+      <span class="hero-badge-dot"></span>
+      CODEFEST AD ASTRA 2026
+    </div>
+    <h1 class="hero-title reveal reveal-delay-1">
+      Ingeniería real.<br>
+      <span class="gradient-text">Ejecución probada.</span>
+    </h1>
+    <p class="hero-subtitle reveal reveal-delay-2">
+      Construimos productos funcionales mediante IA, automatización e ingeniería de software full-stack. Cuatro especialistas. Una misión.
+    </p>
+    <div class="hero-actions reveal reveal-delay-3">
+      <a href="#crew" class="btn-primary">
+        Explorar Tripulación
+        <span class="arrow">→</span>
+      </a>
+      <a href="#capabilities" class="btn-ghost">Ver Capacidades</a>
+    </div>
+  </section>
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities">
+    <div class="capabilities-header">
+      <div class="section-label reveal">Capacidades del equipo</div>
+      <h2 class="capabilities-title reveal reveal-delay-1">
+        Seis dominios.<br>Un equipo cohesionado.
+      </h2>
+    </div>
+    <div class="capabilities-grid">
+      <div class="cap-card reveal" style="--cap-color: rgba(168,85,247,0.12)">
+        <div class="cap-icon" style="background: rgba(168,85,247,0.18); color: #a855f7; font-size:18px;">⬡</div>
+        <div class="cap-name">Inteligencia Artificial</div>
+        <div class="cap-desc">LLMs, RAG, visión computacional y pipelines de ML en producción.</div>
+      </div>
+      <div class="cap-card reveal reveal-delay-1" style="--cap-color: rgba(6,182,212,0.12)">
+        <div class="cap-icon" style="background: rgba(6,182,212,0.18); color: #06b6d4; font-size:18px;">◈</div>
+        <div class="cap-name">Desarrollo Full Stack</div>
+        <div class="cap-desc">Frontend moderno y backends escalables desde MVP hasta producción.</div>
+      </div>
+      <div class="cap-card reveal reveal-delay-2" style="--cap-color: rgba(52,211,153,0.10)">
+        <div class="cap-icon" style="background: rgba(52,211,153,0.18); color: #34d399; font-size:18px;">⟳</div>
+        <div class="cap-name">Automatización</div>
+        <div class="cap-desc">Flujos end-to-end que eliminan trabajo manual y escalan sin fricción.</div>
+      </div>
+      <div class="cap-card reveal reveal-delay-3" style="--cap-color: rgba(251,146,60,0.10)">
+        <div class="cap-icon" style="background: rgba(251,146,60,0.18); color: #fb923c; font-size:18px;">◲</div>
+        <div class="cap-name">Aplicaciones Móviles</div>
+        <div class="cap-desc">Apps nativas iOS y Android con experiencias de clase mundial.</div>
+      </div>
+      <div class="cap-card reveal reveal-delay-4" style="--cap-color: rgba(244,63,94,0.10)">
+        <div class="cap-icon" style="background: rgba(244,63,94,0.18); color: #f43f5e; font-size:18px;">⬢</div>
+        <div class="cap-name">Arquitectura de Software</div>
+        <div class="cap-desc">Sistemas distribuidos, microservicios y decisiones técnicas de largo plazo.</div>
+      </div>
+      <div class="cap-card reveal reveal-delay-5" style="--cap-color: rgba(124,58,237,0.12)">
+        <div class="cap-icon" style="background: rgba(124,58,237,0.18); color: #7c3aed; font-size:18px;">⬡</div>
+        <div class="cap-name">APIs e Integraciones</div>
+        <div class="cap-desc">Conectores, webhooks y orquestación entre plataformas heterogéneas.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <section id="metrics" style="padding-top:0">
+    <div class="metrics-inner reveal">
+      <div class="metric-item">
+        <div class="metric-value" id="m1">20+</div>
+        <div class="metric-label">Proyectos</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">5</div>
+        <div class="metric-label">Sectores</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">4</div>
+        <div class="metric-label">Especialistas</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-value">1</div>
+        <div class="metric-label">Misión</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CREW -->
+  <section id="crew">
+    <div class="crew-header">
+      <div class="section-label reveal">Tripulación</div>
+      <h2 class="crew-title reveal reveal-delay-1">Perfiles complementarios.<br>Capacidad de ejecución real.</h2>
+      <p class="crew-subtitle reveal reveal-delay-2">
+        Cuatro especialistas con roles distintos y experiencia demostrable. No cuatro versiones del mismo perfil.
+      </p>
+    </div>
+    <div class="crew-grid" id="crew-grid">
+      <!-- Cards injected by JS -->
+    </div>
+  </section>
+
+</main>
+
+<!-- ─── Dossier Overlay ────────────────────────────────────── -->
+<div id="dossier-overlay">
+  <div class="dossier-backdrop" id="dossier-backdrop"></div>
+  <div class="dossier-panel" id="dossier-panel">
+    <div class="dossier-corner tl"></div>
+    <div class="dossier-corner tr"></div>
+    <div class="dossier-corner bl"></div>
+    <div class="dossier-corner br"></div>
+    <div id="dossier-content"></div>
+  </div>
+</div>
+
+<!-- ─── Footer ────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="nav-logo-mark" style="width:24px;height:24px;font-size:10px;">AA</div>
+      <span class="footer-text">Equipo · Codefest Ad Astra 2026</span>
+    </div>
+    <div class="footer-right">
+      <span class="footer-dot"></span>
+      Construido con propósito
+    </div>
+  </div>
+</footer>
+
+<!-- ─── Scripts ────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   TEAM DATA — Edita esto con los datos reales del equipo
+═══════════════════════════════════════════════════════════════ */
+const CREW = [
+  {
+    initials: 'AV',
+    name: 'Alejandro Vega',
+    role: 'AI Lead',
+    specialty: 'Modelos de Lenguaje · Visión Computacional',
+    badge: 'AI / ML',
+    accentColor: '#a855f7',
+    borderColor: 'rgba(168,85,247,0.32)',
+    shadowColor: 'rgba(168,85,247,0.18)',
+    gradStart: '#7c3aed',
+    gradEnd: '#a855f7',
+    tags: ['Python', 'LangChain', 'FastAPI', 'RAG'],
+    projects: ['Sistema RAG empresarial (30K docs)', 'Pipeline de clasificación CV con IA'],
+    dossier: {
+      level: 'Experto en IA',
+      capabilities: [
+        { name: 'LLMs & RAG', level: 'Experto' },
+        { name: 'Computer Vision', level: 'Avanzado' },
+        { name: 'MLOps & Deploy', level: 'Sólido' }
+      ],
+      tech: {
+        'AI / ML': ['Python', 'PyTorch', 'LangChain', 'Hugging Face', 'OpenAI API'],
+        'Backend': ['FastAPI', 'Flask', 'PostgreSQL'],
+        'Herramientas': ['Docker', 'Git', 'Supabase']
+      },
+      experience: [
+        'Sistema RAG para empresa logística (30K documentos)',
+        'Pipeline de visión computacional para clasificación automática',
+        'Automatización de reportes con GPT-4 y datos internos'
+      ],
+      impact: 'Reduce en 80% el tiempo de procesamiento documental en entornos empresariales.'
+    }
+  },
+  {
+    initials: 'SC',
+    name: 'Sofía Castillo',
+    role: 'Full Stack',
+    specialty: 'React · Node.js · Sistemas Distribuidos',
+    badge: 'Frontend / Backend',
+    accentColor: '#06b6d4',
+    borderColor: 'rgba(6,182,212,0.32)',
+    shadowColor: 'rgba(6,182,212,0.18)',
+    gradStart: '#0891b2',
+    gradEnd: '#06b6d4',
+    tags: ['React', 'Node.js', 'NestJS', 'PostgreSQL'],
+    projects: ['CRM para empresa de 200 usuarios', 'Dashboard financiero en tiempo real'],
+    dossier: {
+      level: 'Avanzado Full Stack',
+      capabilities: [
+        { name: 'Frontend React/Next', level: 'Experto' },
+        { name: 'Backend Node/Nest',   level: 'Experto' },
+        { name: 'Bases de Datos',      level: 'Avanzado' }
+      ],
+      tech: {
+        'Frontend': ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
+        'Backend':  ['Node.js', 'NestJS', 'REST', 'GraphQL'],
+        'Datos':    ['PostgreSQL', 'Supabase', 'Redis', 'Prisma']
+      },
+      experience: [
+        'CRM empresarial con 200+ usuarios concurrentes',
+        'Dashboard de analíticas en tiempo real con WebSockets',
+        'APIs REST/GraphQL para plataformas SaaS B2B'
+      ],
+      impact: 'Entrega productos web completos, de MVP a producción, en ciclos cortos y sin deuda técnica.'
+    }
+  },
+  {
+    initials: 'MR',
+    name: 'Mateo Ríos',
+    role: 'Mobile & Automation',
+    specialty: 'React Native · n8n · iOS/Android',
+    badge: 'Mobile / Automation',
+    accentColor: '#34d399',
+    borderColor: 'rgba(52,211,153,0.32)',
+    shadowColor: 'rgba(52,211,153,0.18)',
+    gradStart: '#059669',
+    gradEnd: '#34d399',
+    tags: ['React Native', 'n8n', 'Expo', 'TypeScript'],
+    projects: ['App móvil con 5K usuarios activos', 'Flujo de automatización logística'],
+    dossier: {
+      level: 'Avanzado Mobile',
+      capabilities: [
+        { name: 'React Native / Expo', level: 'Experto' },
+        { name: 'Automatización n8n',  level: 'Avanzado' },
+        { name: 'Integraciones API',   level: 'Avanzado' }
+      ],
+      tech: {
+        'Mobile':        ['React Native', 'Expo', 'iOS', 'Android'],
+        'Automatización':['n8n', 'Make', 'Webhooks', 'Zapier'],
+        'Backend':       ['Node.js', 'Firebase', 'Supabase']
+      },
+      experience: [
+        'App móvil con 5K usuarios activos en App Store y Play Store',
+        'Flujo automatizado de logística que reduce 3h de trabajo manual diario',
+        'Integraciones entre CRM, ERP y plataformas de mensajería'
+      ],
+      impact: 'Conecta sistemas dispares y construye canales nativos móviles con alta retención de usuarios.'
+    }
+  },
+  {
+    initials: 'JP',
+    name: 'Juliana Pérez',
+    role: 'Product & Frontend',
+    specialty: 'UX Engineering · Design Systems · TypeScript',
+    badge: 'UX / Product',
+    accentColor: '#fb923c',
+    borderColor: 'rgba(251,146,60,0.32)',
+    shadowColor: 'rgba(251,146,60,0.18)',
+    gradStart: '#ea580c',
+    gradEnd: '#fb923c',
+    tags: ['TypeScript', 'Figma', 'Next.js', 'UX'],
+    projects: ['Design system para producto SaaS', 'Rediseño con +38% conversión'],
+    dossier: {
+      level: 'Experto UX/Frontend',
+      capabilities: [
+        { name: 'UX / Product Design',  level: 'Experto' },
+        { name: 'Frontend TypeScript',  level: 'Avanzado' },
+        { name: 'Design Systems',       level: 'Experto' }
+      ],
+      tech: {
+        'Design':    ['Figma', 'Prototyping', 'Design Tokens'],
+        'Frontend':  ['TypeScript', 'Next.js', 'React', 'CSS/Tailwind'],
+        'Analytics': ['GA4', 'Hotjar', 'A/B Testing']
+      },
+      experience: [
+        'Design system adoptado por equipo de 12 ingenieros en SaaS B2B',
+        'Rediseño de onboarding con aumento del 38% en conversión',
+        'Investigación con usuarios y prototipos de alta fidelidad para startups'
+      ],
+      impact: 'Convierte necesidades técnicas en experiencias de producto que los usuarios adoptan naturalmente.'
+    }
+  }
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   GALAXY — Three.js
+═══════════════════════════════════════════════════════════════ */
+(function initGalaxy() {
+  const canvas = document.getElementById('galaxy-canvas');
+  const W = () => window.innerWidth;
+  const H = () => window.innerHeight;
+
+  // Adaptive DPR
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.2);
+
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: false,
+    alpha: true,
+    powerPreference: 'high-performance'
+  });
+  renderer.setPixelRatio(dpr);
+  renderer.setSize(W(), H());
+  renderer.setClearColor(0x000000, 0);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x030014, 1.5, 16);
+
+  const camera = new THREE.PerspectiveCamera(60, W() / H(), 0.1, 20);
+  camera.position.set(0, 3.5, 5.5);
+  camera.lookAt(0, 0, 0);
+
+  // Glow sprite texture (canvas)
+  function makeGlowTex(inner, outer) {
+    const c = document.createElement('canvas');
+    c.width = c.height = 64;
+    const ctx = c.getContext('2d');
+    const g = ctx.createRadialGradient(32,32,0, 32,32,32);
+    g.addColorStop(0, inner);
+    g.addColorStop(0.35, outer);
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,64,64);
+    return new THREE.CanvasTexture(c);
+  }
+
+  const glowTex   = makeGlowTex('rgba(255,255,255,1)',    'rgba(160,100,255,0.4)');
+  const starTex   = makeGlowTex('rgba(255,255,255,1)',    'rgba(200,180,255,0.2)');
+  const cyanTex   = makeGlowTex('rgba(100,240,255,1)',    'rgba(0,180,220,0.3)');
+  const dustTex   = makeGlowTex('rgba(180,80,255,0.6)',   'rgba(100,40,180,0.05)');
+
+  // ── Spiral galaxy arms ──
+  const armCount = 4;
+  const armStars = 550;
+  const twist    = 7.0;
+
+  const spiralGeo   = new THREE.BufferGeometry();
+  const spiralPos   = [];
+  const spiralCol   = [];
+  const spiralSizes = [];
+
+  for (let arm = 0; arm < armCount; arm++) {
+    const armBase = (arm / armCount) * Math.PI * 2;
+    for (let i = 0; i < armStars; i++) {
+      const t = i / armStars;
+      const radius  = 0.3 + t * 3.2;
+      const angle   = armBase + t * Math.PI * 2.5 + radius * (twist / 10);
+      const spreadR = 0.28 * (0.5 + t * 0.5);
+      const spreadY = 0.12 * (1 - t * 0.7);
+
+      const px = Math.cos(angle) * radius + (Math.random()-0.5)*spreadR*2;
+      const py = (Math.random()-0.5) * spreadY * 2;
+      const pz = Math.sin(angle) * radius + (Math.random()-0.5)*spreadR*2;
+      spiralPos.push(px, py, pz);
+
+      // Color: warm center → purple/blue outer
+      const r = 0.7 + t * 0.15;
+      const g = 0.55 - t * 0.35;
+      const b = 0.85 + t * 0.12;
+      spiralCol.push(r, g, b);
+      spiralSizes.push(0.015 + Math.random() * 0.025);
+    }
+  }
+
+  spiralGeo.setAttribute('position', new THREE.Float32BufferAttribute(spiralPos, 3));
+  spiralGeo.setAttribute('color',    new THREE.Float32BufferAttribute(spiralCol, 3));
+  spiralGeo.setAttribute('size',     new THREE.Float32BufferAttribute(spiralSizes, 1));
+
+  const spiralMat = new THREE.PointsMaterial({
+    size: 0.04,
+    map: starTex,
+    vertexColors: true,
+    transparent: true,
+    opacity: 0.72,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false,
+    sizeAttenuation: true
+  });
+  scene.add(new THREE.Points(spiralGeo, spiralMat));
+
+  // ── Accretion disk ──
+  const diskGeo  = new THREE.BufferGeometry();
+  const diskPos  = [];
+  const diskCol  = [];
+  for (let i = 0; i < 800; i++) {
+    const a = Math.random() * Math.PI * 2;
+    const r = 0.08 + Math.pow(Math.random(), 1.5) * 0.85;
+    diskPos.push(Math.cos(a)*r, (Math.random()-0.5)*0.018, Math.sin(a)*r);
+    diskCol.push(1, 0.82 + Math.random()*0.15, 0.55 + Math.random()*0.2);
+  }
+  diskGeo.setAttribute('position', new THREE.Float32BufferAttribute(diskPos, 3));
+  diskGeo.setAttribute('color',    new THREE.Float32BufferAttribute(diskCol, 3));
+  scene.add(new THREE.Points(diskGeo, new THREE.PointsMaterial({
+    size: 0.022, map: glowTex, vertexColors: true,
+    transparent: true, opacity: 0.85,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  })));
+
+  // ── Cyan energy jets ──
+  const jetGeo = new THREE.BufferGeometry();
+  const jetPos = [];
+  for (let i = 0; i < 200; i++) {
+    const y = (Math.random()-0.5) * 5;
+    const sp = Math.abs(y) * 0.08;
+    jetPos.push((Math.random()-0.5)*sp, y, (Math.random()-0.5)*sp);
+  }
+  jetGeo.setAttribute('position', new THREE.Float32BufferAttribute(jetPos, 3));
+  scene.add(new THREE.Points(jetGeo, new THREE.PointsMaterial({
+    size: 0.018, map: cyanTex, color: new THREE.Color(0x00ddff),
+    transparent: true, opacity: 0.55,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  })));
+
+  // ── Dust haze ──
+  const dustGeo = new THREE.BufferGeometry();
+  const dustPos = [];
+  for (let i = 0; i < 400; i++) {
+    const r = 1 + Math.random() * 3.5;
+    const a = Math.random() * Math.PI * 2;
+    const y = (Math.random()-0.5) * 2;
+    dustPos.push(Math.cos(a)*r, y, Math.sin(a)*r);
+  }
+  dustGeo.setAttribute('position', new THREE.Float32BufferAttribute(dustPos, 3));
+  scene.add(new THREE.Points(dustGeo, new THREE.PointsMaterial({
+    size: 0.14, map: dustTex, color: new THREE.Color(0x7020c0),
+    transparent: true, opacity: 0.22,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  })));
+
+  // ── Core glow sprite ──
+  const coreMat = new THREE.SpriteMaterial({
+    map: glowTex,
+    transparent: true,
+    opacity: 0.85,
+    blending: THREE.AdditiveBlending,
+    depthWrite: false
+  });
+  const core = new THREE.Sprite(coreMat);
+  core.scale.set(0.55, 0.55, 1);
+  scene.add(core);
+
+  // ── Field stars (background) ──
+  const fieldGeo = new THREE.BufferGeometry();
+  const fieldPos = [];
+  for (let i = 0; i < 1200; i++) {
+    fieldPos.push(
+      (Math.random()-0.5)*18,
+      (Math.random()-0.5)*12,
+      (Math.random()-0.5)*18
+    );
+  }
+  fieldGeo.setAttribute('position', new THREE.Float32BufferAttribute(fieldPos, 3));
+  scene.add(new THREE.Points(fieldGeo, new THREE.PointsMaterial({
+    size: 0.012, color: new THREE.Color(0xddbbff),
+    transparent: true, opacity: 0.28,
+    blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+  })));
+
+  // ── Scroll & animation ──
+  let scrollProgress = 0;
+  let time = 0;
+
+  window.addEventListener('scroll', () => {
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    scrollProgress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    time += 0.004;
+
+    // Galaxy rotation
+    scene.rotation.y = time * 0.12 + scrollProgress * 1.2;
+    scene.rotation.x = -0.28 + scrollProgress * 0.15;
+
+    // Core pulse
+    const pulse = 0.55 + Math.sin(time * 1.8) * 0.08;
+    core.scale.set(pulse, pulse, 1);
+    coreMat.opacity = 0.7 + Math.sin(time * 1.8) * 0.15;
+
+    // Camera orbit by scroll
+    camera.position.y = 3.5 - scrollProgress * 1.2;
+    camera.lookAt(0, 0, 0);
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    camera.aspect = W() / H();
+    camera.updateProjectionMatrix();
+    renderer.setSize(W(), H());
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   NEURAL NETWORK — Canvas 2D
+═══════════════════════════════════════════════════════════════ */
+(function initNeural() {
+  const canvas = document.getElementById('neural-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Nodes — asymmetric, right-weighted (as per spec)
+  const nodesDef = [
+    {rx:0.72, ry:0.22}, {rx:0.68, ry:0.40}, {rx:0.80, ry:0.35},
+    {rx:0.62, ry:0.55}, {rx:0.76, ry:0.58}, {rx:0.85, ry:0.48},
+    {rx:0.58, ry:0.32}, {rx:0.90, ry:0.28}, {rx:0.70, ry:0.70},
+    {rx:0.82, ry:0.70}, {rx:0.64, ry:0.78}, {rx:0.88, ry:0.60}
+  ];
+
+  // Connections between nodes
+  const connections = [
+    [0,1],[0,2],[1,3],[1,5],[2,4],[2,5],[3,4],[4,8],
+    [5,9],[6,1],[6,3],[7,0],[7,2],[8,9],[9,10],[10,11],[11,5]
+  ];
+
+  // Pulses
+  const pulses = [];
+  function spawnPulse() {
+    const ci = Math.floor(Math.random() * connections.length);
+    pulses.push({ ci, t: 0, speed: 0.004 + Math.random()*0.003 });
+  }
+  setInterval(spawnPulse, 800);
+
+  // Bezier control point helper
+  function cpOf(n1, n2) {
+    const mx = (n1.x + n2.x)/2;
+    const my = (n1.y + n2.y)/2;
+    const perp = { x: -(n2.y - n1.y)*0.3, y: (n2.x - n1.x)*0.3 };
+    return { cx: mx + perp.x, cy: my + perp.y };
+  }
+
+  function bezierPt(t, x1,y1, cx,cy, x2,y2) {
+    const mt = 1-t;
+    return {
+      x: mt*mt*x1 + 2*mt*t*cx + t*t*x2,
+      y: mt*mt*y1 + 2*mt*t*cy + t*t*y2
+    };
+  }
+
+  let scrollProgress = 0;
+  window.addEventListener('scroll', () => {
+    const ms = document.body.scrollHeight - window.innerHeight;
+    scrollProgress = ms > 0 ? window.scrollY / ms : 0;
+  });
+
+  function draw() {
+    requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, W, H);
+
+    const activation = Math.min(1, Math.max(0, (scrollProgress - 0.1) / 0.5));
+    if (activation < 0.02) return;
+
+    const nodes = nodesDef.map(n => ({ x: n.rx * W, y: n.ry * H }));
+
+    // Draw connections
+    connections.forEach(([a, b]) => {
+      const na = nodes[a], nb = nodes[b];
+      const cp = cpOf(na, nb);
+      ctx.beginPath();
+      ctx.moveTo(na.x, na.y);
+      ctx.quadraticCurveTo(cp.cx, cp.cy, nb.x, nb.y);
+      ctx.strokeStyle = `rgba(120,60,200,${0.08 * activation})`;
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    });
+
+    // Draw pulses
+    for (let i = pulses.length - 1; i >= 0; i--) {
+      const p = pulses[i];
+      p.t += p.speed;
+      if (p.t > 1) { pulses.splice(i, 1); continue; }
+
+      const [a, b] = connections[p.ci];
+      const na = nodes[a], nb = nodes[b];
+      const cp = cpOf(na, nb);
+      const pt = bezierPt(p.t, na.x,na.y, cp.cx,cp.cy, nb.x,nb.y);
+
+      const alpha = Math.sin(p.t * Math.PI) * 0.7 * activation;
+      const grad = ctx.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 6);
+      grad.addColorStop(0, `rgba(168,85,247,${alpha})`);
+      grad.addColorStop(0.5, `rgba(120,60,200,${alpha*0.5})`);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, 6, 0, Math.PI*2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    // Draw nodes
+    nodes.forEach(n => {
+      const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, 4);
+      g.addColorStop(0, `rgba(200,140,255,${0.55 * activation})`);
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 4, 0, Math.PI*2);
+      ctx.fillStyle = g;
+      ctx.fill();
+    });
+  }
+  draw();
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   FOREGROUND PARTICLES — Canvas 2D (30 tenues)
+═══════════════════════════════════════════════════════════════ */
+(function initParticles() {
+  const canvas = document.getElementById('particle-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = Array.from({length: 30}, () => ({
+    x: Math.random(), y: Math.random(),
+    size: 1 + Math.random() * 2.5,
+    vx: (Math.random()-0.5)*0.00015,
+    vy: (Math.random()-0.5)*0.00012,
+    opacity: 0.02 + Math.random() * 0.05
+  }));
+
+  function draw() {
+    requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = 1; if (p.x > 1) p.x = 0;
+      if (p.y < 0) p.y = 1; if (p.y > 1) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x*W, p.y*H, p.size, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(180,140,255,${p.opacity})`;
+      ctx.filter = 'blur(2px)';
+      ctx.fill();
+      ctx.filter = 'none';
+    });
+  }
+  draw();
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   RENDER CREW CARDS
+═══════════════════════════════════════════════════════════════ */
+function renderCrew() {
+  const grid = document.getElementById('crew-grid');
+  grid.innerHTML = CREW.map((m, i) => `
+    <div
+      class="member-card reveal reveal-delay-${i+1}"
+      data-index="${i}"
+      style="
+        --member-color:  ${m.accentColor}22;
+        --member-border: ${m.borderColor};
+        --member-shadow: ${m.shadowColor};
+        --member-accent: ${m.accentColor};
+        --member-grad:   linear-gradient(135deg, ${m.gradStart}, ${m.gradEnd});
+      "
+      onclick="openDossier(${i})"
+    >
+      <div class="card-status-row">
+        <div class="status-pill">Activo</div>
+        <div class="card-role-badge" style="background:${m.accentColor}18; color:${m.accentColor}">${m.badge}</div>
+      </div>
+      <div class="card-avatar-wrap">
+        <div class="avatar-ring" style="background: linear-gradient(135deg, ${m.gradStart}, ${m.gradEnd})"></div>
+        <div class="card-avatar" style="background: linear-gradient(135deg, ${m.gradStart}, ${m.gradEnd})">
+          ${m.initials}
+        </div>
+      </div>
+      <div class="card-name">${m.name}</div>
+      <div class="card-specialty">${m.specialty}</div>
+      <div class="card-tags">
+        ${m.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+      </div>
+      <div class="card-projects">
+        <div class="card-projects-label">Proyectos</div>
+        ${m.projects.map(p => `<div class="card-project-item">${p}</div>`).join('')}
+      </div>
+      <div class="card-cta">
+        <span class="card-cta-text">Ver Dossier</span>
+        <span class="card-cta-arrow">→</span>
+      </div>
+    </div>
+  `).join('');
+
+  // Re-attach reveal observers for new cards
+  attachReveal(grid.querySelectorAll('.reveal'));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DOSSIER PANEL
+═══════════════════════════════════════════════════════════════ */
+function getLevelClass(level) {
+  if (level === 'Experto')  return 'level-expert';
+  if (level === 'Avanzado') return 'level-advanced';
+  return 'level-solid';
+}
+
+function openDossier(index) {
+  const m  = CREW[index];
+  const d  = m.dossier;
+  const ov = document.getElementById('dossier-overlay');
+  const panel = document.getElementById('dossier-panel');
+  const content = document.getElementById('dossier-content');
+
+  // Set CSS color variable
+  panel.style.setProperty('--dossier-color', m.accentColor);
+
+  content.innerHTML = `
+    <div class="dossier-header">
+      <button class="dossier-close" onclick="closeDossier()" aria-label="Cerrar">✕</button>
+      <div class="dossier-mission-label">DOSSIER DE MISIÓN</div>
+      <div class="dossier-avatar" style="background: linear-gradient(135deg, ${m.gradStart}, ${m.gradEnd}); color:white;">
+        ${m.initials}
+      </div>
+      <div class="dossier-name">${m.name}</div>
+      <div class="dossier-role">${m.specialty}</div>
+      <div class="dossier-level-badge" style="background:${m.accentColor}18; border-color:${m.accentColor}30; color:${m.accentColor}">
+        ${d.level}
+      </div>
+    </div>
+    <div class="dossier-body">
+
+      <div class="dossier-section">
+        <div class="dossier-section-title">Capacidades</div>
+        ${d.capabilities.map(c => `
+          <div class="cap-row">
+            <span class="cap-row-name">${c.name}</span>
+            <span class="cap-row-level ${getLevelClass(c.level)}">${c.level}</span>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="dossier-section">
+        <div class="dossier-section-title">Tecnologías</div>
+        ${Object.entries(d.tech).map(([group, techs]) => `
+          <div class="tech-group">
+            <div class="tech-group-label">${group}</div>
+            <div class="tech-tags">
+              ${techs.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="dossier-section">
+        <div class="dossier-section-title">Experiencia relevante</div>
+        ${d.experience.map(e => `
+          <div class="exp-item">
+            <span class="exp-check" style="color:${m.accentColor}">✓</span>
+            <span>${e}</span>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="dossier-section">
+        <div class="dossier-section-title">Impacto</div>
+        <div class="impact-box" style="border-left-color:${m.accentColor}">${d.impact}</div>
+      </div>
+
+    </div>
+  `;
+
+  ov.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDossier() {
+  document.getElementById('dossier-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('dossier-backdrop').addEventListener('click', closeDossier);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDossier();
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV SCROLL
+═══════════════════════════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 32);
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   REVEAL OBSERVER
+═══════════════════════════════════════════════════════════════ */
+function attachReveal(elements) {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  elements.forEach(el => obs.observe(el));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  // Reveal static elements
+  attachReveal(document.querySelectorAll('.reveal:not([data-index])'));
+
+  // Render team
+  renderCrew();
+});
+</script>
+</body>
+</html>
