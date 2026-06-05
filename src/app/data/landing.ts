@@ -87,9 +87,9 @@ export const crewMembers: CrewMember[] = [
     name: "Matheus Aponte",
     shortName: "Matheus",
     rol: "AI Systems Architect",
-    perfil: "Arquitectura de IA y sistemas inteligentes.",
+    perfil: "Arquitectura de IA, sistemas inteligentes y prototipos funcionales.",
     focus: "Arquitectura de IA y Sistemas Inteligentes",
-    specialties: ["Agentes IA", "Modelos de Lenguaje", "Arquitectura de Software"],
+    specialties: ["Python", "Java", "OpenAI", "Arquitectura IA"],
     idiomas: ["Español (Nativo)", "Inglés (Avanzado)"],
     skills: [
       { label: "IA y Machine Learning", level: "Experto" },
@@ -131,9 +131,9 @@ export const crewMembers: CrewMember[] = [
     name: "Ian Di Filippo",
     shortName: "Ian",
     rol: "Automation, AI & Cybersecurity Specialist",
-    perfil: "Automatización inteligente y seguridad informática.",
+    perfil: "Automatización inteligente, integración de APIs y ciberseguridad.",
     focus: "Automatización, Integraciones y Ciberseguridad",
-    specialties: ["Automatización de Flujos", "Seguridad en APIs", "Integración de IA"],
+    specialties: ["Python", "n8n", "APIs", "Linux"],
     idiomas: ["Español (Nativo)", "Inglés (Avanzado)"],
     skills: [
       { label: "Automatización", level: "Experto" },
@@ -167,7 +167,7 @@ export const crewMembers: CrewMember[] = [
       "Flujo automatizado para procesamiento de datos.",
       "Implementación de agente con capacidades de IA.",
     ],
-    color: "#a78bfa",
+    color: "#a855f7",
   },
   {
     id: 2,
@@ -175,9 +175,9 @@ export const crewMembers: CrewMember[] = [
     name: "Brian Stiven Alba Celis",
     shortName: "Brian",
     rol: "Lead Full Stack Developer",
-    perfil: "Producto, desarrollo full stack y liderazgo técnico.",
+    perfil: "Productos SaaS, IA aplicada y arquitectura full stack.",
     focus: "Producto, Full Stack y Liderazgo Técnico",
-    specialties: ["Aplicaciones Web", "Automatización Empresarial", "IA Aplicada"],
+    specialties: ["React", "Node.js", "IA", "Mobile"],
     idiomas: ["Español (Nativo)", "Inglés (Intermedio)"],
     skills: [
       { label: "Full Stack", level: "Experto" },
@@ -221,9 +221,9 @@ export const crewMembers: CrewMember[] = [
     name: "Diego Alejandro Rojas Panteve",
     shortName: "Diego",
     rol: "Full Stack Developer & Software Engineering Student",
-    perfil: "Ingeniería de software, backend y sistemas escalables.",
+    perfil: "Backend escalable, ingeniería de software y apps desktop.",
     focus: "Ingeniería de Software, Backend y Sistemas Escalables",
-    specialties: ["Arquitectura Backend", "Bases de Datos", "Aplicaciones Desktop"],
+    specialties: ["Angular", "NestJS", "PostgreSQL", "Electron"],
     idiomas: ["Español (Nativo)", "Inglés (B2 - Cambridge)"],
     skills: [
       { label: "Backend y APIs", level: "Experto" },
@@ -265,7 +265,7 @@ export const crewMembers: CrewMember[] = [
       "Migración exitosa de infraestructura a la nube en RSec.",
       "Curso de SQL con MinTIC y Universidad Distrital (50h).",
     ],
-    color: "#05a305",
+    color: "#22c55e",
   },
 ];
 

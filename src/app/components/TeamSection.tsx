@@ -84,71 +84,118 @@ function CrewCard({ member, isSelected, onClick, index }: {
       role="button"
       aria-label={`Ver dossier de ${member.name}`}
     >
+      {/* Ambient glow on hover */}
       <motion.div
-        className="absolute inset-0 rounded-2xl pointer-events-none"
+        className="absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500"
         style={{
-          background: isSelected ? `radial-gradient(ellipse at 50% 50%, ${member.color}20, transparent 70%)` : "none",
-          filter: "blur(30px)",
+          background: `radial-gradient(ellipse at 50% 50%, ${member.color}15, transparent 70%)`,
+          filter: "blur(40px)",
         }}
         animate={isSelected ? { opacity: [0.4, 0.8, 0.4] } : { opacity: 0 }}
-        transition={isSelected ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : {}}
+        transition={isSelected ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : { duration: 0.5 }}
       />
       <motion.div
-        className="relative overflow-hidden rounded-2xl transition-all duration-400"
+        className="relative overflow-hidden rounded-2xl"
         style={{
-          background: isSelected ? `linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01))` : "rgba(255,255,255,0.015)",
+          background: "rgba(255,255,255,0.015)",
           backdropFilter: "blur(12px)",
-          border: `1px solid ${isSelected ? member.color + "50" : "rgba(255,255,255,0.05)"}`,
-          boxShadow: isSelected ? `0 0 40px ${member.color}15, 0 0 0 1px ${member.color}30` : "0 4px 30px rgba(0,0,0,0.4)",
+          border: `1px solid ${isSelected ? member.color + "50" : "rgba(255,255,255,0.06)"}`,
+          boxShadow: isSelected
+            ? `0 0 40px ${member.color}15, 0 0 0 1px ${member.color}30`
+            : "0 4px 30px rgba(0,0,0,0.5)",
         }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.2 }}
+        whileHover={{ scale: 1.02, y: -4 }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
       >
-        {isSelected && <ScanLine />}
+        {/* Hover border glow */}
         <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
           style={{
-            background: `radial-gradient(ellipse at 50% 50%, ${member.color}10, transparent 70%)`,
-            filter: "blur(20px)",
+            border: `1px solid ${member.color}50`,
+            boxShadow: `0 0 30px ${member.color}20, inset 0 0 30px ${member.color}08`,
           }}
         />
-        <div className="relative overflow-hidden" style={{ height: 340 }}>
-          <div className="absolute inset-0" style={{ background: `radial-gradient(ellipse at 50% 20%, ${member.color}10, transparent 70%)` }} />
+
+        {/* Photo */}
+        <div className="relative overflow-hidden" style={{ height: 320 }}>
+          <div className="absolute inset-0 z-[1]" style={{ background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%)` }} />
           <motion.img
             src={member.photo} alt={member.name}
-            className="w-full h-full object-cover object-top transition-all duration-500"
-            style={{ filter: isSelected ? "none" : undefined }}
+            className="w-full h-full object-cover object-top"
             initial={{ filter: "brightness(0.85)" }}
-            whileHover={{ filter: "brightness(1.05)", scale: 1.05 }}
+            whileHover={{ filter: "brightness(1.08)", scale: 1.05 }}
+            transition={{ duration: 0.4 }}
           />
-          <div className="absolute inset-x-0 bottom-0 h-28" style={{ background: "linear-gradient(to top, rgba(3,0,20,0.95), transparent)" }} />
-          <div className="absolute bottom-3 left-3">
-            <span className="px-3 py-1 rounded text-[11px] font-semibold" style={{ background: `${member.color}20`, border: `1px solid ${member.color}40`, color: member.color, fontFamily: "'Orbitron', monospace", letterSpacing: "0.08em" }}>
-              {member.rol}
+          <div className="absolute bottom-3 left-3 z-[2] flex items-center gap-2">
+            <motion.div
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ background: "#22c55e", boxShadow: "0 0 8px #22c55e" }}
+              animate={{ opacity: [1, 0.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <span className="text-[9px] uppercase tracking-[0.2em] text-white/50" style={{ fontFamily: "'Orbitron', monospace" }}>
+              ACTIVO EN MISIÓN
             </span>
           </div>
         </div>
+
+        {/* Content */}
         <div className="p-5">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-2 h-2 rounded-full" style={{ background: member.color, boxShadow: `0 0 8px ${member.color}` }} />
-            <h3 className="text-white text-base font-semibold" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.shortName}</h3>
+          {/* Rol */}
+          <div className="text-[11px] uppercase tracking-[0.25em] mb-1.5" style={{ color: "#38bdf8", fontFamily: "'Orbitron', monospace" }}>
+            {member.rol}
           </div>
-          <p className="text-slate-400 text-xs leading-relaxed" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>{member.rol}</p>
-          <p className="mt-2 text-slate-500 text-sm leading-relaxed line-clamp-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+
+          {/* Name */}
+          <h3 className="text-white font-bold leading-tight mb-2" style={{ fontSize: "1.8rem", fontFamily: "'Space Grotesk', sans-serif" }}>
+            {member.shortName}
+          </h3>
+
+          {/* Description */}
+          <p className="text-slate-500 text-sm leading-relaxed line-clamp-2" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
             {member.perfil}
           </p>
-          <div className="flex flex-wrap gap-1.5 mt-2">
-            {member.idiomas.map((idioma) => (
-              <span key={idioma} className="px-1.5 py-0.5 rounded text-[9px] uppercase tracking-[0.08em]" style={{ background: `${member.color}08`, border: `1px solid ${member.color}15`, color: "rgba(255,255,255,0.35)", fontFamily: "'Orbitron', monospace" }}>
-                {idioma}
+
+          {/* Divider */}
+          <div className="h-px my-4" style={{ background: `linear-gradient(90deg, ${member.color}30, transparent)` }} />
+
+          {/* Specialties as badges */}
+          <div className="flex flex-wrap gap-1.5">
+            {member.specialties.map((s) => (
+              <span
+                key={s}
+                className="text-[10px] px-2 py-0.5 rounded font-medium"
+                style={{
+                  background: `${member.color}10`,
+                  border: `1px solid ${member.color}25`,
+                  color: member.color,
+                  fontFamily: "'Space Grotesk', sans-serif",
+                }}
+              >
+                {s}
               </span>
             ))}
           </div>
+
+          {/* Divider */}
+          <div className="h-px my-4" style={{ background: `linear-gradient(90deg, transparent, ${member.color}30)` }} />
+
+          {/* Stats row — only first two */}
+          <div className="grid grid-cols-2 gap-3">
+            {member.stats.slice(0, 2).map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-lg font-bold text-white" style={{ fontFamily: "'Orbitron', monospace" }}>{stat.value}</div>
+                <div className="text-[9px] uppercase tracking-[0.15em]" style={{ color: "rgba(255,255,255,0.3)", fontFamily: "'Orbitron', monospace" }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* VER DOSSIER — appears on hover */}
           <motion.div
-            className="mt-3 text-[10px] uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="mt-4 text-[10px] uppercase tracking-[0.2em] text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             style={{ color: member.color, fontFamily: "'Orbitron', monospace" }}
           >
-            Ver dossier →
+            VER DOSSIER →
           </motion.div>
         </div>
       </motion.div>
