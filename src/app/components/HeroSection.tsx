@@ -1,15 +1,6 @@
 import { motion } from "motion/react";
 import { StarField, NebulaLayer, SpaceGrid, Planet, OrbitalRing, GlowDot } from "./SpaceElements";
-import { Zap, Cpu, Globe, Database, Smartphone, BrainCircuit } from "lucide-react";
-
-const tags = [
-  { label: "AI Agents", icon: BrainCircuit, color: "#a78bfa", delay: 0.6 },
-  { label: "Automation", icon: Zap, color: "#38bdf8", delay: 0.7 },
-  { label: "Software Engineering", icon: Cpu, color: "#34d399", delay: 0.8 },
-  { label: "Mobile Apps", icon: Smartphone, color: "#fb923c", delay: 0.9 },
-  { label: "APIs", icon: Globe, color: "#38bdf8", delay: 1.0 },
-  { label: "Data Systems", icon: Database, color: "#a78bfa", delay: 1.1 },
-];
+import { mission, heroTags } from "../data/landing";
 
 export function HeroSection() {
   return (
@@ -66,7 +57,7 @@ export function HeroSection() {
             className="text-cyan-300 text-xs tracking-[0.2em] uppercase"
             style={{ fontFamily: "'Orbitron', monospace" }}
           >
-            Mission Active · 2026
+            {mission.badge}
           </span>
         </motion.div>
 
@@ -93,7 +84,7 @@ export function HeroSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              MISSION:
+              {mission.title}
             </span>
             <br />
             <span
@@ -104,7 +95,7 @@ export function HeroSection() {
                 filter: "drop-shadow(0 0 40px rgba(56,189,248,0.4))",
               }}
             >
-              CODEFEST AD ASTRA
+              {mission.subtitle}
             </span>
             <br />
             <span
@@ -114,7 +105,7 @@ export function HeroSection() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              2026
+              {mission.year}
             </span>
           </h1>
         </motion.div>
@@ -136,12 +127,12 @@ export function HeroSection() {
           className="text-slate-300 mb-12 max-w-xl mx-auto leading-relaxed"
           style={{ fontSize: "1.15rem", fontFamily: "'Space Grotesk', sans-serif" }}
         >
-          Building Intelligent Agents for Real-World Impact
+          {mission.description}
         </motion.p>
 
         {/* Tech tags */}
         <div className="flex flex-wrap items-center justify-center gap-3">
-          {tags.map((tag) => (
+          {heroTags.map((tag) => (
             <motion.div
               key={tag.label}
               initial={{ opacity: 0, scale: 0.7, y: 12 }}

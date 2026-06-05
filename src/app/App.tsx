@@ -1,10 +1,5 @@
 import { HeroSection } from "./components/HeroSection";
 import { TeamSection } from "./components/TeamSection";
-import { MissionSection } from "./components/MissionSection";
-import { SkillsSection } from "./components/SkillsSection";
-import { TimelineSection } from "./components/TimelineSection";
-import { WhySection } from "./components/WhySection";
-import { ClosingSection } from "./components/ClosingSection";
 
 export default function App() {
   return (
@@ -18,11 +13,6 @@ export default function App() {
     >
       <HeroSection />
       <TeamSection />
-      <MissionSection />
-      <SkillsSection />
-      <TimelineSection />
-      <WhySection />
-      <ClosingSection />
     </div>
   );
 }
