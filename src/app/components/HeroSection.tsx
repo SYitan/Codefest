@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { lazy, Suspense } from "react";
-import { StarField, NebulaLayer, SpaceGrid, Planet } from "./SpaceElements";
+import { SpaceGrid, Planet } from "./SpaceElements";
 import { ShootingStars, ScrollFadeOrbs } from "./Backgrounds";
 import { mission } from "../data/landing";
 import { ArrowRight } from "lucide-react";
@@ -19,14 +19,12 @@ export function HeroSection() {
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: "linear-gradient(180deg, #030014 0%, #04041c 60%, #050510 100%)" }}
+      style={{ background: "linear-gradient(180deg, rgba(3,0,20,0.4) 0%, rgba(4,4,28,0.3) 60%, rgba(5,5,16,0.4) 100%)" }}
     >
       <ScrollFadeOrbs />
-      <NebulaLayer />
       <motion.div style={{ opacity: gridO }}>
         <SpaceGrid />
       </motion.div>
-      <StarField count={240} />
       <ShootingStars />
 
       <motion.div

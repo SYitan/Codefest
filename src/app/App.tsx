@@ -1,12 +1,15 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useInView } from "motion/react";
-import { useRef } from "react";
+import { useRef, lazy, Suspense } from "react";
 import { BrainCircuit, Code2, Smartphone, Zap } from "lucide-react";
 import { HeroSection } from "./components/HeroSection";
 import { TeamSection } from "./components/TeamSection";
 import { SectionBackground, SectionDivider, ShootingStars, GrainOverlay, BottomFade } from "./components/Backgrounds";
 import { GlowDot } from "./components/SpaceElements";
+import { HolographicOverlay } from "./components/visuals/HolographicOverlay";
 import { teamCapabilities, teamStats } from "./data/landing";
+
+const CosmicBackground = lazy(() => import("./components/visuals/CosmicBackground").then(m => ({ default: m.CosmicBackground })));
 
 const capMeta = [
   { icon: BrainCircuit, color: "#a78bfa", label: "IA" },
@@ -180,15 +183,21 @@ export default function App() {
       className="min-h-screen"
       style={{
         fontFamily: "'Space Grotesk', 'Inter', system-ui, sans-serif",
-        background: "#030014",
+        background: "transparent",
         colorScheme: "dark",
       }}
     >
       <GrainOverlay />
-      <HeroSection />
-      <CapabilitiesSection />
-      <MetricsSection />
-      <TeamSection />
+      <Suspense fallback={null}>
+        <CosmicBackground />
+      </Suspense>
+      <HolographicOverlay />
+      <div className="relative z-10">
+        <HeroSection />
+        <CapabilitiesSection />
+        <MetricsSection />
+        <TeamSection />
+      </div>
     </div>
   );
 }

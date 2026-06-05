@@ -497,7 +497,7 @@ export function TeamSection() {
   };
 
   return (
-    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, #050510 0%, #04041c 50%, #050510 100%)" }}>
+    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(5,5,16,0.5) 0%, rgba(4,4,28,0.4) 50%, rgba(5,5,16,0.5) 100%)" }}>
       <motion.div style={{ y: starY }}>
         <StarField count={80} />
       </motion.div>

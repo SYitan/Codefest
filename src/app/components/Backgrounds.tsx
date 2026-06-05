@@ -5,10 +5,10 @@ import { StarField } from "./SpaceElements";
 type SectionTheme = "deep" | "navy" | "dark" | "purple";
 
 const gradients: Record<SectionTheme, string> = {
-  deep: "linear-gradient(180deg, #030014 0%, #050510 50%, #030014 100%)",
-  navy: "linear-gradient(180deg, #050510 0%, #04041c 50%, #050510 100%)",
-  dark: "linear-gradient(180deg, #050510 0%, #030014 50%, #050510 100%)",
-  purple: "linear-gradient(180deg, #030014 0%, #0a041c 50%, #030014 100%)",
+  deep: "linear-gradient(180deg, rgba(3,0,20,0.7) 0%, rgba(5,5,16,0.5) 50%, rgba(3,0,20,0.7) 100%)",
+  navy: "linear-gradient(180deg, rgba(5,5,16,0.5) 0%, rgba(4,4,28,0.5) 50%, rgba(5,5,16,0.5) 100%)",
+  dark: "linear-gradient(180deg, rgba(5,5,16,0.6) 0%, rgba(3,0,20,0.5) 50%, rgba(5,5,16,0.6) 100%)",
+  purple: "linear-gradient(180deg, rgba(3,0,20,0.6) 0%, rgba(10,4,28,0.5) 50%, rgba(3,0,20,0.6) 100%)",
 };
 
 const themeOrbs: Record<SectionTheme, Array<{ color: string; size: number; x: number; y: number; blur: number; opacity: number; duration: number }>> = {
