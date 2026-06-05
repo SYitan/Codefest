@@ -14,4 +14,17 @@ export default defineConfig({
     },
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
+  build: {
+    target: 'es2020',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei'],
+          'motion-vendor': ['motion'],
+          'ui-vendor': ['lucide-react'],
+        },
+      },
+    },
+  },
 })

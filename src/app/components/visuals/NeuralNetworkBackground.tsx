@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 const NODE_DEFS = [
   { rx: 0.72, ry: 0.22 }, { rx: 0.68, ry: 0.40 }, { rx: 0.80, ry: 0.35 },
@@ -49,6 +49,18 @@ const CONSTELLATION_LINKS: [number, number][] = [
 
 export function NeuralNetworkBackground({ lowPower }: { lowPower?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -160,12 +172,12 @@ export function NeuralNetworkBackground({ lowPower }: { lowPower?: boolean }) {
     }
 
     function loop() {
-      draw();
+      if (isVisible) draw();
       animId = requestAnimationFrame(loop);
     }
 
     resize();
-    loop();
+    if (isVisible) loop();
 
     window.addEventListener("resize", resize);
 

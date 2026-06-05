@@ -43,6 +43,7 @@ function AmbientOrb({ color, size, x, y, blur, opacity, duration, lowPower }: {
         background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
         filter: `blur(${blur}px)`,
         opacity,
+        ...(lowPower ? {} : { willChange: "transform" }),
       }}
       animate={lowPower ? undefined : { x: [0, 30, -20, 0], y: [0, -20, 15, 0] }}
       transition={lowPower ? undefined : { duration, repeat: Infinity, ease: "easeInOut" }}

@@ -6,15 +6,31 @@ import {
   Globe,
   Database,
 } from "lucide-react";
-import yitanImg from "../../imports/yitan.webp";
-import diegoImg from "../../imports/diego.webp";
-import matheusImg from "../../imports/matheus.webp";
-import ianImg from "../../imports/ian.webp";
+import yitanWebp from "../../imports/yitan.webp";
+import yitanPng from "../../imports/yitan.png";
+import diegoWebp from "../../imports/diego.webp";
+import diegoPng from "../../imports/diego.png";
+import matheusWebp from "../../imports/matheus.webp";
+import matheusPng from "../../imports/matheus.png";
+import ianWebp from "../../imports/ian.webp";
+import ianPng from "../../imports/ian.png";
+
+export interface PhotoSet {
+  webp: string;
+  png: string;
+}
+
+export const photos = {
+  yitan: { webp: yitanWebp, png: yitanPng } as PhotoSet,
+  diego: { webp: diegoWebp, png: diegoPng } as PhotoSet,
+  matheus: { webp: matheusWebp, png: matheusPng } as PhotoSet,
+  ian: { webp: ianWebp, png: ianPng } as PhotoSet,
+};
 
 export const mission = {
   badge: "MISIÓN: CODEFEST AD ASTRA 2026",
-  title: "Construimos soluciones reales",
-  description: "mediante IA, automatización e ingeniería de software.",
+  title: "Polaris",
+  description: "Construimos soluciones reales mediante IA, automatización e ingeniería de software.",
 };
 
 export const heroTags = [
@@ -45,7 +61,7 @@ export interface Stat {
 
 export interface CrewMember {
   id: number;
-  photo: string;
+  photo: PhotoSet;
   name: string;
   shortName: string;
   rol: string;
@@ -79,7 +95,7 @@ export const teamStats = {
 export const crewMembers: CrewMember[] = [
   {
     id: 0,
-    photo: yitanImg,
+    photo: photos.yitan,
     name: "Brian Stiven Alba Celis",
     shortName: "Brian",
     rol: "Lead Full Stack Developer",
@@ -125,7 +141,7 @@ export const crewMembers: CrewMember[] = [
   },
   {
     id: 1,
-    photo: ianImg,
+    photo: photos.ian,
     name: "Ian Di Filippo",
     shortName: "Ian",
     rol: "Automation, AI & Cybersecurity Specialist",
@@ -169,7 +185,7 @@ export const crewMembers: CrewMember[] = [
   },
   {
     id: 2,
-    photo: diegoImg,
+    photo: photos.diego,
     name: "Diego Alejandro Rojas Panteve",
     shortName: "Diego",
     rol: "Full Stack Developer & Software Engineering Student",
@@ -221,7 +237,7 @@ export const crewMembers: CrewMember[] = [
   },
   {
     id: 3,
-    photo: matheusImg,
+    photo: photos.matheus,
     name: "Matheus Aponte",
     shortName: "Matheus",
     rol: "AI Systems Architect",

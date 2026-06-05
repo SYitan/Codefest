@@ -1,7 +1,19 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 
 export function ForegroundParticles({ lowPower }: { lowPower?: boolean }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -52,12 +64,12 @@ export function ForegroundParticles({ lowPower }: { lowPower?: boolean }) {
     }
 
     function loop() {
-      draw();
+      if (isVisible) draw();
       animId = requestAnimationFrame(loop);
     }
 
     resize();
-    loop();
+    if (isVisible) loop();
     window.addEventListener("resize", resize);
 
     return () => {

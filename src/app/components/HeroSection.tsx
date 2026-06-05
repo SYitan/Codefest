@@ -101,7 +101,7 @@ export function HeroSection({ lowPower }: { lowPower?: boolean }) {
                 whileTap={{ scale: 0.97 }}
               >
                 <span className="relative z-10 inline-flex items-center gap-2">
-                  EXPLORAR TRIPULACIÓN
+                  EXPLORAR NURESTRA TRIPULACIÓN
                   {lowPower ? (
                     <span className="inline-block" style={{ opacity: 1 }}>
                       <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1.5" />

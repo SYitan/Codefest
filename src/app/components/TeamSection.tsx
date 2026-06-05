@@ -2,6 +2,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "motion/react";
 import { StarField, SectionLabel } from "./SpaceElements";
+import { OptimizedImage } from "./OptimizedImage";
 import { crewMembers, teamSection, type CrewMember, type SkillLevel } from "../data/landing";
 
 const levelColors: Record<SkillLevel, string> = {
@@ -108,12 +109,12 @@ function CrewCard({ member, isSelected, onClick, index }: {
 
         <div className="relative" style={{ height: 240 }}>
           <div className="absolute inset-0 z-[1]" style={{ background: `linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 40%)` }} />
-          <motion.img
-            src={member.photo} alt={member.name}
+          <OptimizedImage
+            photo={member.photo} alt={member.name}
             className="w-full h-full object-cover object-top"
-            initial={{ filter: "brightness(0.8)" }}
-            whileHover={{ filter: "brightness(1.05)", scale: 1.05 }}
-            transition={{ duration: 0.4 }}
+            style={{ filter: "brightness(0.8)", willChange: "transform" }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.filter = "brightness(1.05)"; (e.currentTarget as HTMLElement).style.transform = "scale(1.05)"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.filter = "brightness(0.8)"; (e.currentTarget as HTMLElement).style.transform = "scale(1)"; }}
           />
 
           <div className="absolute bottom-3 left-3 z-[2] flex items-center gap-1.5">
@@ -313,7 +314,7 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ delay: b, duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
                     >
-                      <img src={member.photo} alt={member.name} className="w-full h-full object-cover object-top" />
+                      <OptimizedImage photo={member.photo} alt={member.name} className="w-full h-full object-cover object-top" />
                       <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, ${member.color}15, transparent 30%, ${member.color}08)`, mixBlendMode: "overlay" }} />
                     </motion.div>
                     <motion.div className="absolute -top-2.5 -left-2.5 w-4 h-4 border-t-2 border-l-2" style={{ borderColor: member.color }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: b + 0.1 }} />
