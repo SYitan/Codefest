@@ -184,7 +184,7 @@ export const crewMembers: CrewMember[] = [
       "Adaptabilidad Tecnológica",
     ],
     tecnologias: [
-      "React",
+      "Angular",
       "Node.js",
       "JavaScript",
       "TypeScript",
@@ -207,7 +207,7 @@ export const crewMembers: CrewMember[] = [
     valorEquipo:
       "Convierte necesidades del mundo real en productos de software funcionales, combinando visión de producto, solidez técnica y automatización para crear soluciones completas de principio a fin.",
     logros: [
-      "Plataforma de gestión académica con React, Node.js y PostgreSQL.",
+      "Aplicación móvil PWA con Angular y TypeScript.",
       "Automatización de procesos empresariales con Power Platform.",
       "Prototipos funcionales integrando IA generativa en flujos de trabajo.",
     ],
