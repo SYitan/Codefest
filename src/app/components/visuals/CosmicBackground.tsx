@@ -1,22 +1,18 @@
 import { useRef, useEffect } from "react";
 import { useScroll, useMotionValue } from "motion/react";
 import { Canvas } from "@react-three/fiber";
-import { IntelligenceNetwork } from "./IntelligenceNetwork";
+import { SpiralGalaxy } from "./SpiralGalaxy";
 import { AtmosphericHaze } from "./AtmosphericHaze";
-import { ForegroundLayer } from "./ForegroundLayer";
-import { CoreEnergy } from "./CoreEnergy";
 
 function Scene({ progressRef }: {
   progressRef: React.MutableRefObject<number>;
 }) {
   return (
     <>
-      <ambientLight intensity={0.06} />
-      <fog attach="fog" args={["#030014", 4, 30]} />
+      <ambientLight intensity={0.05} />
+      <fog attach="fog" args={["#030014", 3, 20]} />
       <AtmosphericHaze progressRef={progressRef} />
-      <IntelligenceNetwork progressRef={progressRef} />
-      <CoreEnergy progressRef={progressRef} />
-      <ForegroundLayer progressRef={progressRef} />
+      <SpiralGalaxy progressRef={progressRef} />
     </>
   );
 }
@@ -42,12 +38,12 @@ export function CosmicBackground() {
   }, [smoothY]);
 
   const dpr = typeof window !== "undefined" && window.devicePixelRatio > 2
-    ? [0.5, 1] : [0.8, 1.2];
+    ? [0.6, 1] : [0.8, 1.2];
 
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>
       <Canvas
-        camera={{ position: [0, 0.2, 6], fov: 56, near: 0.1, far: 50 }}
+        camera={{ position: [0, 1.5, 5.5], fov: 55, near: 0.1, far: 40 }}
         dpr={dpr}
         gl={{
           antialias: false,
