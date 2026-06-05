@@ -80,8 +80,8 @@ export function NeuralNetworkBackground() {
         ctx.beginPath();
         ctx.moveTo(na.x, na.y);
         ctx.quadraticCurveTo(cp.cx, cp.cy, nb.x, nb.y);
-        ctx.strokeStyle = `rgba(120,60,200,${0.15 * activation})`;
-        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = `rgba(120,60,200,${0.25 * activation})`;
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       }
 
@@ -108,7 +108,7 @@ export function NeuralNetworkBackground() {
 
       for (const n of ns) {
         const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, 4);
-        g.addColorStop(0, `rgba(200,140,255,${0.85 * activation})`);
+        g.addColorStop(0, `rgba(200,140,255,${1.2 * activation})`);
         g.addColorStop(1, "rgba(0,0,0,0)");
         ctx.beginPath();
         ctx.arc(n.x, n.y, 4, 0, Math.PI * 2);

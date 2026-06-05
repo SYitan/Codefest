@@ -19,13 +19,13 @@ export function ForegroundParticles() {
       canvas.style.height = H + "px";
     }
 
-    const particles = Array.from({ length: 40 }, () => ({
+    const particles = Array.from({ length: 55 }, () => ({
       x: Math.random(),
       y: Math.random(),
-      size: 1.5 + Math.random() * 3,
-      vx: (Math.random() - 0.5) * 0.00025,
-      vy: (Math.random() - 0.5) * 0.0002,
-      opacity: 0.04 + Math.random() * 0.08,
+      size: 2 + Math.random() * 4,
+      vx: (Math.random() - 0.5) * 0.00035,
+      vy: (Math.random() - 0.5) * 0.0003,
+      opacity: 0.06 + Math.random() * 0.12,
     }));
 
     function draw() {
