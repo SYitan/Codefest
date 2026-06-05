@@ -5,10 +5,10 @@ import { StarField } from "./SpaceElements";
 type SectionTheme = "deep" | "navy" | "dark" | "purple";
 
 const gradients: Record<SectionTheme, string> = {
-  deep: "linear-gradient(180deg, rgba(3,0,20,0.7) 0%, rgba(5,5,16,0.55) 50%, rgba(3,0,20,0.7) 100%)",
-  navy: "linear-gradient(180deg, rgba(5,5,16,0.65) 0%, rgba(4,4,28,0.5) 50%, rgba(5,5,16,0.65) 100%)",
-  dark: "linear-gradient(180deg, rgba(5,5,16,0.7) 0%, rgba(3,0,20,0.55) 50%, rgba(5,5,16,0.7) 100%)",
-  purple: "linear-gradient(180deg, rgba(3,0,20,0.65) 0%, rgba(10,4,28,0.5) 50%, rgba(3,0,20,0.65) 100%)",
+  deep: "linear-gradient(180deg, rgba(3,0,20,0.82) 0%, rgba(5,5,16,0.7) 50%, rgba(3,0,20,0.82) 100%)",
+  navy: "linear-gradient(180deg, rgba(5,5,16,0.8) 0%, rgba(4,4,28,0.65) 50%, rgba(5,5,16,0.8) 100%)",
+  dark: "linear-gradient(180deg, rgba(5,5,16,0.82) 0%, rgba(3,0,20,0.7) 50%, rgba(5,5,16,0.82) 100%)",
+  purple: "linear-gradient(180deg, rgba(3,0,20,0.8) 0%, rgba(10,4,28,0.65) 50%, rgba(3,0,20,0.8) 100%)",
 };
 
 const themeOrbs: Record<SectionTheme, Array<{ color: string; size: number; x: number; y: number; blur: number; opacity: number; duration: number }>> = {
@@ -150,12 +150,12 @@ export function SectionBackground({ children, theme = "deep", stars = 0, classNa
 
 export function SectionDivider() {
   return (
-    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px opacity-30" style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }} />
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-px opacity-10" style={{ background: "linear-gradient(90deg, transparent, #38bdf8, transparent)" }} />
   );
 }
 
 export function BottomFade() {
   return (
-    <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, #050510)" }} />
+    <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, #030014)" }} />
   );
 }

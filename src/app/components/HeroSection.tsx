@@ -12,7 +12,7 @@ export function HeroSection() {
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: "linear-gradient(180deg, rgba(3,0,20,0.65) 0%, rgba(4,4,28,0.5) 60%, rgba(5,5,16,0.65) 100%)" }}
+      style={{ background: "linear-gradient(180deg, rgba(3,0,20,0.8) 0%, rgba(4,4,28,0.65) 60%, rgba(5,5,16,0.8) 100%)" }}
     >
       <ScrollFadeOrbs />
       <motion.div style={{ opacity: gridO }}>
@@ -119,8 +119,8 @@ export function HeroSection() {
       </motion.div>
 
       <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, transparent, #050510)" }}
+        className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none"
+        style={{ background: "linear-gradient(to bottom, transparent, #030014)" }}
       />
     </section>
   );

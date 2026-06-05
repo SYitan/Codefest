@@ -307,7 +307,7 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                 <div className="flex items-center gap-6 mb-6">
                   <div className="relative flex-shrink-0">
                     <motion.div
-                      className="w-28 h-28 md:w-32 md:h-32 rounded-xl overflow-hidden"
+                      className="w-36 h-36 md:w-40 md:h-40 rounded-xl overflow-hidden"
                       style={{ border: `1px solid ${member.color}40`, boxShadow: `0 0 50px ${member.color}15` }}
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
@@ -490,14 +490,14 @@ export function TeamSection() {
   const handleProfileReady = () => {
     setTimeout(() => {
       if (profileRef.current) {
-        const top = profileRef.current.getBoundingClientRect().top + window.scrollY + 180;
+        const top = profileRef.current.getBoundingClientRect().top + window.scrollY + 260;
         window.scrollTo({ top, behavior: "smooth" });
       }
     }, 100);
   };
 
   return (
-    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(5,5,16,0.65) 0%, rgba(4,4,28,0.5) 50%, rgba(5,5,16,0.65) 100%)" }}>
+    <section ref={sectionRef} id="team-section" className="relative py-28 px-6 overflow-hidden" style={{ background: "linear-gradient(180deg, rgba(5,5,16,0.8) 0%, rgba(4,4,28,0.65) 50%, rgba(5,5,16,0.8) 100%)" }}>
       <motion.div style={{ y: starY }}>
         <StarField count={80} />
       </motion.div>
@@ -529,7 +529,7 @@ export function TeamSection() {
           </AnimatePresence>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, #030014)" }} />
+      <div className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none" style={{ background: "linear-gradient(to bottom, transparent, #030014)" }} />
     </section>
   );
 }
