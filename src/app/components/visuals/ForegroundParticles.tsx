@@ -1,13 +1,5 @@
 import { useRef, useEffect } from "react";
 
-interface FParticle {
-  x: number; y: number;
-  size: number;
-  speedX: number; speedY: number;
-  phase: number;
-  opacity: number;
-}
-
 export function ForegroundParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -16,58 +8,41 @@ export function ForegroundParticles() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
     let animId: number;
-    let particles: FParticle[] = [];
-    let time = 0;
+    let W: number, H: number;
 
     function resize() {
-      const dpr = Math.min(devicePixelRatio, 1.2);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = window.innerWidth + "px";
-      canvas.style.height = window.innerHeight + "px";
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas.width = W;
+      canvas.height = H;
+      canvas.style.width = W + "px";
+      canvas.style.height = H + "px";
     }
 
-    function init() {
-      const count = 28;
-      particles = [];
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * window.innerWidth,
-          y: Math.random() * window.innerHeight,
-          size: 0.5 + Math.random() * 2.5,
-          speedX: (Math.random() - 0.5) * 0.12,
-          speedY: (Math.random() - 0.5) * 0.08 - 0.03,
-          phase: Math.random() * Math.PI * 2,
-          opacity: 0.015 + Math.random() * 0.035,
-        });
-      }
-    }
+    const particles = Array.from({ length: 30 }, () => ({
+      x: Math.random(),
+      y: Math.random(),
+      size: 1 + Math.random() * 2.5,
+      vx: (Math.random() - 0.5) * 0.00015,
+      vy: (Math.random() - 0.5) * 0.00012,
+      opacity: 0.02 + Math.random() * 0.05,
+    }));
 
     function draw() {
-      const cw = window.innerWidth;
-      const ch = window.innerHeight;
-      if (cw === 0 || ch === 0) return;
-
-      ctx.clearRect(0, 0, cw, ch);
-      time += 0.016;
-
+      ctx.clearRect(0, 0, W, H);
       for (const p of particles) {
-        p.x += p.speedX + Math.sin(time * 0.3 + p.phase) * 0.04;
-        p.y += p.speedY + Math.cos(time * 0.2 + p.phase) * 0.03;
-
-        if (p.x < -10) p.x = cw + 10;
-        if (p.x > cw + 10) p.x = -10;
-        if (p.y < -10) p.y = ch + 10;
-        if (p.y > ch + 10) p.y = -10;
-
-        const flicker = Math.sin(time * 0.6 + p.phase) * 0.3 + 0.7;
-        const op = p.opacity * flicker;
-
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = 1;
+        if (p.x > 1) p.x = 0;
+        if (p.y < 0) p.y = 1;
+        if (p.y > 1) p.y = 0;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(148,215,255,${op})`;
+        ctx.arc(p.x * W, p.y * H, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(180,140,255,${p.opacity})`;
+        ctx.filter = "blur(2px)";
         ctx.fill();
+        ctx.filter = "none";
       }
     }
 
@@ -77,13 +52,12 @@ export function ForegroundParticles() {
     }
 
     resize();
-    init();
     loop();
-    window.addEventListener("resize", () => { resize(); init(); });
+    window.addEventListener("resize", resize);
 
     return () => {
       cancelAnimationFrame(animId);
-      window.removeEventListener("resize", () => { resize(); init(); });
+      window.removeEventListener("resize", resize);
     };
   }, []);
 
@@ -91,7 +65,7 @@ export function ForegroundParticles() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none"
-      style={{ zIndex: 3, filter: "blur(2px)" }}
+      style={{ zIndex: 3 }}
     />
   );
 }
