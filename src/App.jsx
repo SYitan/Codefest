@@ -150,7 +150,7 @@ const CREW_DATA = [
   {
     id: 3,
     photo: diegoImg,
-    name: "Diego Alejandro Rojas Panteve",
+    name: "Diego Rojas",
     shortName: "Diego",
     rol: "Full-Stack Engineer & Software Engineering Student",
     perfil:
