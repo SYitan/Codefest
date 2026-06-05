@@ -42,13 +42,13 @@ export function CosmicBackground({ lowPower }: { lowPower?: boolean }) {
   const cameraPosition = lowPower
     ? [0, 0.6, 0.95]
     : isMobile
-      ? [0, 0.55, 0.8]
+      ? [0, 0.52, 0.72]
       : [0, 0.5, 0.85];
 
   return (
     <div className="fixed inset-0" style={{ zIndex: 0, pointerEvents: "none" }}>
       <Canvas
-        camera={{ position: cameraPosition, fov: 68, near: 0.1, far: 25 }}
+        camera={{ position: cameraPosition, fov: isMobile ? 72 : 68, near: 0.1, far: 25 }}
         dpr={dpr}
         gl={{
           antialias: false,
