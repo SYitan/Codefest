@@ -9,8 +9,6 @@ export function HeroSection() {
   const contentY = useTransform(scrollY, [0, 400], [0, -40]);
   const contentO = useTransform(scrollY, [0, 400], [1, 0]);
   const gridO = useTransform(scrollY, [0, 300], [1, 0]);
-  const scrollDotO = useTransform(scrollY, [0, 200], [1, 0]);
-
   return (
     <section
       className="relative min-h-screen flex items-center overflow-hidden"
@@ -118,24 +116,6 @@ export function HeroSection() {
           </div>
         </div>
 
-        <motion.div
-          style={{ opacity: scrollDotO }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <motion.div
-            className="w-4 h-7 rounded-full border flex items-start justify-center p-1"
-            style={{ borderColor: "rgba(56,189,248,0.15)" }}
-            animate={{ borderColor: ["rgba(56,189,248,0.15)", "rgba(56,189,248,0.35)", "rgba(56,189,248,0.15)"] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <motion.div
-              className="w-1 h-1.5 rounded-full"
-              style={{ background: "#38bdf8", boxShadow: "0 0 6px #38bdf8" }}
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
-        </motion.div>
       </motion.div>
 
       <div
