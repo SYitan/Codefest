@@ -272,7 +272,7 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
 
   useEffect(() => {
     if (ref.current && phase === "content") setHeight(ref.current.scrollHeight);
-  }, [phase, member]);
+  }, [phase, member, expSect]);
 
   const b = 0.1;
 
@@ -395,31 +395,25 @@ function ExpandedProfile({ member, onReady }: { member: CrewMember; onReady: () 
                           ▼
                         </motion.span>
                       </button>
-                      <AnimatePresence>
-                        {expSect && (
-                          <motion.ul
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="space-y-2.5 overflow-hidden"
+                      <motion.ul
+                        className="space-y-2.5 overflow-hidden"
+                        animate={expSect ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {member.experiencia.map((item, i) => (
+                          <motion.li
+                            key={i}
+                            className="flex items-start gap-2 text-sm md:text-base leading-relaxed"
+                            style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'Space Grotesk', sans-serif" }}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.04 }}
                           >
-                            {member.experiencia.map((item, i) => (
-                              <motion.li
-                                key={i}
-                                className="flex items-start gap-2 text-sm md:text-base leading-relaxed"
-                                style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'Space Grotesk', sans-serif" }}
-                                initial={{ opacity: 0, x: -8 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: i * 0.04 }}
-                              >
-                                <span className="mt-0.5" style={{ color: member.color, fontSize: "10px" }}>{String.fromCharCode(9656)}</span>
-                                {item}
-                              </motion.li>
-                            ))}
-                          </motion.ul>
-                        )}
-                      </AnimatePresence>
+                            <span className="mt-0.5" style={{ color: member.color, fontSize: "10px" }}>{String.fromCharCode(9656)}</span>
+                            {item}
+                          </motion.li>
+                        ))}
+                      </motion.ul>
                     </SectionFade>
                   </div>
                 </div>
