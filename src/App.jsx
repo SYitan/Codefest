@@ -14,12 +14,9 @@ const CREW_DATA = [
     photo: brianImg,
     name: "Brian Alba",
     shortName: "Brian",
-
     rol: "Full-Stack & AI Automation Engineer",
-
     perfil:
       "Estudiante de Ingeniería de Software con experiencia práctica en desarrollo Full-Stack, automatización de procesos e integración de Inteligencia Artificial. Ha trabajado en proyectos personales y entornos reales de desarrollo durante aproximadamente 6 meses, construyendo aplicaciones web, sistemas de gestión empresarial y soluciones enfocadas en optimización de procesos mediante tecnología moderna.",
-
     skills: [
       { label: "Dominio Técnico", value: 78 },
       { label: "Diseño de Sistemas", value: 74 },
@@ -27,7 +24,6 @@ const CREW_DATA = [
       { label: "Conocimiento en IA", value: 85 },
       { label: "Experiencia de Desarrollo", value: 75 },
     ],
-
     experiencia: [
       "Desarrollo de aplicaciones Full-Stack con React, Next.js y TypeScript.",
       "Creación de sistemas CRM y plataformas de gestión de información.",
@@ -38,18 +34,16 @@ const CREW_DATA = [
       "Desarrollo de portafolios interactivos y aplicaciones personalizadas.",
       "Construcción de soluciones orientadas a optimización de procesos.",
     ],
-
     fortalezas: [
-      "Full-Stack Development",
-      "AI Automation",
-      "Problem Solving",
-      "System Design",
-      "Prompt Engineering",
-      "Process Automation",
-      "Product Thinking",
+      "Desarrollo Full-Stack",
+      "Automatización con IA",
+      "Resolución de Problemas",
+      "Diseño de Sistemas",
+      "Ingeniería de Prompts",
+      "Automatización de Procesos",
+      "Pensamiento de Producto",
       "Adaptabilidad",
     ],
-
     tecnologias: [
       "JavaScript",
       "TypeScript",
@@ -68,17 +62,15 @@ const CREW_DATA = [
       "OpenAI APIs",
       "REST APIs",
     ],
-
     contribuciones: [
       "Diseño y desarrollo de aplicaciones web completas.",
       "Implementación de sistemas de automatización empresarial.",
       "Integración de Inteligencia Artificial en flujos de trabajo.",
       "Desarrollo de interfaces funcionales y optimizadas.",
       "Estructuración de bases de datos y lógica backend.",
-      "Optimización de procesos mediante herramientas low-code y AI.",
+      "Optimización de procesos mediante herramientas low-code e IA.",
       "Apoyo en definición de arquitectura de proyectos.",
     ],
-
     logros: [
       "Desarrollo de múltiples proyectos Full-Stack personales.",
       "Implementación de sistemas CRM y plataformas empresariales.",
@@ -95,10 +87,8 @@ const CREW_DATA = [
     name: "Ian Di Filippo Espeleta",
     shortName: "Ian",
     rol: "Full-Stack Engineer & Cybersecurity Specialist",
-
     perfil:
       "Estudiante de Ingeniería de Software enfocado en desarrollo full-stack, ciberseguridad, automatización e inteligencia artificial. Destaca por su capacidad para diseñar soluciones escalables, optimizar procesos complejos y desarrollar sistemas seguros impulsados por tecnología moderna.",
-
     skills: [
       { label: "Dominio Técnico", value: 88 },
       { label: "Diseño de Sistemas", value: 84 },
@@ -106,7 +96,6 @@ const CREW_DATA = [
       { label: "Inteligencia Artificial", value: 87 },
       { label: "Experiencia de Desarrollo", value: 86 },
     ],
-
     experiencia: [
       "Desarrollo de aplicaciones web full-stack.",
       "Construcción de APIs y servicios backend.",
@@ -115,17 +104,15 @@ const CREW_DATA = [
       "Implementación de soluciones de ciberseguridad.",
       "Desarrollo de dashboards y análisis de información.",
     ],
-
     fortalezas: [
-      "Full-Stack Development",
-      "Cybersecurity",
-      "Artificial Intelligence",
-      "Backend Engineering",
-      "System Architecture",
-      "Automation",
-      "Data Analysis",
+      "Desarrollo Full-Stack",
+      "Ciberseguridad",
+      "Inteligencia Artificial",
+      "Ingeniería Backend",
+      "Arquitectura de Sistemas",
+      "Automatización",
+      "Análisis de Datos",
     ],
-
     tecnologias: [
       "Python",
       "Java",
@@ -140,9 +127,8 @@ const CREW_DATA = [
       "Power BI",
       "REST APIs",
       "Machine Learning",
-      "Cryptography",
+      "Criptografía",
     ],
-
     contribuciones: [
       "Diseño de arquitectura técnica.",
       "Desarrollo de sistemas backend.",
@@ -151,7 +137,6 @@ const CREW_DATA = [
       "Optimización del flujo de datos.",
       "Implementación de medidas de seguridad.",
     ],
-
     logros: [
       "Certificación CS50x de Harvard.",
       "Formación en criptografía aplicada.",
@@ -160,7 +145,6 @@ const CREW_DATA = [
       "Implementación de automatizaciones basadas en IA.",
       "Desarrollo de plataformas web escalables.",
     ],
-
     color: "#3b82f6",
   },
   {
@@ -168,7 +152,7 @@ const CREW_DATA = [
     photo: diegoImg,
     name: "Diego Alejandro Rojas Panteve",
     shortName: "Diego",
-    rol: "Full-Stack Engineer & Software Engineering student",
+    rol: "Full-Stack Engineer & Software Engineering Student",
     perfil:
       "Estudiante de Ingeniería de Software enfocado en desarrollo full stack, con experiencia real construyendo sistemas completos desde el backend hasta interfaces modernas. Apasionado por la arquitectura de software, la ciberseguridad y la creación de productos funcionales que resuelvan problemas reales.",
     skills: [
@@ -243,12 +227,9 @@ const CREW_DATA = [
     photo: matheusImg,
     name: "Matheus Aponte",
     shortName: "Matheus",
-
     rol: "Full-Stack & AI Automation Engineer",
-
     perfil:
       "Estudiante de Ingeniería de Software con experiencia en desarrollo Full-Stack, automatización de procesos e integración de soluciones basadas en Inteligencia Artificial. Ha participado en la construcción de aplicaciones web empresariales, sistemas de gestión de datos y plataformas orientadas a optimizar procesos mediante tecnologías modernas, arquitecturas escalables y automatización inteligente.",
-
     skills: [
       { label: "Dominio Técnico", value: 84 },
       { label: "Diseño de Sistemas", value: 80 },
@@ -256,7 +237,6 @@ const CREW_DATA = [
       { label: "Conocimiento en IA", value: 88 },
       { label: "Experiencia de Desarrollo", value: 86 },
     ],
-
     experiencia: [
       "Desarrollo de aplicaciones Full-Stack con React, Next.js y TypeScript.",
       "Construcción de sistemas CRM y plataformas empresariales.",
@@ -267,18 +247,16 @@ const CREW_DATA = [
       "Desarrollo de aplicaciones web personalizadas.",
       "Diseño de arquitecturas orientadas a escalabilidad y mantenimiento.",
     ],
-
     fortalezas: [
-      "Full-Stack Development",
-      "AI Automation",
-      "Prompt Engineering",
-      "Database Design",
-      "System Design",
-      "Problem Solving",
-      "Product Thinking",
+      "Desarrollo Full-Stack",
+      "Automatización con IA",
+      "Ingeniería de Prompts",
+      "Diseño de Bases de Datos",
+      "Diseño de Sistemas",
+      "Resolución de Problemas",
+      "Pensamiento de Producto",
       "Trabajo en Equipo",
     ],
-
     tecnologias: [
       "JavaScript",
       "TypeScript",
@@ -297,7 +275,6 @@ const CREW_DATA = [
       "REST APIs",
       "OpenAI",
     ],
-
     contribuciones: [
       "Desarrollo de plataformas empresariales.",
       "Diseño e implementación de automatizaciones.",
@@ -306,7 +283,6 @@ const CREW_DATA = [
       "Diseño de estructuras de datos y bases de datos.",
       "Optimización de flujos operativos digitales.",
     ],
-
     logros: [
       "Participación en múltiples proyectos empresariales reales.",
       "Implementación de sistemas CRM y gestión de información.",
@@ -315,7 +291,6 @@ const CREW_DATA = [
       "Desarrollo de aplicaciones web modernas y escalables.",
       "Implementación de soluciones seguras utilizando Supabase y RLS.",
     ],
-
     color: "#fb923c",
   },
 ];
