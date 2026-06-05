@@ -2,103 +2,135 @@ import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
-const NODE_COUNT = 24;
-const FIELD_W = 10;
-const FIELD_H = 4;
-const FIELD_D = 3;
-const CONNECT_DIST = 2.6;
-
-function createParticleTexture() {
-  const canvas = document.createElement("canvas");
-  canvas.width = 32;
-  canvas.height = 32;
-  const ctx = canvas.getContext("2d")!;
-  const g = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-  g.addColorStop(0, "rgba(255,255,255,1)");
-  g.addColorStop(0.2, "rgba(200,220,255,0.6)");
-  g.addColorStop(1, "rgba(255,255,255,0)");
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 32, 32);
-  const tex = new THREE.CanvasTexture(canvas);
-  return tex;
-}
+const CTRL_OFF = 0.6;
 
 interface NodeDef {
   pos: THREE.Vector3;
   threshold: number;
-  pulsePhase: number;
+  phase: number;
 }
 
 interface ConnectionDef {
-  a: number;
-  b: number;
-  pulseSpeed: number;
-  pulseOffset: number;
+  points: THREE.Vector3[];
+  curve: THREE.CatmullRomCurve3;
+  length: number;
+  aIdx: number;
+  bIdx: number;
+  speed: number;
+  offset: number;
 }
 
-function buildNetwork(): { nodes: NodeDef[]; connections: ConnectionDef[] } {
-  const nodes: NodeDef[] = [];
-  for (let i = 0; i < NODE_COUNT; i++) {
-    nodes.push({
-      pos: new THREE.Vector3(
-        (Math.random() - 0.5) * FIELD_W,
-        (Math.random() - 0.5) * FIELD_H,
-        (Math.random() - 0.5) * FIELD_D
-      ),
-      threshold: 0.08 + Math.random() * 0.5,
-      pulsePhase: Math.random() * Math.PI * 2,
-    });
-  }
+const NODE_DEFS: [number, number, number, number][] = [
+  // [x, y, z, activationThreshold]
+  // Primary hub (right)
+  [2.8, 0.6, 0.0, 0.15],
+  [3.8, 1.3, -0.2, 0.18],
+  [3.4, -0.4, 0.15, 0.20],
+  [4.2, 0.2, -0.1, 0.22],
+  [2.2, 1.2, 0.1, 0.25],
+  // Lower cluster (right)
+  [2.6, -1.6, 0.0, 0.35],
+  [3.6, -2.2, -0.15, 0.38],
+  [1.8, -2.0, 0.1, 0.42],
+  // Sparse left
+  [-2.0, 0.6, -0.1, 0.50],
+  [-1.4, -0.8, 0.15, 0.55],
+  // Mid
+  [0.6, -0.6, -0.2, 0.45],
+  [-0.8, 1.0, 0.05, 0.52],
+];
 
-  const connections: ConnectionDef[] = [];
-  for (let i = 0; i < NODE_COUNT; i++) {
-    for (let j = i + 1; j < NODE_COUNT; j++) {
-      const d = nodes[i].pos.distanceTo(nodes[j].pos);
-      if (d < CONNECT_DIST && Math.random() < 0.35) {
-        connections.push({
-          a: i, b: j,
-          pulseSpeed: 0.15 + Math.random() * 0.2,
-          pulseOffset: Math.random() * Math.PI * 2,
-        });
-      }
-    }
-  }
-  return { nodes, connections };
-}
+// Connection definitions: [nodeA, nodeB, ...controlPoints]
+// Control points are optional intermediate points for curve shaping
+const CONNECTION_DEFS: { a: number; b: number; via?: [number, number, number][] }[] = [
+  // Hub mesh
+  { a: 0, b: 1 },
+  { a: 0, b: 2 },
+  { a: 0, b: 3, via: [[3.6, 0.2, 0.4]] },
+  { a: 1, b: 2, via: [[3.8, 0.2, -0.1]] },
+  { a: 1, b: 4 },
+  { a: 2, b: 4, via: [[2.6, 0.2, 0.2]] },
+  { a: 3, b: 1 },
+  // Hub to lower cluster (directional flow)
+  { a: 0, b: 5, via: [[2.9, -0.4, 0.2], [2.6, -1.0, -0.1]] },
+  { a: 2, b: 5, via: [[3.2, -0.8, 0.1]] },
+  { a: 4, b: 7, via: [[2.0, -0.2, 0.15], [1.6, -1.2, 0.0]] },
+  // Lower cluster mesh
+  { a: 5, b: 6 },
+  { a: 5, b: 7, via: [[2.4, -1.8, 0.1]] },
+  { a: 6, b: 7 },
+  // Sparse left connections
+  { a: 8, b: 9, via: [[-1.8, -0.2, 0.0]] },
+  { a: 8, b: 11, via: [[-1.4, 0.6, -0.1]] },
+  // Mid connections
+  { a: 10, b: 5, via: [[1.2, -1.2, -0.1]] },
+  { a: 10, b: 2, via: [[1.8, -0.2, 0.0]] },
+  { a: 11, b: 0, via: [[0.6, 0.8, 0.1]] },
+  { a: 11, b: 4, via: [[0.4, 1.0, 0.05]] },
+];
 
 export function IntelligenceNetwork({ progressRef }: {
   progressRef: React.MutableRefObject<number>;
 }) {
-  const spriteRef = useRef<THREE.Points>(null!);
-  const nodeGlowRef = useRef<THREE.Points>(null!);
-  const pulseRef = useRef<THREE.Points>(null!);
-  const lineRef = useRef<THREE.LineSegments>(null!);
-  const activeLineRef = useRef<THREE.LineSegments>(null!);
+  const linesRef = useRef<THREE.Group>(null!);
+  const nodesRef = useRef<THREE.Points>(null!);
+  const pulsesRef = useRef<THREE.Points>(null!);
+  const particlesRef = useRef<THREE.Points>(null!);
   const timeRef = useRef(0);
 
-  const { nodes, connections } = useMemo(buildNetwork, []);
-  const spriteTex = useMemo(createParticleTexture, []);
+  const { nodes, connections, particleBase } = useMemo(() => {
+    const nodes: NodeDef[] = NODE_DEFS.map(([x, y, z, t]) => ({
+      pos: new THREE.Vector3(x, y, z),
+      threshold: t,
+      phase: Math.random() * Math.PI * 2,
+    }));
 
-  const linePositions = useMemo(() => {
-    const arr: number[] = [];
-    connections.forEach(c => {
+    const connections: ConnectionDef[] = CONNECTION_DEFS.map(c => {
       const pa = nodes[c.a].pos;
       const pb = nodes[c.b].pos;
-      arr.push(pa.x, pa.y, pa.z, pb.x, pb.y, pb.z);
+      const pts = c.via
+        ? [pa, ...c.via.map(v => new THREE.Vector3(v[0], v[1], v[2])), pb]
+        : [pa, pb];
+      const curve = new THREE.CatmullRomCurve3(pts);
+      return {
+        points: pts,
+        curve,
+        length: 0,
+        aIdx: c.a,
+        bIdx: c.b,
+        speed: 0.08 + Math.random() * 0.12,
+        offset: Math.random() * Math.PI * 2,
+      };
     });
-    return new Float32Array(arr);
-  }, [nodes, connections]);
 
-  const particleBase = useMemo(() => {
-    const count = 180;
-    const pos = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * FIELD_W * 1.2;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * FIELD_H * 1.2;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * FIELD_D * 1.5;
+    // Pre-compute curve lengths
+    connections.forEach(c => {
+      c.length = c.curve.getLength();
+    });
+
+    // Particle base positions (80 particles)
+    const pCount = 80;
+    const pb = new Float32Array(pCount * 3);
+    for (let i = 0; i < pCount; i++) {
+      const n = nodes[Math.floor(Math.random() * nodes.length)];
+      pb[i * 3] = n.pos.x + (Math.random() - 0.5) * 3;
+      pb[i * 3 + 1] = n.pos.y + (Math.random() - 0.5) * 2.5;
+      pb[i * 3 + 2] = n.pos.z + (Math.random() - 0.5) * 1.5;
     }
-    return pos;
+
+    return { nodes, connections, particleBase: pb };
   }, []);
+
+  // Pre-compute curve geometries
+  const curveGeos = useMemo(() => {
+    return connections.map(c => {
+      const pts = c.curve.getPoints(40);
+      const pos = new Float32Array(pts.flatMap(p => [p.x, p.y, p.z]));
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+      return geo;
+    });
+  }, [connections]);
 
   useFrame((_, delta) => {
     delta = Math.min(delta, 0.05);
@@ -106,119 +138,98 @@ export function IntelligenceNetwork({ progressRef }: {
     const t = timeRef.current;
     const progress = progressRef.current;
 
-    const stage = progress < 0.12 ? 0 : progress < 0.35 ? 1 : progress < 0.6 ? 2 : progress < 0.82 ? 3 : 4;
-
-    // Node activation: ease in
-    const nodeActive = nodes.map((n, i) => {
+    // Compute node activation: smooth sigmoid-ish curve
+    const nodeActive = nodes.map(n => {
       if (progress < n.threshold) return 0;
       const raw = (progress - n.threshold) / (1 - n.threshold);
-      return Math.min(raw * 2.5, 1);
+      return raw * raw * (3 - 2 * raw); // smoothstep
     });
 
-    // Connection opacity = average of both endpoints
-    const connOpacity = connections.map((c, i) => {
-      const act = (nodeActive[c.a] + nodeActive[c.b]) * 0.5;
-      return act * act * 0.35;
-    });
-
-    // Update line segments opacity via vertex colors
-    if (lineRef.current) {
-      const colors = new Float32Array(linePositions.length / 3 * 3);
-      const baseColor = new THREE.Color("#38bdf8");
-      connections.forEach((c, i) => {
-        const o = connOpacity[i];
-        const col = baseColor.clone().multiplyScalar(o * 1.5);
-        for (let j = 0; j < 2; j++) {
-          const idx = (i * 2 + j) * 3;
-          colors[idx] = col.r;
-          colors[idx + 1] = col.g;
-          colors[idx + 2] = col.b;
-        }
-      });
-      lineRef.current.geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-    }
-
-    // Energy pulses along connections
-    if (pulseRef.current && stage >= 1) {
-      const pulseCount = Math.min(connections.length, Math.floor(progress * 40));
-      const pulsePos = new Float32Array(pulseCount * 3);
-      const pulseSizes = new Float32Array(pulseCount);
-      for (let i = 0; i < pulseCount; i++) {
-        const ci = i % connections.length;
-        const c = connections[ci];
-        const p = (t * c.pulseSpeed + c.pulseOffset) % 1;
-        const pa = nodes[c.a].pos;
-        const pb = nodes[c.b].pos;
-        const e = p < 0.5 ? p * 2 : 2 - p * 2;
-        pulsePos[i * 3] = pa.x + (pb.x - pa.x) * e;
-        pulsePos[i * 3 + 1] = pa.y + (pb.y - pa.y) * e;
-        pulsePos[i * 3 + 2] = pa.z + (pb.z - pa.z) * e;
-        pulseSizes[i] = 0.04 + Math.sin(t * 2 + i) * 0.02;
-      }
-      pulseRef.current.geometry.setAttribute("position", new THREE.BufferAttribute(pulsePos, 3));
-      pulseRef.current.geometry.setAttribute("size", new THREE.BufferAttribute(pulseSizes, 1));
-      (pulseRef.current.material as THREE.PointsMaterial).opacity = connOpacity.reduce((a, b) => a + b, 0) / connections.length * 0.8;
-    }
-
-    // Particle field
-    if (spriteRef.current) {
-      const activeRatio = Math.min(progress * 2, 1);
-      const visibleCount = Math.floor(180 * activeRatio);
-      const positions = spriteRef.current.geometry.attributes.position.array as Float32Array;
-      for (let i = 0; i < visibleCount; i++) {
-        const i3 = i * 3;
-        const drift = Math.sin(t * 0.15 + i * 0.05) * 0.3;
-        const driftY = Math.cos(t * 0.12 + i * 0.07) * 0.2;
-        if (stage >= 3) {
-          // Clustering behavior at later stages
-          const clusterIdx = i % nodes.length;
-          const n = nodes[clusterIdx];
-          positions[i3] = particleBase[i3] * (0.4 + Math.sin(t * 0.1 + i) * 0.1) + n.pos.x * 0.3 + drift;
-          positions[i3 + 1] = particleBase[i3 + 1] * 0.5 + n.pos.y * 0.3 + driftY;
-        } else {
-          positions[i3] = particleBase[i3] + drift;
-          positions[i3 + 1] = particleBase[i3 + 1] + driftY;
-        }
-        positions[i3 + 2] = particleBase[i3 + 2] + Math.sin(t * 0.1 + i * 0.03) * 0.1;
-      }
-      spriteRef.current.geometry.attributes.position.needsUpdate = true;
-      spriteRef.current.geometry.setDrawRange(0, visibleCount);
-      (spriteRef.current.material as THREE.PointsMaterial).opacity = 0.08 + activeRatio * 0.25;
-    }
-
-    // Node glow points
-    if (nodeGlowRef.current) {
-      const positions = nodeGlowRef.current.geometry.attributes.position.array as Float32Array;
-      const sizes = nodeGlowRef.current.geometry.attributes.size.array as Float32Array;
+    // Node glow
+    if (nodesRef.current) {
+      const pos = nodesRef.current.geometry.attributes.position.array as Float32Array;
+      const sizes = nodesRef.current.geometry.attributes.size.array as Float32Array;
       nodes.forEach((n, i) => {
         const act = nodeActive[i];
         const i3 = i * 3;
-        positions[i3] = n.pos.x;
-        positions[i3 + 1] = n.pos.y + Math.sin(t * 0.3 + n.pulsePhase) * 0.04;
-        positions[i3 + 2] = n.pos.z;
-        sizes[i] = 0.03 + act * 0.04 + Math.sin(t * 0.5 + n.pulsePhase) * 0.01;
+        const pulse = Math.sin(t * 0.4 + n.phase) * 0.5 + 0.5;
+        pos[i3] = n.pos.x;
+        pos[i3 + 1] = n.pos.y + Math.sin(t * 0.2 + n.phase) * 0.03;
+        pos[i3 + 2] = n.pos.z;
+        sizes[i] = 0.02 + act * 0.04 + pulse * 0.01 * act;
       });
-      nodeGlowRef.current.geometry.attributes.position.needsUpdate = true;
-      nodeGlowRef.current.geometry.attributes.size.needsUpdate = true;
-      (nodeGlowRef.current.material as THREE.PointsMaterial).opacity = 0.15 + Math.min(progress * 3, 1) * 0.35;
+      nodesRef.current.geometry.attributes.position.needsUpdate = true;
+      nodesRef.current.geometry.attributes.size.needsUpdate = true;
+      (nodesRef.current.material as THREE.PointsMaterial).opacity = 0.08 + Math.min(progress * 2.5, 1) * 0.25;
+    }
+
+    // Connection lines
+    if (linesRef.current) {
+      const children = linesRef.current.children;
+      connections.forEach((c, i) => {
+        const line = children[i] as THREE.Line;
+        const act = (nodeActive[c.aIdx] + nodeActive[c.bIdx]) * 0.5;
+        const op = act * act * 0.2;
+        (line.material as THREE.LineBasicMaterial).opacity = op;
+      });
+    }
+
+    // Energy pulses
+    if (pulsesRef.current) {
+      const maxPulses = Math.min(connections.length, Math.floor(progress * 20));
+      const pPos = pulsesRef.current.geometry.attributes.position.array as Float32Array;
+      const pSizes = pulsesRef.current.geometry.attributes.size.array as Float32Array;
+      for (let i = 0; i < maxPulses; i++) {
+        const ci = i % connections.length;
+        const c = connections[ci];
+        const p = (t * c.speed + c.offset) % 1;
+        const pt = c.curve.getPointAt(p);
+        pPos[i * 3] = pt.x;
+        pPos[i * 3 + 1] = pt.y;
+        pPos[i * 3 + 2] = pt.z;
+        const act = (nodeActive[c.aIdx] + nodeActive[c.bIdx]) * 0.5;
+        pSizes[i] = 0.02 + act * 0.03 + Math.sin(t * 3 + i) * 0.005;
+      }
+      pulsesRef.current.geometry.attributes.position.needsUpdate = true;
+      pulsesRef.current.geometry.attributes.size.needsUpdate = true;
+      pulsesRef.current.geometry.setDrawRange(0, maxPulses);
+      (pulsesRef.current.material as THREE.PointsMaterial).opacity = Math.min(progress * 1.5, 1) * 0.3;
+    }
+
+    // Particle field
+    if (particlesRef.current) {
+      const visible = Math.floor(80 * Math.min(progress * 1.8, 1));
+      const pos = particlesRef.current.geometry.attributes.position.array as Float32Array;
+      for (let i = 0; i < visible; i++) {
+        const i3 = i * 3;
+        pos[i3] = particleBase[i3] + Math.sin(t * 0.08 + i * 0.1) * 0.3;
+        pos[i3 + 1] = particleBase[i3 + 1] + Math.cos(t * 0.06 + i * 0.13) * 0.2;
+        pos[i3 + 2] = particleBase[i3 + 2] + Math.sin(t * 0.04 + i * 0.07) * 0.1;
+      }
+      particlesRef.current.geometry.attributes.position.needsUpdate = true;
+      particlesRef.current.geometry.setDrawRange(0, visible);
+      (particlesRef.current.material as THREE.PointsMaterial).opacity = 0.04 + Math.min(progress * 1.2, 1) * 0.12;
     }
   });
 
   return (
     <group>
       {/* Connection lines */}
-      <lineSegments ref={lineRef} frustumCulled>
-        <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[linePositions, 3]}
-          />
-        </bufferGeometry>
-        <lineBasicMaterial vertexColors transparent opacity={0.4} depthWrite={false} />
-      </lineSegments>
+      <group ref={linesRef}>
+        {curveGeos.map((geo, i) => (
+          <line key={i} geometry={geo} frustumCulled>
+            <lineBasicMaterial
+              color="#38bdf8"
+              transparent
+              opacity={0}
+              depthWrite={false}
+            />
+          </line>
+        ))}
+      </group>
 
       {/* Energy pulses */}
-      <points ref={pulseRef} frustumCulled>
+      <points ref={pulsesRef} frustumCulled>
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
@@ -230,8 +241,8 @@ export function IntelligenceNetwork({ progressRef }: {
           />
         </bufferGeometry>
         <pointsMaterial
-          color="#a0e0ff"
-          size={0.06}
+          color="#88ccff"
+          size={0.04}
           transparent
           opacity={0}
           sizeAttenuation
@@ -240,21 +251,21 @@ export function IntelligenceNetwork({ progressRef }: {
         />
       </points>
 
-      {/* Node glow points */}
-      <points ref={nodeGlowRef} frustumCulled>
+      {/* Node glow */}
+      <points ref={nodesRef} frustumCulled>
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            args={[new Float32Array(NODE_COUNT * 3), 3]}
+            args={[new Float32Array(NODE_DEFS.length * 3), 3]}
           />
           <bufferAttribute
             attach="attributes-size"
-            args={[new Float32Array(NODE_COUNT), 1]}
+            args={[new Float32Array(NODE_DEFS.length), 1]}
           />
         </bufferGeometry>
         <pointsMaterial
           color="#60a5fa"
-          size={0.06}
+          size={0.04}
           transparent
           opacity={0}
           sizeAttenuation
@@ -263,8 +274,8 @@ export function IntelligenceNetwork({ progressRef }: {
         />
       </points>
 
-      {/* Glowing particle field */}
-      <points ref={spriteRef} frustumCulled>
+      {/* Ambient particles */}
+      <points ref={particlesRef} frustumCulled>
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
@@ -272,14 +283,13 @@ export function IntelligenceNetwork({ progressRef }: {
           />
         </bufferGeometry>
         <pointsMaterial
-          map={spriteTex}
-          size={0.08}
+          color="#4992ff"
+          size={0.04}
           transparent
           opacity={0}
           sizeAttenuation
           depthWrite={false}
           blending={THREE.AdditiveBlending}
-          color="#88bbff"
         />
       </points>
     </group>
