@@ -3,17 +3,16 @@ import useScrollReveal from '../hooks/useScrollReveal'
 
 const levelColors = {
   Experto: 'bg-green-900/60 border-green-400/40 text-green-300',
-  Avanzado: 'bg-cyan-900/60 border-cyan-400/40 text-cyan-300',
-  Intermedio: 'bg-slate-700/60 border-slate-500/40 text-slate-300',
+  Avanzado: 'bg-emerald-900/60 border-emerald-400/40 text-emerald-300',
+  Intermedio: 'bg-cyan-900/60 border-cyan-400/40 text-cyan-300',
   Basico: 'bg-zinc-800/60 border-zinc-600/40 text-zinc-400',
 }
 
 function getLevel(skill) {
   if (skill.level) return skill.level
   if (skill.value != null) {
-    if (skill.value >= 75) return 'Experto'
-    if (skill.value >= 50) return 'Avanzado'
-    if (skill.value >= 25) return 'Intermedio'
+    if (skill.value >= 75) return 'Avanzado'
+    if (skill.value >= 50) return 'Intermedio'
     return 'Basico'
   }
   return 'Intermedio'
@@ -41,8 +40,8 @@ function AnimatedContent({ member, onBack }) {
       </button>
 
       {/* ── HEADER: image + info ── */}
-      <div className={`flex gap-6 items-start ${anim}`}>
-        <div className="relative w-[220px] h-[220px] rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 flex-shrink-0">
+      <div className={`md:flex gap-6 items-start ${anim}`}>
+        <div className="relative w-[220px] h-[220px] rounded-lg overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950 flex-shrink-0 mx-auto md:mx-0">
           <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-slate-900/10" />
           <div style={{ backgroundColor: member.color }} className="absolute top-0 left-0 w-4 h-[2px]" />

@@ -18,11 +18,11 @@ const CREW_DATA = [
     perfil:
       "Estudiante de Ingeniería de Software con experiencia práctica en desarrollo Full-Stack, automatización de procesos e integración de Inteligencia Artificial. Ha trabajado en proyectos personales y entornos reales de desarrollo durante aproximadamente 6 meses, construyendo aplicaciones web, sistemas de gestión empresarial y soluciones enfocadas en optimización de procesos mediante tecnología moderna.",
     skills: [
-      { label: "Dominio Técnico", value: 78 },
-      { label: "Diseño de Sistemas", value: 74 },
-      { label: "Resolución de Problemas", value: 88 },
-      { label: "Conocimiento en IA", value: 85 },
-      { label: "Experiencia de Desarrollo", value: 75 },
+      { label: "Dominio Técnico", value: 72 },
+      { label: "Diseño de Sistemas", value: 65 },
+      { label: "Resolución de Problemas", value: 82 },
+      { label: "Conocimiento en IA", value: 78 },
+      { label: "Experiencia de Desarrollo", value: 55 },
     ],
     experiencia: [
       "Desarrollo de aplicaciones Full-Stack con React, Next.js y TypeScript.",
@@ -90,11 +90,11 @@ const CREW_DATA = [
     perfil:
       "Estudiante de Ingeniería de Software enfocado en desarrollo full-stack, ciberseguridad, automatización e inteligencia artificial. Destaca por su capacidad para diseñar soluciones escalables, optimizar procesos complejos y desarrollar sistemas seguros impulsados por tecnología moderna.",
     skills: [
-      { label: "Dominio Técnico", value: 88 },
-      { label: "Diseño de Sistemas", value: 84 },
-      { label: "Resolución de Problemas", value: 91 },
-      { label: "Inteligencia Artificial", value: 87 },
-      { label: "Experiencia de Desarrollo", value: 86 },
+      { label: "Dominio Técnico", value: 82 },
+      { label: "Diseño de Sistemas", value: 65 },
+      { label: "Resolución de Problemas", value: 80 },
+      { label: "Inteligencia Artificial", value: 62 },
+      { label: "Experiencia de Desarrollo", value: 80 },
     ],
     experiencia: [
       "Desarrollo de aplicaciones web full-stack.",
@@ -156,11 +156,11 @@ const CREW_DATA = [
     perfil:
       "Estudiante de Ingeniería de Software enfocado en desarrollo full stack, con experiencia real construyendo sistemas completos desde el backend hasta interfaces modernas. Apasionado por la arquitectura de software, la ciberseguridad y la creación de productos funcionales que resuelvan problemas reales.",
     skills: [
-      { label: "Dominio Técnico", value: 82 },
-      { label: "Diseño de Sistemas", value: 80 },
-      { label: "Resolución de Problemas", value: 85 },
-      { label: "Conocimiento en IA", value: 70 },
-      { label: "Experiencia en Desarrollo", value: 78 },
+      { label: "Dominio Técnico", value: 74 },
+      { label: "Diseño de Sistemas", value: 85 },
+      { label: "Resolución de Problemas", value: 80 },
+      { label: "Conocimiento en IA", value: 65 },
+      { label: "Experiencia en Desarrollo", value: 75 },
     ],
     experiencia: [
       "Desarrollo de aplicaciones desktop con Electron y Angular 19+.",
@@ -231,11 +231,11 @@ const CREW_DATA = [
     perfil:
       "Estudiante de Ingeniería de Software con experiencia en desarrollo Full-Stack, automatización de procesos e integración de soluciones basadas en Inteligencia Artificial. Ha participado en la construcción de aplicaciones web empresariales, sistemas de gestión de datos y plataformas orientadas a optimizar procesos mediante tecnologías modernas, arquitecturas escalables y automatización inteligente.",
     skills: [
-      { label: "Dominio Técnico", value: 84 },
-      { label: "Diseño de Sistemas", value: 80 },
-      { label: "Resolución de Problemas", value: 90 },
-      { label: "Conocimiento en IA", value: 88 },
-      { label: "Experiencia de Desarrollo", value: 86 },
+      { label: "Dominio Técnico", value: 60 },
+      { label: "Diseño de Sistemas", value: 74 },
+      { label: "Resolución de Problemas", value: 82 },
+      { label: "Conocimiento en IA", value: 75 },
+      { label: "Experiencia de Desarrollo", value: 60 },
     ],
     experiencia: [
       "Desarrollo de aplicaciones Full-Stack con React, Next.js y TypeScript.",
